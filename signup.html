@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>skilharvest</title>
+  <link rel="stylesheet" href="signup.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome</h1>
+    <button onclick="showForm('signup')">Sign Up</button>
+    <button onclick="showForm('login')">Login</button>
+
+    <form id="signupForm" class="form hidden">
+      <h2>Sign Up</h2>
+      <input type="text" placeholder="Username" required /><br />
+      <input type="email" placeholder="Email" required /><br />
+      <input type="password" placeholder="Password" required /><br />
+      <button type="submit">Submit</button>
+    </form>
+
+    <form id="loginForm" class="form hidden">
+      <h2>Login</h2>
+      <input type="email" placeholder="Email" required /><br />
+      <input type="password" placeholder="Password" required /><br />
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
