@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>landing page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen">
+   <!-- slider container div--> 
+   <div class="w-[320px] overflow-hidden bg-white rounded-xl shadow-lg">
+    <!--image card divs-->
+    <div id="slides"
+    class="flex transition-transform duration-500 ease-in-out">
+    <!--card1-->
+    <div class="min-w-full p-5 text-center">
+        <h2>Welcome To SkillHarvest</h2>
+      <img src="images/image 10.png" alt="picture of a grain field" 
+      class="rounded-lg mb-3">  
+    </div>
+    <!--card2-->
+    <div class="min-w-full p-5 text-center">
+        <h3>Where knowledge from years of experience is passed down from generation 
+            to generation </h3>
+      <img src="images/unsplash_acwQfNie9TA.png" alt=" picture of an old white farmer
+       picking tomatoes from the garden" class="rounded-lg mb-3">  
+    </div>
+    <!--card3-->
+    <div class="min-w-full p-5 text-center">
+        <p>Ask questions, get answers and connect with experienced farmers.</p>
+        <img src="images/image 19.png" alt="picture of an old farmer having an interview
+         with young students" class="rounded-lg mb-3">
+    </div>
+
+    </div>
+
+    </div>
+    <!--dots-->
+    <div class="flex gap-2 mt-4">
+        <span class="dot w-2.5 h-2.5 rounded-full bg-green-600 cursor-pointer" data-index="0"></span>
+        <span class="dot w-2.5 h-2.5 rounded-full bg-gray-400 cursor-pointer" data-index="1"></span>
+        <span class="dot w-2.5 h-2.5 rounded-full bg-gray-400 cursor-pointer" data-index="2"></span>
+    </div>
+    <!--buttons-->
+    <div class="flex gap-3 mt-4">
+        <button 
+        id="prevBtn"
+       class="px-4 py-2 bg-green-600 text-white rounded-lg" 
+       >
+        Previous</button>
+        
+        <button id="nextBtn"
+        class="px-4 py-2 bg-green-600 text-white rounded-lg">
+            Next
+        </button>
+    </div>
+
+   <script src="script.js"></script>
+</body>
+</html>
