@@ -23,3 +23,37 @@ videos.forEach(video => {
 
   videoGrid.appendChild(link);
 });
+//side bar js
+const menuBtn = document.getElementById("menuBtn");
+const sidebar = document.getElementById("sidebar");
+const links = sidebar.querySelectorAll("a");
+//toggle sidebar
+menuBtn.addEventListener("click", () => {
+  sidebar.classList.toggle("-translate-x-full");
+});
+//close sidebar when link is clicked
+links.forEach(link => {
+  link.addEventListener("click", () => {
+    sidebar.classList.add("-translate-x-full");
+  });
+});
+// search by keyword feature
+const searchInput = document.getElementById("searchinput");
+
+searchInput.addEventListener("input", () => {
+  const query = searchInput.value.toLowerCase();
+
+  const cards = document.querySelectorAll("#videoGrid a");
+
+  cards.forEach(card => {
+    const text = card.innerText.toLowerCase();
+
+    if (text.includes(query)) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
+  });
+});
+
+
