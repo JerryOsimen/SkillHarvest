@@ -31,11 +31,12 @@ tailwind.config = {
   <button
   id="startBtn"
   class="
+  opacity-0 translate-y-6  pointer-events-none
     bg-gray-600 text-white mt-[100px] rounded-xl cursor-pointer
 
     uppercase px-[80px] py-2 font-bold text-center
 
-    transition-all duration-300 ease-out
+    transition-all duration-700 ease-out
 
     hover:bg-white hover:text-black
 
@@ -44,5 +45,19 @@ tailwind.config = {
     focus-visible:ring-2 focus-visible:ring-gray-400
   ">Start</button>
 </div>
+<script>
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      const btn = 
+      document.getElementById("startBtn");
+      btn.classList.remove("opacity-0", "translate-y-6", "pointer-events-none");
+      btn.classList.add("opacity-100");
+    },1200);
+  });
+
+  document.getElementById("startBtn").addEventListener("click", function () {
+    window.location.href = "Landing-page.html";
+  });
+</script>
   </body>
 </html>
