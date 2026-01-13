@@ -11,11 +11,11 @@ function showForm(form) {
 document.getElementById("signupForm").addEventListener("submit", function(e) {
   e.preventDefault(); // stop page reload
   alert("Sign-up successful!");
-  window.location.href = "home.html";
+  window.location.href = "Homepage.html";
 });
 
 document.getElementById("loginForm").addEventListener("submit", function(e) {
   e.preventDefault();
   alert("Login successful!");
-  window.location.href = "home.html";
+  window.location.href = "Homepage.html";
 });
