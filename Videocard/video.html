@@ -69,15 +69,16 @@
         <ul class="flex flex-col gap-4 px-5 py-4" id="menuItems">
             <li><a href="../index.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
                         class="fa-solid fa-house"></i> Home</a></li>
-            <li><a href="../explore.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
-                        class="fa-solid fa-compass"></i> Explore</a></li>
+            <li><a href="../uploadVideo.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
+                        class="fa-solid fa-compass"></i>Upload videos</a></li>
             <li><a href="../videocard/video.html"
                     class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
                         class="fa-solid fa-video"></i> Videos</a></li>
             <li><a href="../profile.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
                         class="fa-solid fa-user"></i> Profile</a></li>
             <li><a href="../settings.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
-                        class="fa-solid fa-cog"></i> Settings</a></li>
+                        class="fa-solid fa-cog"></i> Settings</a>
+                </li>
         </ul>
     </aside>
 
@@ -119,8 +120,8 @@
                         class="flex px-3 py-2 font-bold border-2 border-gray-500 items-center rounded-2xl comments"><i
                             class="fa-regular fa-comment px-2"></i>45</label>
 
-                    <button class="flex size-12 justify-center font-bold border-2 border-gray-500 items-center rounded-2xl"><i
-                            class="fa-regular fa-bookmark"></i></button>
+                    <button class="flex justify-center px-3 py-2 font-bold border-2 border-gray-500 items-center rounded-2xl"><i
+                            class="fa-regular fa-bookmark px-2"></i></button>
 
                     <button class="flex px-3 py-2 font-bold border-2 border-gray-500 items-center rounded-2xl"><i
                             class="fa-solid fa-share-nodes px-2"></i>...</button>
@@ -154,7 +155,7 @@
                     <div id="authorsDetails" class="cursor-pointer">
                         <h2 class="font-bold py-3">About this video</h2>
                         <h3 id="uploadDate" class="pb-3">Updated <span class="uploadDate">5 days ago</span></h3>
-                        <button class="font-bold">More from <span class="authorsName">Musa Ibrahim...</span></button>
+                        <button class="text-[10px]">More from <span class="authorsName">Musa Ibrahim...</span></button>
                     </div>
 
                     <div id="moreDescription" class="hidden">
@@ -166,6 +167,7 @@
                             <button id="downloadVideo" type="button">Download for Offline Viewing</button>
                         </div>
                     </div>
+                    <button class="items-flex-start py-2 hidden text-[10px]" id="showless">showless</button>
 
                 </div>
 

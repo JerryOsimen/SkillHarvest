@@ -13,8 +13,14 @@ const mainVideoSrc = document.getElementById('main-screen-src');
 const videoList = document.getElementById("videoList"); 
 
 authorsDetails.addEventListener("click", ()=>{ 
-    document.getElementById('moreDescription').classList.toggle("hidden") 
+    document.getElementById('moreDescription').classList.remove("hidden") 
+    document.getElementById('showless').classList.remove("hidden")
 }) 
+
+document.getElementById('showless').addEventListener("click",()=>{
+    document.getElementById('moreDescription').classList.add("hidden")
+    document.getElementById('showless').classList.add("hidden")
+})
 
 playBtn.addEventListener('click', () => { 
 
@@ -36,14 +42,17 @@ menuBtn.addEventListener('click', () => {
     mainVideo.controls = !mainVideo.controls; 
         }); 
 
-const updatecommentField = () => { 
-    const commentValue = commentInput.value; 
+const updatecommentField = (commentfield) => { 
     const usersImg = document.createElement('img'); 
-    usersImg.src = "./assets/ooui_user-avatar-outline.png"; 
-    usersImg.alt = "User Icon"; 
+    usersImg.src = "./assets/ooui_user-avatar-outline.png";
+    usersImg.alt = "User Icon";
+    commentfield.comments.push({
+        comment:commentInput.value,
+        commentorsImg:usersImg.src
+    })
     usersImg.classList.add("size-8", "rounded-full", "mr-2", "bg-green-900"); 
     const newComment = document.createElement('li');
-    newComment.innerText = commentValue; 
+    newComment.innerText = commentInput.value; 
     newComment.classList.add( 
         "py-2", "px-4", "gap-2", "w-full", 
         "max-w-full", "break-words", "whitespace-normal",
@@ -53,13 +62,39 @@ const updatecommentField = () => {
     
     if(newComment.innerText.length > 0 && newComment.innerText.length <= 50){ 
         commentBox.appendChild(newComment); 
-    } commentInput.value = ""; }
+    } 
+    commentInput.value = ""; 
+}
     
-    commentInput.addEventListener('keydown', (event) => { 
-        if (event.key === 'Enter'&& commentInput.value.trim() !== '') {
-             updatecommentField(); } });
-    commentBtn.addEventListener('click',()=>{ if (commentInput.value.trim() !== '') {
-         updatecommentField(); } 
+
+commentInput.addEventListener('keydown', (event) => { 
+        if (event.key === 'Enter'&& commentInput.value.trim() !== '') {   
+            videoData.forEach((video)=>{
+                if(video.isPlaying){
+                    updatecommentField(video); 
+                    document.querySelector(".comments").innerHTML = `
+                     <i class="fa-regular fa-comment px-2"></i>
+                     ${video.comments.length}
+                    `
+                    console.log(video)
+                }    
+            })
+            
+            } });
+
+commentBtn.addEventListener('click',()=>{ if (commentInput.value.trim() !== '') {
+         videoData.forEach((video)=>{
+                if(video.isPlaying){
+                    updatecommentField(video);
+                     document.querySelector(".comments").innerHTML = `
+                     <i class="fa-regular fa-comment px-2"></i>
+                     ${video.comments.length}
+                    `
+                    console.log(video) 
+                }    
+            })
+            
+        } 
     } ); 
 
 
@@ -70,10 +105,6 @@ const videoData = [
      title: "How to Fix Prisma Error",
      author: "Dev Musa",
      comments:[
-        {
-            commentorsImg:'',
-            comment:'',
-        }
      ],
      likes:10,
      location:"Enugu",
@@ -86,10 +117,6 @@ const videoData = [
       title: "Figma Tutorial", 
       author:"UI John",
       comments:[
-        {
-            ommentorsImg:'',
-            comment:'',
-        }
      ],
       likes:20,
       location:"Osun", 
@@ -103,10 +130,7 @@ const videoData = [
         location:"Oyo",
         author: "UI John",
         comments:[
-        {
-            ommentorsImg:'',
-            comment:'',
-        }
+    
      ], 
         likes:900,
         views: "900", 
@@ -120,10 +144,7 @@ const videoData = [
         location:"Oyo",
         author: "UI John",
         comments:[
-        {
-            ommentorsImg:'',
-            comment:'',
-        }
+
      ], 
         likes:900,
         views: "900", 
@@ -136,6 +157,10 @@ const videoData = [
 
 const mainScreenUpdate = (video)=>{
         // Reset all isPlaying flags
+        video.comments.forEach((value)=>{
+
+            commentBox.innerHTML
+        })
          videoData.forEach(v => v.isPlaying = false);
          video.isPlaying = true;
          mainVideoSrc.src = video.src;
