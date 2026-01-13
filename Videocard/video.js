@@ -112,7 +112,26 @@ const videoData = [
         views: "900", 
         date: "1 day ago" ,
         isPlaying:false, 
-        } ]; 
+        },
+        , 
+      { 
+        src: "./assets/Figmatutorial.mp4", 
+        title: "Figma Tutorial", 
+        location:"Oyo",
+        author: "UI John",
+        comments:[
+        {
+            ommentorsImg:'',
+            comment:'',
+        }
+     ], 
+        likes:900,
+        views: "900", 
+        date: "1 day ago" ,
+        isPlaying:false, 
+        }
+    
+   ]; 
         
 
 const mainScreenUpdate = (video)=>{
@@ -170,7 +189,7 @@ videoData.forEach(video => {
      `<video muted class="object-cover h-full rounded-xl max-lg:rounded-t-xl"> 
      <source src="${video.src}"> 
      </video> 
-     <div class="flex-col justify-center max-lg:items-center max-lg:text-center"> 
+     <div class="flex-col justify-center max-lg:items-center px-10  max-lg:px-2 max-lg:text-center"> 
      <h3 class="font-bold">${video.title}</h3> 
      <p class="text-sm">${video.author}</p> 
      <p class="text-sm">${video.views} views</p> 

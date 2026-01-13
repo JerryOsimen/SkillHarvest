@@ -13,7 +13,7 @@
     <title>Video Player</title>
 </head>
 
-<body class="min-w-fit bg-gray-100 font-[poppins]">
+<body class="min-w-fit bg-gray-100 max-md:text-[10px] font-[poppins]">
 
     <!-- NAV BAR -->
     <nav class="navbar w-full sticky top-0 flex justify-between items-center px-10 py-2 bg-[#2e7d32] text-white z-50">
@@ -39,7 +39,10 @@
         </div>
         <div class="nav-right flex items-center gap-4">
             <a href="../login.html"
-                class="nav-link text-[12px] rounded-3xl hover:bg-[#1b5e20] bg-[#1b5e20] px-4 py-2">
+                class="nav-link text-[12px] 
+                rounded-3xl hover:bg-[#1b5e20]
+                 bg-[#1b5e20] px-4 py-2
+                 ">
                 <i class="fa-solid fa-plus pr-2"></i>Create
             </a>
 
@@ -79,10 +82,10 @@
     </aside>
 
     <!-- MAIN LAYOUT -->
-    <div class="grid min-w-full grid-cols-[1fr_500px] max-lg:grid-cols-1 gap-10 px-10 py-5">
+    <div class="grid min-w-full grid-cols-[1fr_500px] max-lg:grid-cols-1 gap-2 px-10 py-5 ">
 
         <!-- MAIN VIDEO PANEL -->
-        <div class="rounded-3xl bg-white w-full mt-5">
+        <div class="rounded-3xl bg-white w-full h-fit mt-5">
 
             <!-- Video Screen -->
             <div class="flex justify-center items-center relative" id="Video-screen">
@@ -181,10 +184,10 @@
         </div>
 
         <!-- SIDE VIDEO LIST -->
-        <div class="grid grid-rows-[50px_300px] gap-2 rounded-2xl p-2">
+        <div class="grid grid-rows-[50px_auto] max-md:text-[12px] gap-2 rounded-2xl p-2">
 
             <!-- Filter Buttons -->
-            <div class="grid grid-cols-[120px_1fr_100px] h-12 rounded-3xl p-2 gap-2 text-white">
+            <div class="grid grid-cols-[120px_1fr_100px] max-md:grid-cols-[1fr_2fr_1fr]  h-12 rounded-3xl p-2 gap-2 text-white">
                 <div class="flex rounded-xl justify-center bg-[#2e7d32] hover:bg-[#1b5e20]"><button>All</button></div>
                 <div class="flex rounded-xl justify-center bg-[#2e7d32] hover:bg-[#1b5e20]"><button>Similar videos</button></div>
                 <div class="flex rounded-xl justify-center bg-[#2e7d32] hover:bg-[#1b5e20]"><button>Trending</button></div>
@@ -192,7 +195,9 @@
 
             <!-- Grid of Video Cards -->
             <div id="videoList"
-                class="grid gap-3 px-2 max-lg:grid-cols-3 max-md:grid-cols-2">
+                class="grid gap-3 px-2 max-lg:grid-cols-3 
+                h-fit
+                max-md:grid-cols-2">
             </div>
         </div>
     </div>
