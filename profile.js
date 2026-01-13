@@ -4,16 +4,23 @@ function displayVideos(key, containerId) {
 
   container.innerHTML = "";
 
-  videos.forEach((video) => {
-    const div = document.createElement("div");
-    div.className = "video-item";
+  if (videos.length === 0) {
+    container.innerHTML = "<p class='empty'>No videos yet</p>";
+    return;
+  }
 
-    div.innerHTML = `
-      <img src="${video.thumbnail}" style="width:100%">
-      <p>${video.title}</p>
+  videos.forEach(video => {
+    const card = document.createElement("div");
+    card.className = "video-card";
+
+    card.innerHTML = `
+      <img src="${video.thumbnail}" alt="${video.title}">
+      <div class="video-info">
+        <div class="video-title">${video.title}</div>
+      </div>
     `;
 
-    container.appendChild(div);
+    container.appendChild(card);
   });
 }
 

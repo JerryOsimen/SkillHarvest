@@ -1,152 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PROFILE PAGE</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-     <div class="app">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <h2>Menu</h2>
-      <div class="nav-item">Upload</div>
-      <a href="profile.html">Home</a>
-      
-    </aside>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile Page</title>
+  <link rel="stylesheet" href="profile-page.css" />
+</head>
+<body>
 
+<!-- Hamburger icon -->
+<div class="hamburger" id="hamburger">&#9776;</div>
 
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <h2>Menu</h2>
+  <a href="index.html">Home</a>
+  <a href="profile.html">Profile</a>
+  <a href="upload.html">Upload Video</a>
+</aside>
 
-<div class="profil-container">
-      <div class="profile-header">
-        
-        <h1>WELCOME</h1>
+<!-- Main content -->
+<div class="main-content">
 
-        <a href="profile-content.html">View Profile</a>
-         
-      </div>
+  <div class="profile-header">
+    <h1>WELCOME</h1>
+    <a href="profile-content.html" class="btn">View Profile</a>
+  </div>
 
-       <section>
-          <div class="section-header">
-            <h2>History</h2>
-            <a href="#">View all</a>
-          </div>
+  <!-- Watch History -->
+  <section class="history">
+    <div class="section-header">
+      <h2>History</h2>
+    </div>
+    <div class="video-grid" id="historyGrid"></div>
+  </section>
 
-          <div class="video-grid">
-            <div class="video-card">
-              <div class="thumbnail"></div>
-              <div class="video-info">
-                <div class="video-title">Farming Tips</div>
-                <div class="video-meta">Live · 649 watching</div>
-              </div>
-            </div>
+  <!-- Liked Videos -->
+  <section class="likes">
+    <div class="section-header">
+      <h2>Likes</h2>
+    </div>
+    <div class="video-grid" id="likesGrid"></div>
+  </section>
 
-             <div class="video-card">
-              <div class="thumbnail"></div>
-              <div class="video-info">
-                <div class="video-title">Consumers Principles</div>
-                <div class="video-meta">Live · 9 watching</div>
-              </div>
-            </div>
+</div>
 
-            <div class="video-card">
-              <div class="thumbnail"></div>
-              <div class="video-info">
-                <div class="video-title">Farming Mechanisation</div>
-                <div class="video-meta">Live · 286 watching</div>
-              </div>
-            </div>
-
-            <div class="video-card">
-              <div class="thumbnail"></div>
-              <div class="video-info">
-                <div class="video-title">Shorts Clip</div>
-                <div class="video-meta">14M views · 2 months ago</div>
-              </div>
-          
-            </div>
-          </div>
-        </section>
-
-
-        <section>
-          <div class="section-header">
-            <h2>Likes</h2>
-            <a href="#">View all</a>
-          </div>
-
-          <div class="video-grid">
-            <div class="video-card">
-              <div class="thumbnail"></div>
-              <div class="video-info">
-                <div class="video-title">Farming Tips</div>
-                <div class="video-meta">Live · 649 watching</div>
-              </div>
-            </div>
-
-             <div class="video-card">
-              <div class="thumbnail"></div>
-              <div class="video-info">
-                <div class="video-title">Consumers Principles</div>
-                <div class="video-meta">Live · 9 watching</div>
-              </div>
-            </div>
-
-            <div class="video-card">
-              <div class="thumbnail"></div>
-              <div class="video-info">
-                <div class="video-title">Farming Mechanisation</div>
-                <div class="video-meta">Live · 286 watching</div>
-              </div>
-            </div>
-
-            <div class="video-card">
-              <div class="thumbnail"></div>
-              <div class="video-info">
-                <div class="video-title">Shorts Clip</div>
-                <div class="video-meta">14M views · 2 months ago</div>
-              </div>
-          
-            </div>
-          </div>
-        </section>
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-  </body>
+<script src="profile.js"></script>
+<script src="hamburger.js"></script>
+</body>
 </html>
