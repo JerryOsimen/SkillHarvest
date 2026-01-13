@@ -165,7 +165,7 @@ document.getElementById('likes').addEventListener("click",()=>{
 videoData.forEach(video => { 
      
      const card = document.createElement("div");
-     card.className = "video-card text-white grid h-32 max-lg:h-full grid-cols-[1fr_2fr] max-lg:grid-cols-[1fr] bg-green-800 hover:bg-green-700 rounded-3xl gap-2 p-3"; 
+     card.className = "video-card text-white grid h-32 max-lg:h-full grid-cols-[1fr_2fr] max-lg:grid-cols-[1fr] bg-[#2e7d32] hover:bg-[#1b5e20] rounded-3xl gap-2 p-3"; 
      card.innerHTML = 
      `<video muted class="object-cover h-full rounded-xl max-lg:rounded-t-xl"> 
      <source src="${video.src}"> 
