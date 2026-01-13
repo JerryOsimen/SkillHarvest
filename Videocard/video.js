@@ -1,142 +1,223 @@
-const mainVideo = document.getElementById('play-screen');
-const menuBtn = document.getElementById('menuBtn');
-const sideMenu = document.getElementById('sidebar');
+const mainVideo = document.getElementById('play-screen'); 
+const menuBtn = document.getElementById('menuBtn'); 
+const sideMenu = document.getElementById('sidebar'); 
 const closeSidebar = document.getElementById('closeBtn');
-const menuItems = document.getElementById('menuItems');
-const playBtn = document.getElementById('playBtn');
-const playOverlay = document.getElementById('playOverlay');
-const authorsDetails = document.getElementById('authorsDetails')
-const commentInput = document.getElementById('comment-input');
-const commentBox = document.getElementById('commentBox');
-const commentBtn = document.getElementById('submit-comment');
+ const menuItems = document.getElementById('menuItems'); 
+ const playBtn = document.getElementById('playBtn'); 
+ const playOverlay = document.getElementById('playOverlay');
+const authorsDetails = document.getElementById('authorsDetails'); 
+const commentInput = document.getElementById('comment-input'); 
+const commentBox = document.getElementById('commentBox'); 
+const commentBtn = document.getElementById('submit-comment'); 
 const mainVideoSrc = document.getElementById('main-screen-src'); 
-const videoList = document.getElementById("videoList");
+const videoList = document.getElementById("videoList"); 
+
+authorsDetails.addEventListener("click", ()=>{ 
+    document.getElementById('moreDescription').classList.toggle("hidden") 
+}) 
+
+playBtn.addEventListener('click', () => { 
+
+    if (mainVideo.paused) { 
+        mainVideo.play(); 
+        playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>'
+        ; } else { 
+            mainVideo.pause(); 
+            playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+         } });
+         
+closeSidebar.addEventListener('click', () => { 
+    sideMenu.classList.add('hidden'); 
+    menuItems.classList.add("max-md:items-center"); 
+    mainVideo.controls = true; });
+    
+menuBtn.addEventListener('click', () => { 
+    sideMenu.classList.toggle('hidden'); 
+    mainVideo.controls = !mainVideo.controls; 
+        }); 
+
+const updatecommentField = () => { 
+    const commentValue = commentInput.value; 
+    const usersImg = document.createElement('img'); 
+    usersImg.src = "./assets/ooui_user-avatar-outline.png"; 
+    usersImg.alt = "User Icon"; 
+    usersImg.classList.add("size-8", "rounded-full", "mr-2", "bg-green-900"); 
+    const newComment = document.createElement('li');
+    newComment.innerText = commentValue; 
+    newComment.classList.add( 
+        "py-2", "px-4", "gap-2", "w-full", 
+        "max-w-full", "break-words", "whitespace-normal",
+         "flex", "flex-wrap", "overflow-hidden", "bg-green-900", 
+         "rounded-lg", "mb-2", "text-white");
+    newComment.prepend(usersImg); 
+    
+    if(newComment.innerText.length > 0 && newComment.innerText.length <= 50){ 
+        commentBox.appendChild(newComment); 
+    } commentInput.value = ""; }
+    
+    commentInput.addEventListener('keydown', (event) => { 
+        if (event.key === 'Enter'&& commentInput.value.trim() !== '') {
+             updatecommentField(); } });
+    commentBtn.addEventListener('click',()=>{ if (commentInput.value.trim() !== '') {
+         updatecommentField(); } 
+    } ); 
 
 
 
-authorsDetails.addEventListener("click", ()=>{
-    document.getElementById('moreDescription').classList.toggle("hidden")  
-})
-
-
-
-
-playBtn.addEventListener('click', () => {
-    if (mainVideo.paused) {
-       mainVideo.play();
-        playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
-    } else {
-       mainVideo.pause();
-        playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
-    } 
+const videoData = [ 
+    { 
+     src: "./assets/Prisma.error.mp4", 
+     title: "How to Fix Prisma Error",
+     author: "Dev Musa",
+     comments:[
+        {
+            commentorsImg:'',
+            comment:'',
+        }
+     ],
+     likes:10,
+     location:"Enugu",
+     views: "1.2k",
+     date: "2 days ago",
+     isPlaying:false, 
+    }, 
+     { 
+      src: "./assets/Figmatutorial.mp4", 
+      title: "Figma Tutorial", 
+      author:"UI John",
+      comments:[
+        {
+            ommentorsImg:'',
+            comment:'',
+        }
+     ],
+      likes:20,
+      location:"Osun", 
+      views: "900", 
+      date: "1 day ago",
+      isPlaying:false, 
+      }, 
+      { 
+        src: "./assets/Figmatutorial.mp4", 
+        title: "Figma Tutorial", 
+        location:"Oyo",
+        author: "UI John",
+        comments:[
+        {
+            ommentorsImg:'',
+            comment:'',
+        }
+     ], 
+        likes:900,
+        views: "900", 
+        date: "1 day ago" ,
+        isPlaying:false, 
+        } ]; 
         
-});
 
-closeSidebar.addEventListener('click', () => {
-    sideMenu.classList.add('hidden');
-    menuItems.classList.add("max-md:items-center");
-   mainVideo.controls = true;
-});
+const mainScreenUpdate = (video)=>{
+        // Reset all isPlaying flags
+         videoData.forEach(v => v.isPlaying = false);
+         video.isPlaying = true;
+         mainVideoSrc.src = video.src;
+         mainVideo.load(); 
+         mainVideo.play(); 
+         mainVideo.title = video.title 
+         document.getElementById("location").innerText = video.location;
+         document.querySelectorAll(".authorsName").forEach(authorName=>{
+            authorName.innerText = video.author;
+         })
+         document.querySelector(".comments").innerHTML = `
+         <i class="fa-regular fa-comment px-2"></i>
+         ${video.comments.length}
+         `
+         document.querySelectorAll(".uploadDate").forEach(uploadDate => {
+            uploadDate.innerText = video.date
+         });
+         document.getElementById('views').innerHTML = `<i class="fa-regular fa-eye  px-2"></i> ${video.views}`
+         document.getElementById('video-title').innerText = video.title; 
+         document.getElementById('likes').innerHTML = `
+          <i class="fa-regular fa-thumbs-up px-2"></i>
+          ${String(video.likes)}
+          `
+} 
 
 
-
-menuBtn.addEventListener('click', () => {
-    sideMenu.classList.toggle('hidden');
-   mainVideo.controls = !mainVideo.controls;
-});
-
-const updatecommentField = () => {
-    const commentValue = commentInput.value;
-    const usersImg = document.createElement('img');
-    usersImg.src = "./assets/ooui_user-avatar-outline.png";
-    usersImg.alt = "User Icon";
-    usersImg.classList.add("size-8", "rounded-full", "mr-2", "bg-green-900");
-    const newComment = document.createElement('li')
-    newComment.innerText = commentValue;
-    newComment.classList.add(
-    "py-2", "px-4", "gap-2", 
-    "w-full", 
-    "max-w-full",
-    "break-words",
-    "whitespace-normal", "flex", 
-    "flex-wrap", "overflow-hidden", 
-    "bg-green-900", "rounded-lg", "mb-2", 
-    "text-white");   
-    newComment.prepend(usersImg);
-    commentBox.appendChild(newComment);   
-    console.log(newComment,usersImg)  ;
-    // commentBox.appendChild(newCommet);
-    commentInput.value = "";
+const addToLikes = (video)=>{
+        video.likes++
+        document.getElementById('likes').innerHTML = `
+          <i class="fa-regular fa-thumbs-up px-2"></i>
+          ${String(video.likes)}
+          `
 }
 
-commentInput.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter'&& commentInput.value.trim() !== '') {
-        updatecommentField();
-    } 
-});
-
-commentBtn.addEventListener('click',()=>{
-    if (commentInput.value.trim() !== '')   {
-        updatecommentField();
-    }
-} );   
-
-
-const videoData = [
-    {
-        src: "./assets/Prisma.error.mp4",
-        title: "How to Fix Prisma Error",
-        author: "Dev Musa",
-        views: "1.2k",
-        date: "2 days ago"
-    },
-    {
-        src: "./assets/Figmatutorial.mp4",
-        title: "Figma Tutorial",
-        author: "UI John",
-        views: "900",
-        date: "1 day ago"
-    },
-     {
-        src: "./assets/Figmatutorial.mp4",
-        title: "Figma Tutorial",
-        author: "UI John",
-        views: "900",
-        date: "1 day ago"
-    }
-];
-
-
-
-videoData.forEach(video => {
-    const card = document.createElement("div");
-    card.className = "video-card text-white grid h-32 max-lg:h-full grid-cols-[1fr_2fr] max-lg:grid-cols-[1fr] bg-green-800 hover:bg-green-700 rounded-3xl gap-2 p-3";
-
-    card.innerHTML = `
-        <video muted class="object-cover h-full rounded-xl max-lg:rounded-t-xl">
-            <source src="${video.src}">
-        </video>
-
-        <div class="flex-col justify-center max-lg:items-center max-lg:text-center">
-            <h3 class="font-bold">${video.title}</h3>
-            <p class="text-sm">${video.author}</p>
-            <p class="text-sm">${video.views} views</p>
-            <p class="text-sm">${video.date}</p>
-        </div>
-    `;
-
-    // Clicking card loads main video
-    card.onclick = () => {
+document.getElementById('likes').addEventListener("click",()=>{
+        videoData.forEach(video=>{
+            if(video.isPlaying){
+            addToLikes(video)
+            }
+        })
         
-        console.log(mainVideoSrc.src)
-        mainVideoSrc.src = video.src;
-        console.log(mainVideoSrc.src)
-        mainVideo.load();
-        mainVideo.play();
-    };
+}
+)
 
-    videoList.appendChild(card);
-});
+        
+videoData.forEach(video => { 
+     
+     const card = document.createElement("div");
+     card.className = "video-card text-white grid h-32 max-lg:h-full grid-cols-[1fr_2fr] max-lg:grid-cols-[1fr] bg-green-800 hover:bg-green-700 rounded-3xl gap-2 p-3"; 
+     card.innerHTML = 
+     `<video muted class="object-cover h-full rounded-xl max-lg:rounded-t-xl"> 
+     <source src="${video.src}"> 
+     </video> 
+     <div class="flex-col justify-center max-lg:items-center max-lg:text-center"> 
+     <h3 class="font-bold">${video.title}</h3> 
+     <p class="text-sm">${video.author}</p> 
+     <p class="text-sm">${video.views} views</p> 
+     <p class="text-sm">${video.date}</p> 
+     </div>` ; 
+     
+     // Clicking card loads main video 
+     card.onclick = () => {
+
+        mainScreenUpdate(video)
+        }; videoList.appendChild(card); 
+    }); 
+
+// Download video functionality 
+document.getElementById('downloadVideo').addEventListener('click', () => { 
+        const videoSrc = mainVideoSrc.src; 
+        const link = document.createElement('a'); 
+        link.href = videoSrc; 
+        link.download = 'video.mp4';
+        document.body.appendChild(link); 
+         link.click(); 
+        document.body.removeChild(link); 
+        }); 
+        
 
 
-console.log(videoList, videoData);
+const videoContainer = document.getElementById("Video-screen"); 
+        
+videoContainer.addEventListener("mousemove", () => { 
+            playBtn.classList.remove("hidden"); 
+            const timer = setTimeout(() => { 
+                playBtn.classList.add("hidden"); }, 2000);
+            clearTimeout(timer); 
+            });
+      
+mainVideo.addEventListener('mouseleave', ()=>{
+     playBtn.classList.add('hidden'); 
+    });
+
+( 
+ ()=>{
+    const updatemain = [videoData[0]]
+    videoData[0].isPlaying = true;
+    updatemain.forEach(value=>{
+        mainScreenUpdate(value)
+    })
+ }
+)()
+
+    
