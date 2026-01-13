@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
+    <script src="https://kit.fontawesome.com/79e3c5887d.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="video.css">
+    <title>videocard</title>
+</head>
+
+<body class="min-w-fit bg-gray-100 font-[poppins]">
+    <!-- NAV BAR-->
+    <nav class="navbar w-full sticky top-0 flex justify-between z-50 items-center px-10 py-2 bg-green-800 text-white">
+        
+        <div class="nav-left flex items-center gap-2">
+            <button id="menuBtn" class="menu-btn size-8 bg-green-900 hover:bg-green-700 flex justify-center items-center ">
+                <i class="fa-solid text-[18px] fa-bars"></i>
+            </button>
+            <a href="../index.html" class="logo flex items-center "><img class="size-10" src="assets/logo.png" alt="logo">Skillharvest</a>
+        </div>
+        <div class="flex items-center justify-between h-8 bg-black text-sm 
+            rounded-2xl border-none overflow-hidden pl-3
+            w-full max-w-xs 
+            max-md:w-16
+            md:max-w-sm
+            lg:max-w-md 
+            xl:max-w-2xl">
+            <input type="text" class="search-bar text-white outline-none w-full mr-auto" placeholder="Search">
+            <button class="search-button text-white hover:bg-green-700 bg-green-900 w-12 h-8 flex items-center justify-center"><img class="size-5 filter invert brightness-0" src="./assets/mingcute_search-line.png" alt=""></button>
+        </div>
+        <div class="nav-right flex items-center gap-4">
+            <a href="../login.html" class="nav-link text-[12px] rounded-3xl hover:bg-green-700 bg-green-900 px-4 py-2"><i class="fa-solid fa-plus pr-2"></i>Create</a>
+            <a href="../signup.html" class="nav-link size-9 flex justify-center hover:bg-green-700 items-center bg-green-900 rounded-full"><img class="size-6" src="https://res.cloudinary.com/dbgowpxtw/image/upload/v1767883781/SkillHarvest/noto-v1_man-office-worker_wbwj0f.png" alt=""></a>
+        </div>
+    </nav>
+
+    <aside class="w-64  h-full
+        bg-green-800 
+        text-white 
+        hidden
+        fixed 
+        top-0 
+        left-0
+        z-2 
+        translate-x-0 
+        transition-transform 
+        duration-300 
+        ease-in-out
+        max-md:w-full
+        max-md:h-auto"
+         id="sidebar">
+        <div class="flex justify-between items-center pt-4 px-4 mt-10">
+            <h2 class="font-poppins text-white px-3">Menu</h2>
+            <button id="closeBtn" class="w-8 h-8 hover:bg-green-700" class="size-8 ">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <ul class="flex flex-col gap-4 px-5 py-2" id="menuItems">
+            <li><a href="../index.html" class="hover:bg-green-700 rounded-xl px-3 py-2 flex items-center gap-3"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="../explore.html" class="hover:bg-green-700 rounded-xl px-3 py-2 flex items-center gap-3"><i class="fa-solid fa-compass"></i> Explore</a></li>
+            <li><a href="../videocard/video.html" class="hover:bg-green-700 rounded-xl px-3 py-2 flex items-center gap-3"><i class="fa-solid fa-video"></i> Videos</a></li>
+            <li><a href="../profile.html" class="hover:bg-green-700 rounded-xl px-3 py-2 flex items-center gap-3"><i class="fa-solid fa-user"></i> Profile</a></li>
+            <li><a href="../settings.html" class="hover:bg-green-700 rounded-xl px-3 py-2 flex items-center gap-3"><i class="fa-solid fa-cog"></i> Settings</a></li>
+        </ul>
+
+
+    </aside>
+
+
+    <div class="grid min-w-full grid-cols-[1fr_500px] max-lg:grid-cols-[auto] 
+              items-center 
+               gap-10 px-10 py-5
+               " 
+             >
+        <!-- MAIN VIDEO SCREEN-->
+        <div class="rounded-3xl items-center bg-white px- w-full">
+        
+        <div class="flex justify-center relative z-0  items-center">
+            <video autoplay muted controls class="w-full object-cover rounded-3xl h-[450px]" id="play-screen">
+                 <source id="main-screen-src" src="./assets/Figmatutorial.mp4" type="video/mp4"> 
+            </video>
+            <div class="flex justify-center absolute z-0 items-center" id="playOverlay">
+            <button class="bg-white rounded-full z-1 size-12" id="playBtn"><i class="fa-solid fa-pause"></i></button>
+            </div>
+        </div>
+        
+            
+           
+        <!-- VIDEO INFO-->
+        <div class="video-info w-full bg-white flex flex-col px-6 py-5">
+            <h2 class="h2 text-gray-900 bold font-bold py-5 w-full font-poppins tracking-wider" id="video title">Maize spacing techniques for maximum yield</h2>
+            <div class="flex w-full justify-between items-center pb-3">
+                <button class="flex px-3 py-2 font-bold border-2 border-gray-500 justify-between items-center rounded-2xl" href="http://"><i class="fa-regular fa-thumbs-up px-2"></i>189</button>
+                <label for="comment-input" class="flex px-3 py-2 font-bold border-2 border-gray-500 justify-between items-center rounded-2xl"><i class="fa-regular fa-comment px-2 "></i>45 </label>
+                <button class="flex size-12 px-3 py-2 justify-center font-bold border-2 border-gray-500 items-center rounded-2xl" href="http://"><i class="fa-regular fa-bookmark px-2"></i></button>
+                <button class="flex px-3 py-2 font-bold border-2 border-gray-500 items-center rounded-2xl" href="http://"><i class="fa-solid fa-share-nodes px-2"></i>...</button>
+            </div>
+            <div class="flex w-full rounded-2xl p-3 justify-between  items-center bg-[#eab76a2f] pb-3">
+                <a href="../profile" class="size-9  flex justify-center items-center bg-green-800 rounded-full mr-4"><img class="size-6" src="https://res.cloudinary.com/dbgowpxtw/image/upload/v1767883781/SkillHarvest/noto-v1_man-office-worker_wbwj0f.png" alt=""></a>
+                <div class="flex flex-col w-64 mr-auto">
+                    <h2 class="h2">John Adeola </h2>
+                    <div class="flex w-full justify-between w-[150px] text-sm text-gray-800 ">
+                        <span class="items-center"><i class="fa-regular fa-comment pr-2 "></i>Ogun</span><span class="px-3  items-center" id="views"><i class="fa-regular fa-comment px-2 "></i> views</span>
+                    </div>   
+                </div>
+                <a class="flex px-3 bg-green-800 py-2  items-center rounded-2xl text-white" href="http://"><button class="">Follow</button></a>
+            </div>
+
+            <!--About this video-->
+
+            <div class="flex flex-col  py-2 px-4 my-4 rounded-xl bg-[#eab76a2f]">
+                <div class="more" id="authorsDetails">
+                <h2 class="h2 bold py-3">About this video</h2>
+                <h3 class="h2 pb-3" id="uploadDate">Updated <span class="upload date">5</span> days ago</h3>
+                <button class="font-bold">More from musa Ibrahim ...</button> 
+                </div>
+                <div class="div hidden" id="moreDescription"> 
+                <p class="text-gray-800 text-5 pb-5 py-2" id="video-description">
+                    Learn effective maize spacing techniques to maximize your crop yield. This video covers optimal row spacing, 
+                    plant density, and planting methods to ensure healthy growth and high productivity. 
+                    Whether you're a small-scale farmer or a large agricultural producer, these tips 
+                    will help you achieve better results in your maize cultivation.
+                </p>
+                <div class="download-btn bg-white font-bold flex my-2 justify-center w-full px-3 py-3 rounded-xl">
+                    <button class="font-poppins" type="button">Download for Offline Viewing</button>
+                </div>
+                </div>
+            </div>
+
+            <!-- COMMENTS SECTION-->
+            <div id="comment" class="w-full bg-green-800 flex justify-between flex-col rounded-xl py-4 px-4 comment-section">
+                <ul class="comments w-full" id="commentBox">
+                </ul>
+                <div class=" flex w-full input-field bg-white rounded-xl py-2 px-2">
+                     <input type="text" class="flex h-full outline-none w-full comments-input" id="comment-input" name="" placeholder="comment"><button class="text-green-700" id="submit-comment"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </div>
+
+        </div>
+        </div>
+
+
+        <!-- All VIDEOS GRIDS-->
+        <div class="grid grid-rows-[50px_300px] 
+            gap-2 
+            max-lg:w-full
+            max-w-full 
+            rounded-2xl 
+            p-2
+            h-full
+            max-lg:grid-rows-[50px_auto]">
+            <div class="grid text-white grid-cols-[120px_minmax(100px,_1fr)_100px] 
+                h-12 rounded-3xl p-2 gap-2">
+                <div class="flex rounded-xl hover:bg-green-700 justify-center bg-green-800"><button>All</button></div>
+                <div class="flex rounded-xl hover:bg-green-700 justify-center bg-green-800"><button>Similar videos</button></div>
+                <div class="flex rounded-xl hover:bg-green-700 justify-center bg-green-800"><button>Trending</button></div>
+            </div>
+            <div class="grid 
+                h-full 
+                max-lg:grid-cols-[auto_auto_auto] 
+                max-md:grid-cols-2 
+                gap-3 px-2" id="videoList">
+            </div>
+        </div>
+
+    </div>
+     <script src="video.js"></script>
+</body>
+</html>
