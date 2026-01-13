@@ -22,6 +22,7 @@ document.getElementById('showless').addEventListener("click",()=>{
     document.getElementById('showless').classList.add("hidden")
 })
 
+
 playBtn.addEventListener('click', () => { 
 
     if (mainVideo.paused) { 
@@ -32,17 +33,20 @@ playBtn.addEventListener('click', () => {
             playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
          } });
          
-closeSidebar.addEventListener('click', () => { 
+    closeSidebar.addEventListener('click', () => { 
     sideMenu.classList.add('hidden'); 
     menuItems.classList.add("max-md:items-center"); 
     mainVideo.controls = true; });
     
-menuBtn.addEventListener('click', () => { 
+   menuBtn.addEventListener('click', () => { 
     sideMenu.classList.toggle('hidden'); 
     mainVideo.controls = !mainVideo.controls; 
         }); 
 
+
+
 const updatecommentField = (commentfield) => { 
+
     const usersImg = document.createElement('img'); 
     usersImg.src = "./assets/ooui_user-avatar-outline.png";
     usersImg.alt = "User Icon";
@@ -50,14 +54,16 @@ const updatecommentField = (commentfield) => {
         comment:commentInput.value,
         commentorsImg:usersImg.src
     })
+
     usersImg.classList.add("size-8", "rounded-full", "mr-2", "bg-green-900"); 
     const newComment = document.createElement('li');
     newComment.innerText = commentInput.value; 
     newComment.classList.add( 
         "py-2", "px-4", "gap-2", "w-full", 
         "max-w-full", "break-words", "whitespace-normal",
-         "flex", "flex-wrap", "overflow-hidden", "bg-green-900", 
-         "rounded-lg", "mb-2", "text-white");
+        "flex", "flex-wrap", "overflow-hidden", "bg-green-900", 
+        "rounded-lg", "mb-2", "text-white"
+    );
     newComment.prepend(usersImg); 
     
     if(newComment.innerText.length > 0 && newComment.innerText.length <= 50){ 
@@ -156,17 +162,38 @@ const videoData = [
         
 
 const mainScreenUpdate = (video)=>{
-        // Reset all isPlaying flags
-        video.comments.forEach((value)=>{
 
-            commentBox.innerHTML
+        
+        video.comments.forEach((value)=>{
+            
+            // Reset commentBox
+            
+            const existingComment = document.createElement('li')
+            existingComment.classList.add( 
+                "py-2", "px-4", "gap-2", "w-full", 
+                "max-w-full", "break-words", "whitespace-normal",
+                "flex", "flex-wrap", "overflow-hidden", "bg-green-900", 
+                "rounded-lg", "mb-2", "text-white"
+            ); 
+
+            const imgNew = document.createElement("img")
+            imgNew.classList.add("size-8", "rounded-full", "mr-2", "bg-green-900"); 
+            imgNew.src = value.commentorsImg
+            imgNew.alt = "User Icon"
+            existingComment.innerText = value.comment
+            existingComment.prepend(imgNew) 
+            commentBox.appendChild(existingComment)
         })
+
+        // Reset all isPlaying flags
+
          videoData.forEach(v => v.isPlaying = false);
          video.isPlaying = true;
          mainVideoSrc.src = video.src;
          mainVideo.load(); 
          mainVideo.play(); 
          mainVideo.title = video.title 
+
          document.getElementById("location").innerText = video.location;
          document.querySelectorAll(".authorsName").forEach(authorName=>{
             authorName.innerText = video.author;
@@ -223,7 +250,7 @@ videoData.forEach(video => {
      
      // Clicking card loads main video 
      card.onclick = () => {
-
+        commentBox.innerHTML = ""
         mainScreenUpdate(video)
         }; videoList.appendChild(card); 
     }); 
