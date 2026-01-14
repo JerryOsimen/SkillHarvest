@@ -301,20 +301,20 @@ mainVideo.addEventListener('mouseleave', ()=>{
 
 
 
-const useApi = async()=>{
+// const useApi = async()=>{
 
-    try{
-        const response = await fetch ("https://skillharvest-backend.onrender.com/API/videos/upload")
-        const data = await response.json()
+//     try{
+//         const response = await fetch ("https://skillharvest-backend.onrender.com/API/videos/upload")
+//         const data = await response.json()
 
-        console.log(data)
-    }catch{
-        // console.error();    
-    }
+//         console.log(data)
+//     }catch{
+//         console.error();    
+//     }
 
-}
+// }
 
-useApi()
+// useApi()
 
 
 ( 
