@@ -57,7 +57,7 @@ menuBtn.addEventListener('click', () => {
 const updatecommentField = (commentfield) => { 
 
     const usersImg = document.createElement('img'); 
-    usersImg.src = "./assets/ooui_user-avatar-outline.png";
+    usersImg.src = "./Videocard/assets/ooui_user-avatar-outline.png";
     usersImg.alt = "User Icon";
     commentfield.comments.push({
         comment:commentInput.value,
@@ -121,7 +121,7 @@ commentBtn.addEventListener('click',()=>{ if (commentInput.value.trim() !== '') 
 
 const videoData = [ 
     { 
-     src: "./assets/Prisma.error.mp4", 
+     src: "./Videocard/assets/Prisma.error.mp4", 
      title: "How to Fix Prisma Error",
      author: "Dev Musa",
      comments:[
@@ -133,7 +133,7 @@ const videoData = [
      isPlaying:false, 
     }, 
      { 
-      src: "./assets/Figmatutorial.mp4", 
+      src: "./Videocard/assets/Figmatutorial.mp4", 
       title: "Figma Tutorial", 
       author:"UI John",
       comments:[
@@ -145,7 +145,7 @@ const videoData = [
       isPlaying:false, 
       }, 
       { 
-        src: "./assets/Figmatutorial.mp4", 
+        src: "./Videocard/assets/Figmatutorial.mp4", 
         title: "Figma Tutorial", 
         location:"Oyo",
         author: "UI John",
@@ -159,7 +159,7 @@ const videoData = [
         },
         , 
       { 
-        src: "./assets/Figmatutorial.mp4", 
+        src: "./Videocard/assets/Figmatutorial.mp4", 
         title: "Figma Tutorial", 
         location:"Oyo",
         author: "UI John",
@@ -299,6 +299,22 @@ mainVideo.addEventListener('mouseleave', ()=>{
      playBtn.classList.add('hidden'); 
     });
 
+
+
+const useApi = async()=>{
+
+    try{
+        const response = await fetch ("https://skillharvest-backend.onrender.com/API/videos/upload")
+        const data = await response.json()
+
+        console.log(data)
+    }catch{
+        // console.error();    
+    }
+
+}
+
+useApi()
 
 
 ( 
