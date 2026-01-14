@@ -1,3 +1,24 @@
+
+/* LOAD SELECTED VIDEO FROM HOME PAGE*/
+const params = new URLSearchParams(window.location.search);
+const videoIndex = params.get("id");
+
+const videos = JSON.parse(localStorage.getItem("videos")) || [];
+
+if (videoIndex !== null && videos[videoIndex]) {
+  const selectedVideo = videos[videoIndex];
+
+  const videoPlayer = document.getElementById("play-screen");
+  const videoSource = document.getElementById("main-screen-src");
+
+  videoSource.src = selectedVideo.videoURL;
+  document.getElementById("video-title").textContent = selectedVideo.title;
+  document.getElementById("video-description").textContent =
+    selectedVideo.description || "";
+
+  videoPlayer.load();
+}
+
 const mainVideo = document.getElementById('play-screen'); 
 const menuBtn = document.getElementById('menuBtn'); 
 const sideMenu = document.getElementById('sidebar'); 
