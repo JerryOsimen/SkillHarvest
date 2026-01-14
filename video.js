@@ -33,9 +33,25 @@ const commentBtn = document.getElementById('submit-comment');
 const mainVideoSrc = document.getElementById('main-screen-src'); 
 const videoList = document.getElementById("videoList"); 
 
+
+
+
+
+
+
+
+
+
 authorsDetails.addEventListener("click", ()=>{ 
-    document.getElementById('moreDescription').classList.toggle("hidden") 
+    document.getElementById('moreDescription').classList.remove("hidden") 
+    document.getElementById('showless').classList.remove("hidden")
 }) 
+
+document.getElementById('showless').addEventListener("click",()=>{
+    document.getElementById('moreDescription').classList.add("hidden")
+    document.getElementById('showless').classList.add("hidden")
+})
+
 
 playBtn.addEventListener('click', () => { 
 
@@ -57,44 +73,79 @@ menuBtn.addEventListener('click', () => {
     mainVideo.controls = !mainVideo.controls; 
         }); 
 
-const updatecommentField = () => { 
-    const commentValue = commentInput.value; 
+
+
+const updatecommentField = (commentfield) => { 
+
     const usersImg = document.createElement('img'); 
-    usersImg.src = "./assets/ooui_user-avatar-outline.png"; 
-    usersImg.alt = "User Icon"; 
+    usersImg.src = "./Videocard/assets/ooui_user-avatar-outline.png";
+    usersImg.alt = "User Icon";
+    commentfield.comments.push({
+        comment:commentInput.value,
+        commentorsImg:usersImg.src
+    })
+
     usersImg.classList.add("size-8", "rounded-full", "mr-2", "bg-green-900"); 
     const newComment = document.createElement('li');
-    newComment.innerText = commentValue; 
+    newComment.innerText = commentInput.value; 
     newComment.classList.add( 
-        "py-2", "px-4", "gap-2", "w-full", 
-        "max-w-full", "break-words", "whitespace-normal",
-         "flex", "flex-wrap", "overflow-hidden", "bg-green-900", 
-         "rounded-lg", "mb-2", "text-white");
+        "w-full",
+        "py-2", "px-4",
+        "max-w-full",
+        "break-words", "whitespace-normal",
+        "overflow-hidden",
+        "bg-green-800",
+        "rounded-lg", "mb-2", "text-white"
+    );
     newComment.prepend(usersImg); 
     
-    if(newComment.innerText.length > 0 && newComment.innerText.length <= 50){ 
+    if(newComment.innerText.length > 0 && newComment.innerText.length <= 200){ 
         commentBox.appendChild(newComment); 
-    } commentInput.value = ""; }
+    } 
+    commentInput.value = ""; 
+}
     
-    commentInput.addEventListener('keydown', (event) => { 
-        if (event.key === 'Enter'&& commentInput.value.trim() !== '') {
-             updatecommentField(); } });
-    commentBtn.addEventListener('click',()=>{ if (commentInput.value.trim() !== '') {
-         updatecommentField(); } 
+
+commentInput.addEventListener('keydown', (event) => { 
+        if (event.key === 'Enter'&& commentInput.value.trim() !== '') {   
+            videoData.forEach((video)=>{
+                if(video.isPlaying){
+                    updatecommentField(video); 
+                    document.querySelector(".comments").innerHTML = `
+                     <i class="fa-regular fa-comment px-2"></i>
+                     ${video.comments.length}
+                    `
+                    console.log(video)
+                }    
+            })
+            
+            } });
+
+
+
+commentBtn.addEventListener('click',()=>{ if (commentInput.value.trim() !== '') {
+         videoData.forEach((video)=>{
+                if(video.isPlaying){
+                    updatecommentField(video);
+                     document.querySelector(".comments").innerHTML = `
+                     <i class="fa-regular fa-comment px-2"></i>
+                     ${video.comments.length}
+                    `
+                    console.log(video) 
+                }    
+            })
+            
+        } 
     } ); 
 
 
 
 const videoData = [ 
     { 
-     src: "./assets/Prisma.error.mp4", 
+     src: "./Videocard/assets/Prisma.error.mp4", 
      title: "How to Fix Prisma Error",
      author: "Dev Musa",
      comments:[
-        {
-            commentorsImg:'',
-            comment:'',
-        }
      ],
      likes:10,
      location:"Enugu",
@@ -103,14 +154,10 @@ const videoData = [
      isPlaying:false, 
     }, 
      { 
-      src: "./assets/Figmatutorial.mp4", 
+      src: "./Videocard/assets/Figmatutorial.mp4", 
       title: "Figma Tutorial", 
       author:"UI John",
       comments:[
-        {
-            ommentorsImg:'',
-            comment:'',
-        }
      ],
       likes:20,
       location:"Osun", 
@@ -119,15 +166,12 @@ const videoData = [
       isPlaying:false, 
       }, 
       { 
-        src: "./assets/Figmatutorial.mp4", 
+        src: "./Videocard/assets/Figmatutorial.mp4", 
         title: "Figma Tutorial", 
         location:"Oyo",
         author: "UI John",
         comments:[
-        {
-            ommentorsImg:'',
-            comment:'',
-        }
+    
      ], 
         likes:900,
         views: "900", 
@@ -136,15 +180,12 @@ const videoData = [
         },
         , 
       { 
-        src: "./assets/Figmatutorial.mp4", 
+        src: "./Videocard/assets/Figmatutorial.mp4", 
         title: "Figma Tutorial", 
         location:"Oyo",
         author: "UI John",
         comments:[
-        {
-            ommentorsImg:'',
-            comment:'',
-        }
+
      ], 
         likes:900,
         views: "900", 
@@ -156,13 +197,41 @@ const videoData = [
         
 
 const mainScreenUpdate = (video)=>{
+
+        
+        video.comments.forEach((value)=>{
+            
+            // Reset commentBox
+            
+            const existingComment = document.createElement('li')
+            existingComment.classList.add( 
+                "w-full",
+                "py-2", "px-4",
+                "max-w-full",
+                "break-words", "whitespace-normal",
+                "overflow-hidden",
+                "bg-green-800",
+                "rounded-lg", "mb-2", "text-white"
+            ); 
+
+            const imgNew = document.createElement("img")
+            imgNew.classList.add("size-8", "rounded-full", "mr-2", "bg-green-900"); 
+            imgNew.src = value.commentorsImg
+            imgNew.alt = "User Icon"
+            existingComment.innerText = value.comment
+            existingComment.prepend(imgNew) 
+            commentBox.appendChild(existingComment)
+        })
+
         // Reset all isPlaying flags
+
          videoData.forEach(v => v.isPlaying = false);
          video.isPlaying = true;
          mainVideoSrc.src = video.src;
          mainVideo.load(); 
          mainVideo.play(); 
          mainVideo.title = video.title 
+
          document.getElementById("location").innerText = video.location;
          document.querySelectorAll(".authorsName").forEach(authorName=>{
             authorName.innerText = video.author;
@@ -219,7 +288,7 @@ videoData.forEach(video => {
      
      // Clicking card loads main video 
      card.onclick = () => {
-
+        commentBox.innerHTML = ""
         mainScreenUpdate(video)
         }; videoList.appendChild(card); 
     }); 
@@ -238,6 +307,7 @@ document.getElementById('downloadVideo').addEventListener('click', () => {
 
 
 const videoContainer = document.getElementById("Video-screen"); 
+
         
 videoContainer.addEventListener("mousemove", () => { 
             playBtn.classList.remove("hidden"); 
@@ -250,6 +320,24 @@ mainVideo.addEventListener('mouseleave', ()=>{
      playBtn.classList.add('hidden'); 
     });
 
+
+
+const useApi = async()=>{
+
+    try{
+        const response = await fetch ("https://skillharvest-backend.onrender.com/API/videos/upload")
+        const data = await response.json()
+
+        console.log(data)
+    }catch{
+        // console.error();    
+    }
+
+}
+
+useApi()
+
+
 ( 
  ()=>{
     const updatemain = [videoData[0]]
@@ -259,5 +347,14 @@ mainVideo.addEventListener('mouseleave', ()=>{
     })
  }
 )()
+
+const searchBut = document.getElementById("searchBut")
+
+const searchForm = document.getElementById("searchForm")
+
+searchBut.addEventListener('click',(e)=>{
+    e.preventDefault();
+    console.log(e)
+})
 
     
