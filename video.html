@@ -13,7 +13,7 @@
     <title>Video Player</title>
 </head>
 
-<body class="min-w-fit bg-gray-100 max-md:text-[10px] font-[poppins]">
+<body class="min-w-full bg-gray-100 max-md:text-[10px] font-[poppins]">
 
     <!-- NAV BAR -->
     <nav class="navbar w-full sticky top-0 flex justify-between items-center px-10 py-2 bg-[#2e7d32] text-white z-50">
@@ -29,13 +29,18 @@
             </a>
         </div>
         <div class="flex items-center h-8 bg-black text-sm rounded-2xl pl-3 w-full max-w-xs max-sm:hidden max-md:w-32 md:max-w-sm lg:max-w-md xl:max-w-2xl">
-            <input type="text"
+            <form action="" method="post" id="searchForm" class="w-full flex">
+            <input 
+                id="search-bar"
+                type="text"
                 class="search-bar text-white outline-none w-full mr-auto bg-transparent"
-                placeholder="Search">
+                placeholder="Search"
+                name="search-bar">
             <button
-                class="search-button bg-[#1b5e20] rounded-r-2xl hover:bg-[#1b5e20] w-12 h-8 flex items-center justify-center">
+                class="search-button bg-[#1b5e20] rounded-r-2xl hover:bg-[#1b5e20] w-12 h-8 flex items-center justify-center" id="searchBut">
                 <img class="size-5 filter invert brightness-0" src="./assets/mingcute_search-line.png" alt="">
             </button>
+            </form>
         </div>
         <div class="nav-right flex items-center gap-4">
             <a href="../login.html"
@@ -83,10 +88,10 @@
     </aside>
 
     <!-- MAIN LAYOUT -->
-    <div class="grid min-w-full grid-cols-[1fr_500px] max-lg:grid-cols-1 gap-2 px-10 py-5 ">
+    <div class="grid  grid-cols-[1fr_500px] max-lg:grid-cols-1 gap-2 px-10 py-5 ">
 
         <!-- MAIN VIDEO PANEL -->
-        <div class="rounded-3xl bg-white w-full h-fit mt-5">
+        <div class="rounded-3xl bg-white w-full max-w-full h-fit mt-5 overflow-hidden">
 
             <!-- Video Screen -->
             <div class="flex justify-center items-center relative" id="Video-screen">
@@ -174,7 +179,7 @@
                 <!-- COMMENTS -->
                 <div id="comment" class="w-full bg-[#2e7d32] rounded-xl py-4 px-4">
 
-                    <ul id="commentBox" class="w-full"></ul>
+                    <ul id="commentBox" class="w-full max-w-full"></ul>
 
                     <div class="w-full bg-white rounded-xl py-2 px-2 flex">
                         <input type="text" id="comment-input" class="w-full outline-none" placeholder="comment">

@@ -12,6 +12,15 @@ const commentBtn = document.getElementById('submit-comment');
 const mainVideoSrc = document.getElementById('main-screen-src'); 
 const videoList = document.getElementById("videoList"); 
 
+
+
+
+
+
+
+
+
+
 authorsDetails.addEventListener("click", ()=>{ 
     document.getElementById('moreDescription').classList.remove("hidden") 
     document.getElementById('showless').classList.remove("hidden")
@@ -33,12 +42,12 @@ playBtn.addEventListener('click', () => {
             playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
          } });
          
-    closeSidebar.addEventListener('click', () => { 
+closeSidebar.addEventListener('click', () => { 
     sideMenu.classList.add('hidden'); 
     menuItems.classList.add("max-md:items-center"); 
     mainVideo.controls = true; });
     
-   menuBtn.addEventListener('click', () => { 
+menuBtn.addEventListener('click', () => { 
     sideMenu.classList.toggle('hidden'); 
     mainVideo.controls = !mainVideo.controls; 
         }); 
@@ -59,14 +68,17 @@ const updatecommentField = (commentfield) => {
     const newComment = document.createElement('li');
     newComment.innerText = commentInput.value; 
     newComment.classList.add( 
-        "py-2", "px-4", "gap-2", "w-full", 
-        "max-w-full", "break-words", "whitespace-normal",
-        "flex", "flex-wrap", "overflow-hidden", "bg-green-900", 
+        "w-full",
+        "py-2", "px-4",
+        "max-w-full",
+        "break-words", "whitespace-normal",
+        "overflow-hidden",
+        "bg-green-800",
         "rounded-lg", "mb-2", "text-white"
     );
     newComment.prepend(usersImg); 
     
-    if(newComment.innerText.length > 0 && newComment.innerText.length <= 50){ 
+    if(newComment.innerText.length > 0 && newComment.innerText.length <= 200){ 
         commentBox.appendChild(newComment); 
     } 
     commentInput.value = ""; 
@@ -87,6 +99,8 @@ commentInput.addEventListener('keydown', (event) => {
             })
             
             } });
+
+
 
 commentBtn.addEventListener('click',()=>{ if (commentInput.value.trim() !== '') {
          videoData.forEach((video)=>{
@@ -170,9 +184,12 @@ const mainScreenUpdate = (video)=>{
             
             const existingComment = document.createElement('li')
             existingComment.classList.add( 
-                "py-2", "px-4", "gap-2", "w-full", 
-                "max-w-full", "break-words", "whitespace-normal",
-                "flex", "flex-wrap", "overflow-hidden", "bg-green-900", 
+                "w-full",
+                "py-2", "px-4",
+                "max-w-full",
+                "break-words", "whitespace-normal",
+                "overflow-hidden",
+                "bg-green-800",
                 "rounded-lg", "mb-2", "text-white"
             ); 
 
@@ -269,6 +286,7 @@ document.getElementById('downloadVideo').addEventListener('click', () => {
 
 
 const videoContainer = document.getElementById("Video-screen"); 
+
         
 videoContainer.addEventListener("mousemove", () => { 
             playBtn.classList.remove("hidden"); 
@@ -281,6 +299,8 @@ mainVideo.addEventListener('mouseleave', ()=>{
      playBtn.classList.add('hidden'); 
     });
 
+
+
 ( 
  ()=>{
     const updatemain = [videoData[0]]
@@ -290,5 +310,14 @@ mainVideo.addEventListener('mouseleave', ()=>{
     })
  }
 )()
+
+const searchBut = document.getElementById("searchBut")
+
+const searchForm = document.getElementById("searchForm")
+
+searchBut.addEventListener('click',(e)=>{
+    e.preventDefault();
+    console.log(e)
+})
 
     
