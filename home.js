@@ -1,59 +1,64 @@
 const videoGrid = document.getElementById("videoGrid");
 
-// TEMP data (later replaced by backend)
-const videos = [
-  { id: 1 },
-  { id: 2 },
-  { id: 3 },
-  { id: 4 },
-];
+// Load uploaded videos
+const videos = JSON.parse(localStorage.getItem("videos")) || [];
 
-videos.forEach(video => {
-  const link = document.createElement("a");
+if (videos.length === 0) {
+  videoGrid.innerHTML = `
+    <p class="text-gray-500 col-span-full text-center">
+      No videos uploaded yet
+    </p>
+  `;
+}
 
-  link.href = `video.html?id=${video.id}`;
-  link.className = "block";
+videos.forEach((video, index) => {
+  const card = document.createElement("a");
+  card.href = `video.html?id=${index}`;
+  card.className = "block";
 
-  // 👇 teammate's card component (placeholder for now)
-  link.innerHTML = `
-    <div class="bg-white h-60 rounded-xl shadow flex items-center justify-center">
-      <span class="text-gray-500">Video ${video.id}</span>
+  card.innerHTML = `
+    <div class="bg-white rounded-xl shadow overflow-hidden">
+      <video 
+        src="${video.videoURL}" 
+        class="w-full h-40 object-cover"
+        muted
+      ></video>
+
+      <div class="p-4">
+        <h3 class="font-semibold text-lg">${video.title}</h3>
+        <p class="text-sm text-gray-600">${video.description}</p>
+      </div>
     </div>
   `;
 
-  videoGrid.appendChild(link);
+  videoGrid.appendChild(card);
 });
-//side bar js
+
+/* Sidebar */
 const menuBtn = document.getElementById("menuBtn");
 const sidebar = document.getElementById("sidebar");
 const links = sidebar.querySelectorAll("a");
-//toggle sidebar
+
 menuBtn.addEventListener("click", () => {
   sidebar.classList.toggle("-translate-x-full");
 });
-//close sidebar when link is clicked
+
 links.forEach(link => {
   link.addEventListener("click", () => {
     sidebar.classList.add("-translate-x-full");
   });
 });
-// search by keyword feature
+
+/* Search */
 const searchInput = document.getElementById("searchinput");
 
 searchInput.addEventListener("input", () => {
   const query = searchInput.value.toLowerCase();
-
   const cards = document.querySelectorAll("#videoGrid a");
 
   cards.forEach(card => {
-    const text = card.innerText.toLowerCase();
-
-    if (text.includes(query)) {
-      card.style.display = "block";
-    } else {
-      card.style.display = "none";
-    }
+    card.style.display = card.innerText.toLowerCase().includes(query)
+      ? "block"
+      : "none";
   });
 });
-
-
