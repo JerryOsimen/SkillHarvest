@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upload Screen</title>
+  <link rel="stylesheet" href="upload.css">
+</head>
+<body>
+
+  <div class="upload-screen">
+
+    <div class="header">
+      <h3>Add Video Details</h3>
+      <p>Help farmers find your knowledge.</p>
+    </div>
+
+    <div class="upload-video">
+      <label class="upload-box">
+        <input type="file" id="videoInput" accept="video/*" hidden />
+        <div class="upload-content">
+          <p>Click to upload video</p>
+          <small>MP4, MOV, AVI</small>
+        </div>
+      </label>
+
+      <video
+        id="previewVideo"
+        class="hidden w-full mt-4 rounded-lg"
+        controls>
+      </video>
+
+      <button class="upload-btn" id="uploadBtn">Upload</button>
+    </div>
+
+    <div class="card">
+      <label class="label">
+        <span class="required">Title*</span>
+      </label>
+      <input type="text" id="videoTitle" />
+    </div>
+
+    <div class="card">
+      <label class="label">
+        <span class="required">Description*</span>
+      </label>
+      <textarea id="videoDescription" rows="6"></textarea>
+    </div>
+
+  </div>
+
+  <script src="upload.js"></script>
+</body>
+</html>
