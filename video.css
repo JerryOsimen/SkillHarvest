@@ -15,6 +15,13 @@
 
 /* Sidebar video hover */
 .video-card:hover {
+    cursor: pointer;
     transform: scale(1.02);
+    transition: 0.2s ease;
+}
+
+.tags:hover {
+    cursor: pointer;
+    background-color:rgba(255, 255, 255, 0.941);
     transition: 0.2s ease;
 }

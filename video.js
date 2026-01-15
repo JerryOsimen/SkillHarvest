@@ -209,6 +209,15 @@ const mainScreenUpdate = (video) => {
         <i class="fa-regular fa-thumbs-up px-2"></i>
         ${video.likes}
     `;
+
+    const isMarked = getBookmarks().some(v => v.id === video.id);
+    updateBookmarkBtn(isMarked);
+
+    document.getElementById("bookmarkBtn").onclick = () => {
+    const status = toggleBookmark(video);
+    updateBookmarkBtn(status);
+};
+
 };
 
 
@@ -248,6 +257,8 @@ const allVideos = (videoData)=>{
             <p class="text-sm">${video.date}</p>
         </div>
     `;
+
+   document.getElementById("shareBtn").onclick = () => shareVideo(video);
 
     card.onclick = () => {
         mainScreenUpdate(video);
@@ -308,15 +319,13 @@ mainVideo.addEventListener('mouseleave', () => {
 /** ===========================
  *  DUMMY ASYNC FUNCTION
  * =========================== */
-async function aame(params) {
-    console.log(params);
-}
 
 
 /** ===========================
  *  FETCH VIDEOS BY TAG
  * =========================== */
-// async function fetchVideosByTag(tagName = "javascript", page = 1, limit = 10) {
+// async function fetchVideosByTag(tagName="John", page = 1, limit = 2) {
+
 //     const url = `https://skillharvest-backend.onrender.com/api/video/tag/${tagName}?page=${page}&limit=${limit}`;
 
 //     try {
@@ -329,7 +338,7 @@ async function aame(params) {
 //         console.log("Videos:", data);
 
 //         // TODO: If you want to replace your static videoData with API videos:
-//         // videoData = data.videos;
+//         videoData = data.videos;
 
 //         return data;
 
@@ -338,8 +347,8 @@ async function aame(params) {
 //     }
 // }
 
-// // request videos initially
-// fetchVideosByTag();
+// request videos initially
+// fetchVideosByTag(1,2);
 
 
 /** ===========================
@@ -422,10 +431,103 @@ const searchInput = document.getElementById("search-bar")
 searchInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
         e.preventDefault();
-        // const formData = new FormData(searchInput);
-        // const query = formData.get("search")?.trim().toLowerCase();
-        if (e.target.value!=="") handleSearch(e.target.value);
-        console.log(e.target.value)
-        console.log("Enter")
+        const query = e.target.value
+        query.trim().toLowerCase();
+        if (e.target.value!=="") handleSearch(query);
     }
 });
+
+
+
+// ---------- BOOKMARK SYSTEM ----------
+const BOOKMARK_KEY = "bookmarkedVideos";
+
+// Get all bookmarks
+function getBookmarks() {
+    return JSON.parse(localStorage.getItem(BOOKMARK_KEY)) || [];
+}
+
+// Save updated list
+function saveBookmarks(list) {
+    localStorage.setItem(BOOKMARK_KEY, JSON.stringify(list));
+}
+
+// Toggle bookmark for a video
+function toggleBookmark(video) {
+    let bookmarks = getBookmarks();
+
+    const exists = bookmarks.some(v => v.id === video.id);
+
+    if (exists) {
+        // Remove
+        bookmarks = bookmarks.filter(v => v.id !== video.id);
+        saveBookmarks(bookmarks);
+        alert("Removed from bookmarks");
+        return false;
+    } else {
+        // Add
+        bookmarks.push(video);
+        saveBookmarks(bookmarks);
+        alert("Added to bookmarks");
+        return true;
+    }
+}
+
+// Update UI (icon change)
+// function updateBookmarkBtn(isBookmarked) {
+//     const btn = document.getElementById("bookmarkBtn");
+//     if (!btn) return;
+
+//     const bookMarkbtnhtmlExist ="<i class= 'fa-regular text-red-700 fa-bookmark'></i>"
+//     const bookMarkbtnhtml ="<i class= 'fa-regular fa-bookmark'></i>"
+//     btn.textContent = isBookmarked ? `${btn.innerHTML= bookMarkbtnhtmlExist}` : `${btn.innerHTML= bookMarkbtnhtml}`;
+// }
+
+
+
+
+// document.querySelectorAll(".bookmarkCardBtn").forEach(btn => {
+//     btn.addEventListener("click", () => {
+//         const id = btn.dataset.videoid;
+//         const video = videoData.find(v => v.id == id);
+
+//         if (!video) return;
+
+//         toggleBookmark(video);
+//     });
+// });
+
+
+
+// ---------- SHARE SYSTEM ----------
+function shareVideo(video) {
+    const shareUrl = `${window.location.origin}/watch?video=${video.id}`;
+    const shareText = `Watch this: ${video.title}`;
+
+    if (navigator.share) {
+        navigator.share({
+            title: video.title,
+            text: shareText,
+            url: shareUrl
+        })
+        .catch(err => console.log("Share cancelled", err));
+    } else {
+        // Fallback for desktop
+        navigator.clipboard.writeText(shareUrl);
+        alert("Link copied to clipboard!");
+    }
+}
+
+
+function getSocialShareLinks(videoId, title) {
+    const url = encodeURIComponent(`${location.origin}/watch?video=${videoId}`);
+    const text = encodeURIComponent(title);
+
+    return {
+        whatsapp: `https://wa.me/?text=${text}%20${url}`,
+        facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+        twitter: `https://twitter.com/intent/tweet?text=${text}&url=${url}`
+    };
+}
+
+
