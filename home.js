@@ -1,4 +1,6 @@
 const videoGrid = document.getElementById("videoGrid");
+const videoGrid2 = document.getElementById("videoGrid2");
+
 
 // TEMP data (later replaced by backend)
 const videos = [
@@ -8,8 +10,9 @@ const videos = [
   { id: 4 },
 ];
 
-videos.forEach(video => {
-  const link = document.createElement("a");
+
+ function createLinks(video,grid){
+   const link = document.createElement("a");
 
   link.href = `video.html?id=${video.id}`;
   link.className = "block";
@@ -20,30 +23,44 @@ videos.forEach(video => {
       <span class="text-gray-500">Video ${video.id}</span>
     </div>
   `;
+  grid.appendChild(link);
+ }
 
-  videoGrid.appendChild(link);
+videos.forEach(video => {
+  createLinks(video,videoGrid)
 });
+
+
+videos.forEach(video => {
+  createLinks(video,videoGrid2)
+});
+
 //side bar js
 const menuBtn = document.getElementById("menuBtn");
-const sidebar = document.getElementById("sidebar");
-const links = sidebar.querySelectorAll("a");
+const sideMenu = document.getElementById('sidebar');
+const closeSidebar = document.getElementById('closeBtn');
+const menuItems = document.getElementById('menuItems');
+
 //toggle sidebar
-menuBtn.addEventListener("click", () => {
-  sidebar.classList.toggle("-translate-x-full");
+menuBtn.addEventListener('click', () => {
+    sideMenu.classList.toggle('hidden');
 });
-//close sidebar when link is clicked
-links.forEach(link => {
-  link.addEventListener("click", () => {
-    sidebar.classList.add("-translate-x-full");
-  });
+
+
+// SIDEBAR
+closeSidebar.addEventListener('click', () => {
+    sideMenu.classList.add('hidden');
 });
+
+
 // search by keyword feature
 const searchInput = document.getElementById("searchinput");
 
-searchInput.addEventListener("input", () => {
+searchInput.addEventListener("input", (e) => {
+  e.preventDefault();
   const query = searchInput.value.toLowerCase();
 
-  const cards = document.querySelectorAll("#videoGrid a");
+  const cards = document.querySelectorAll(".videoGrid a");
 
   cards.forEach(card => {
     const text = card.innerText.toLowerCase();

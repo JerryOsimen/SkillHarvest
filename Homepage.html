@@ -4,59 +4,107 @@
   <meta charset="UTF-8" />
   <title>Home</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script defer src="https://kit.fontawesome.com/79e3c5887d.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="video.css">
 </head>
 <body class="bg-gray-100 min-h-screen">
-  <!--fixed nav icon-->
-   <button
-   id="menuBtn"
-   class="fixed top-4 left-4 z-[60] p-3 bg-white rounded-md text-xl"
-   >
-   ☰
-   </button>
- <!--side bar-->
- <div
- id="sidebar"
- class="fixed top-0 left-0 h-full w-64 bg-white shadow-xl -translate-x-full
- transition-transform duration-300 z-40"
- >
-  <nav class="mt-24 flex flex-col gap-6 px-6 text-lg font-medium">
-    <a href="" class="hover:text-green-600">Home</a>
-    <a href="" class="hover:text-green-600">Profile</a>
-    <a href="" class="hover:text-green-600">Upload video</a>
-  </nav>
- </div>
-    <!--fixed search bar-->
-   <div class="fixed top-0 left-0 w-full bg-white shadow z-50 p-4 flex justify-center">
-    <input 
-    id="searchinput" 
-    type="text"
-    placeholder="Search farming videos"
-    class="w-full md:w-1/2 p-2 rounded-lg border border-gray-400 
-    focus:outline-none focus:ring-green-500">
-   </div>
+  <!-- NAV BAR -->
+    <nav class="navbar w-full sticky top-0 flex justify-between items-center px-10 py-2 bg-[#2e7d32] text-white z-50">
+        <div class="nav-left flex items-center gap-2">
+            <button id="menuBtn" class="video-card menu-btn size-8 bg-[#1b5e20] hover:bg-[#1b5e20] flex justify-center items-center">
+                <i class="fa-solid fa-bars text-[18px]"></i>
+            </button>
+
+            <a href="../index.html" class="logo flex items-center">
+                <img class="size-10" src="./Videocard/assets/logo.png" alt="logo">
+                Skillharvest
+            </a>
+        </div>
+        <div class="flex items-center h-8 bg-black text-sm rounded-2xl pl-3 w-full max-w-xs max-sm:hidden max-md:w-32 md:max-w-sm lg:max-w-md xl:max-w-2xl">
+            <form action="" method="post" id="searchForm" class="w-full flex">
+            <input 
+                id="searchInput"
+                type="text"
+                class="search-bar text-white outline-none w-full mr-auto bg-yeloow-500"
+                placeholder="Search"
+                name="search-bar">
+            <button
+                class="search-button video-card bg-[#1b5e20] rounded-r-2xl hover:bg-[#1b5e20] w-12 h-8 flex items-center justify-center" id="searchBut">
+                <img class="size-5 filter invert brightness-0" src="./Videocard/assets/mingcute_search-line.png" alt="">
+            </button>
+            </form>
+        </div>
+        <div class="nav-right flex items-center gap-4">
+            <a href="../login.html"
+                class="video-card nav-link text-[12px] max-md:text-[10px] 
+                rounded-3xl hover:bg-[#1b5e20]
+                 bg-[#1b5e20] px-4 py-2
+                 ">
+                <i class="fa-solid fa-plus pr-2"></i>Create
+            </a>
+
+            <a href="../signup.html"
+                class="nav-link size-9 flex justify-center items-center hover:bg-[#1b5e20] bg-[#1b5e20] rounded-full">
+                <img class="size-6"
+                    src="https://res.cloudinary.com/dbgowpxtw/image/upload/v1767883781/SkillHarvest/noto-v1_man-office-worker_wbwj0f.png"
+                    alt="">
+            </a>
+        </div>
+    </nav>
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar"
+        class="w-64 h-full bg-[#2e7d32] text-white hidden fixed top-0 left-0 z-40 transition-transform duration-300 ease-in-out max-md:w-full max-md:h-auto">
+
+        <div class="flex justify-between items-center pt-4 px-4 mt-10">
+            <h2 class="font-bold text-white pl-4">Menu</h2>
+            <button id="closeBtn" class="w-8 h-8 hover:bg-[#1b5e20]">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <ul class="flex flex-col gap-4 px-5 py-4" id="menuItems">
+            <li><a href="../Homepage.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
+                        class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="../uploadVideo.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
+                        class="fa-solid fa-compass"></i>Upload videos</a></li>
+            <li><a href="../video.html"
+                    class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
+                        class="fa-solid fa-video"></i> Videos</a></li>
+            <li><a href="../profile.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
+                        class="fa-solid fa-user"></i> Profile</a></li>
+            <li><a href="../landingpage.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
+                        class="fa-solid fa-cog"></i> Landing page </a>
+                </li>
+        </ul>
+    </aside>
    <!--main content-->
-  <main class="max-w-7xl pt-28 mx-auto px-4 py-10">
-    <h1 class="text-2xl font-bold mb-6">Latest Farming Videos</h1>
+  <main class="max-w-7xl pt-5 mx-auto px-10 py-2">
+    <h1 class="text-2xl font-bold text-[#1b5e20] m-5 py-2">Latest Farming Videos</h1>
 
     <!-- VIDEO GRID -->
 
       <section
       id="videoGrid"
-      class="grid gap-6
+      class="videoGrid
+             grid gap-6
              grid-cols-1
+             max-sm:grid-cols-2
              sm:grid-cols-2
              md:grid-cols-3
-             lg:grid-cols-4">
+             lg:grid-cols-4 p-5">
     </section>
 
-   
+    <h1 class="text-2xl font-bold text-[#1b5e20] m-5 py-2">Poultry Farming Videos</h1>
     <section
-      id="videoGrid"
-      class="grid gap-6
+      id="videoGrid2"
+      class="videoGrid 
+             grid gap-6
              grid-cols-1
+             max-sm:grid-cols-2
              sm:grid-cols-2
              md:grid-cols-3
-             lg:grid-cols-4">
+             lg:grid-cols-4 p-5">
     </section>
   </main>
 
