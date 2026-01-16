@@ -19,7 +19,7 @@
     <nav class="navbar w-full sticky top-0 flex justify-between items-center px-10 py-2 bg-[#2e7d32] text-white z-50">
 
         <div class="nav-left flex items-center gap-2">
-            <button id="menuBtn" class="menu-btn size-8 bg-[#1b5e20] hover:bg-[#1b5e20] flex justify-center items-center">
+            <button id="menuBtn" class="video-card menu-btn size-8 bg-[#1b5e20] hover:bg-[#1b5e20] flex justify-center items-center">
                 <i class="fa-solid fa-bars text-[18px]"></i>
             </button>
 
@@ -37,14 +37,14 @@
                 placeholder="Search"
                 name="search-bar">
             <button
-                class="search-button bg-[#1b5e20] rounded-r-2xl hover:bg-[#1b5e20] w-12 h-8 flex items-center justify-center" id="searchBut">
+                class="search-button video-card bg-[#1b5e20] rounded-r-2xl hover:bg-[#1b5e20] w-12 h-8 flex items-center justify-center" id="searchBut">
                 <img class="size-5 filter invert brightness-0" src="./Videocard/assets/mingcute_search-line.png" alt="">
             </button>
             </form>
         </div>
         <div class="nav-right flex items-center gap-4">
             <a href="../login.html"
-                class="nav-link text-[12px] 
+                class="video-card nav-link text-[12px] max-md:text-[10px] 
                 rounded-3xl hover:bg-[#1b5e20]
                  bg-[#1b5e20] px-4 py-2
                  ">
@@ -65,7 +65,7 @@
         class="w-64 h-full bg-[#2e7d32] text-white hidden fixed top-0 left-0 z-40 transition-transform duration-300 ease-in-out max-md:w-full max-md:h-auto">
 
         <div class="flex justify-between items-center pt-4 px-4 mt-10">
-            <h2 class="font-bold text-white">Menu</h2>
+            <h2 class="font-bold text-white pl-4">Menu</h2>
             <button id="closeBtn" class="w-8 h-8 hover:bg-[#1b5e20]">
                 <i class="fa-solid fa-xmark"></i>
             </button>
@@ -81,7 +81,7 @@
                         class="fa-solid fa-video"></i> Videos</a></li>
             <li><a href="../profile.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
                         class="fa-solid fa-user"></i> Profile</a></li>
-            <li><a href="../Landing-page.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
+            <li><a href="../landingpage.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
                         class="fa-solid fa-cog"></i> Landing page </a>
                 </li>
         </ul>
@@ -117,18 +117,19 @@
                 </h2>
 
                 <!-- Buttons Row -->
-                <div class="flex justify-between items-center pb-3">
-                    <button id="likes" class="flex px-3 py-2 font-bold border-2 border-gray-500 items-center rounded-2xl"><i
+                <div class="flex justify-between items-center max-md:text-[10px] pb-3">
+                    <button id="likes" class="tags flex px-3 py-2 font-bold border-2 border-gray-500 items-center rounded-2xl"><i
                             class="fa-regular fa-thumbs-up px-2"></i></button>
 
                     <label for="comment-input"
-                        class="flex px-3 py-2 font-bold border-2 border-gray-500 items-center rounded-2xl comments"><i
+                        class="flex tags px-3 py-2 font-bold border-2 border-gray-500 items-center rounded-2xl comments"><i
                             class="fa-regular fa-comment px-2"></i>45</label>
 
-                    <button class="flex justify-center px-3 py-2 font-bold border-2 border-gray-500 items-center rounded-2xl"><i
-                            class="fa-regular fa-bookmark px-2"></i></button>
+                    <button class="tags flex justify-center px-3 py-3 font-bold border-2 border-gray-500 items-center rounded-2xl"
+                    id="bookmarkBtn"><i
+                            class=" fa-regular fa-bookmark"></i></button>
 
-                    <button class="flex px-3 py-2 font-bold border-2 border-gray-500 items-center rounded-2xl"><i
+                    <button class="tags flex px-3 py-2 font-bold border-2 border-gray-500 items-center rounded-2xl" id="shareBtn"><i
                             class="fa-solid fa-share-nodes px-2"></i>...</button>
                 </div>
 
@@ -136,22 +137,22 @@
                 <div class="flex items-center bg-[#eab76a2f] p-3 rounded-2xl">
 
                     <a href="../profile"
-                        class="size-9 flex justify-center items-center bg-[#2e7d32] rounded-full mr-4">
+                        class="size-10 flex justify-center items-center bg-[#2e7d32] rounded-full px-2 mr-4">
                         <img class="size-6"
                             src="https://res.cloudinary.com/dbgowpxtw/image/upload/v1767883781/SkillHarvest/noto-v1_man-office-worker_wbwj0f.png"
                             alt="">
                     </a>
 
-                    <div class="flex flex-col mr-auto w-64">
+                    <div class="flex flex-col w-full">
                         <h2 id="authorsName" class="authorsName font-semibold">John Adeola</h2>
 
-                        <div class="flex justify-between text-sm text-gray-800">
-                            <span id="location"><i class="fa-regular fa-comment pr-2"></i>Ogun</span>
-                            <span id="views"><i class="fa-regular fa-eye px-2"></i>views</span>
+                        <div class="flex justify-between text-gray-800 px-2">
+                            <span id="location" class=""><i class="fa-regular fa-comment px-2"></i>Ogun</span>
+                            <span id="views" class="mr-10"><i class="fa-regular fa-eye px-2"></i>views</span>
                         </div>
                     </div>
 
-                    <button class="px-3 bg-[#2e7d32] py-2 rounded-2xl text-white">Follow</button>
+                    <button class="px-3 bg-[#2e7d32] video-card py-2 rounded-2xl text-white">Follow</button>
                 </div>
 
                 <!-- ABOUT VIDEO -->
@@ -195,9 +196,9 @@
 
             <!-- Filter Buttons -->
             <div class="grid grid-cols-[120px_1fr_100px] max-md:grid-cols-[1fr_2fr_1fr]  h-12 rounded-3xl p-2 gap-2 text-white">
-                <div class="flex rounded-xl justify-center bg-[#2e7d32] hover:bg-[#1b5e20]"><button>All</button></div>
-                <div class="flex rounded-xl justify-center bg-[#2e7d32] hover:bg-[#1b5e20]"><button>Similar videos</button></div>
-                <div class="flex rounded-xl justify-center bg-[#2e7d32] hover:bg-[#1b5e20]"><button>Trending</button></div>
+                <div class="flex rounded-xl justify-center bg-[#2e7d32] hover:bg-[#1b5e20]" id="totalVideos"><button>All</button></div>
+                <div class="flex rounded-xl justify-center bg-[#2e7d32] hover:bg-[#1b5e20]" id="similarVideos"><button>Similar videos</button></div>
+                <div class="flex rounded-xl justify-center bg-[#2e7d32] hover:bg-[#1b5e20]" id="trendingVideos"><button>Trending</button></div>
             </div>
 
             <!-- Grid of Video Cards -->

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>
 tailwind.config = {
@@ -19,44 +19,26 @@ tailwind.config = {
 </script>
   </head>
   <body class="bg-[#2e7d32] text-white flex flex-col gap-3  justify-center 
-  items-center min-h-screen font-poppins ">
+  items-center min-h-screen font-poppins" id="body" >
 <!--1st div-->
 <div class="flex flex-col justify-center items-center">
   <img src="images/image1.png" alt="a flower icon">
   <h2 class="font-bold text-[28px]">Skill Harvest</h2>
   <p class="font-normal text-base">Growing Knowledge. Growing Future.</p>
 </div>
-<!--button div-->
-<div>
-  <button
-  id="startBtn"
-  class="
-  opacity-0 translate-y-6  pointer-events-none
-    bg-gray-600 text-white mt-[100px] rounded-xl cursor-pointer
 
-    uppercase px-[80px] py-2 font-bold text-center
-
-    transition-all duration-700 ease-out
-
-    hover:bg-white hover:text-black
-
-    active:scale-95 active:bg-gray-700
-
-    focus-visible:ring-2 focus-visible:ring-gray-400
-  ">Start</button>
+  
 </div>
 <script>
   window.addEventListener("load", () => {
-    setTimeout(() => {
-      const btn = 
-      document.getElementById("startBtn");
-      btn.classList.remove("opacity-0", "translate-y-6", "pointer-events-none");
-      btn.classList.add("opacity-100");
-    },1200);
+
   });
 
-  document.getElementById("startBtn").addEventListener("click", function () {
-    window.location.href = "Landing-page.html";
+  window.addEventListener("load", function () {
+        setTimeout(() => {
+          window.location.href = "landingpage.html";
+          document.getElementById(body).classList.add("duration-200", "ease-in-out")
+    },2000);
   });
 </script>
   </body>
