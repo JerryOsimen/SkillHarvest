@@ -263,6 +263,7 @@ document.getElementById('likes').addEventListener("click", () => {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 
@@ -299,6 +300,8 @@ const allVideos = (videoData)=>{
 =======
 =======
 >>>>>>> parent of bebbcf6 (updated)
+=======
+>>>>>>> parent of bebbcf6 (updated)
 ( 
  ()=>{
     const updatemain = [videoData[0]]
@@ -309,6 +312,9 @@ const allVideos = (videoData)=>{
  }
 )()
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of bebbcf6 (updated)
+=======
 >>>>>>> parent of bebbcf6 (updated)
 =======
 >>>>>>> parent of bebbcf6 (updated)
