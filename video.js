@@ -1,3 +1,7 @@
+// GET VIDEO ID FROM URL
+const params = new URLSearchParams(window.location.search);
+const videoIdFromUrl = params.get("id");
+
 // ELEMENT SELECTORS
 const mainVideo = document.getElementById('play-screen');
 const menuBtn = document.getElementById('menuBtn');
@@ -50,61 +54,8 @@ menuBtn.addEventListener('click', () => {
 });
 
 
-// VIDEO DATA
-const videoData = [
-    {
-        id:"1",
-        src: "./Videocard/assets/Prisma.error.mp4",
-        title: "How to Fix Prisma Error",
-        author: "Dev Musa",
-        comments: [],
-        isTrending:false,
-        likes: 10,
-        location: "Enugu",
-        views: "1.2k",
-        date: "2 days ago",
-        isPlaying: false,
-    },
-    {
-        id:"2",
-        src: "./Videocard/assets/Figmatutorial.mp4",
-        title: "Figma Tutorial",
-        author: "UI John",
-        comments: [],
-        isTrending:true,
-        likes: 20,
-        location: "Osun",
-        views: "900",
-        date: "1 day ago",
-        isPlaying: false,
-    },
-    {
-        id:"3",
-        src: "./Videocard/assets/Figmatutorial.mp4",
-        title: "Figma Tutorial",
-        author: "UI John",
-        comments: [],
-        isTrending:false,
-        likes: 900,
-        location: "Oyo",
-        views: "900",
-        date: "1 day ago",
-        isPlaying: false,
-    },
-    {
-        id:"4",
-        src: "./Videocard/assets/Figmatutorial.mp4",
-        title: "Figma Tutorial",
-        author: "UI John",
-        isTrending:true,
-        comments: [],
-        likes: 900,
-        location: "Oyo",
-        views: "900",
-        date: "1 day ago",
-        isPlaying: false,
-    }
-];
+// VIDEO DATA FROM LOCALSTORAGE ONLY
+const videoData = JSON.parse(localStorage.getItem("videos")) || [];
 
 
 // RENDER COMMENT ITEM
@@ -178,7 +129,7 @@ const mainScreenUpdate = (video) => {
     videoData.forEach(v => v.isPlaying = false);
     video.isPlaying = true;
 
-    mainVideoSrc.src = video.src;
+    mainVideoSrc.src = video.src || video.videoURL;
     mainVideo.load();
     mainVideo.play();
 
@@ -332,7 +283,7 @@ async function fetchVideosByTag() {
         console.log("Videos:", data);
 
         // TODO: If you want to replace your static videoData with API videos:
-        videoData = data.videos;
+        videoData.push(...data.videos);
 
         return data;
 
@@ -342,17 +293,7 @@ async function fetchVideosByTag() {
 }
 
 // request videos initially
-fetchVideosByTag();
 
-
-/** ===========================
- *  INITIALIZE MAIN VIDEO ON LOAD
- * =========================== */
-(() => {
-    const first = videoData[0];
-    first.isPlaying = true;
-    mainScreenUpdate(first);
-})();
 
 
 /** ===========================
@@ -462,5 +403,24 @@ function getSocialShareLinks(videoId, title) {
         twitter: `https://twitter.com/intent/tweet?text=${text}&url=${url}`
     };
 }
+
+function loadVideoFromURL() {
+    if (!videoIdFromUrl) return; // do nothing if no video ID in URL
+
+    const selectedVideo = videoData.find(
+        v => String(v.id) === String(videoIdFromUrl)
+    );
+
+    if (!selectedVideo) return; // do nothing if ID not found in videoData
+
+    videoData.forEach(v => v.isPlaying = false);
+    selectedVideo.isPlaying = true;
+    mainScreenUpdate(selectedVideo);
+}
+
+// Run after page load
+window.addEventListener("load", loadVideoFromURL);
+
+
 
 

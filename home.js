@@ -1,14 +1,8 @@
 const videoGrid = document.getElementById("videoGrid");
 const videoGrid2 = document.getElementById("videoGrid2");
 
-
-// TEMP data (later replaced by backend)
-const videos = [
-  { id: 1 },
-  { id: 2 },
-  { id: 3 },
-  { id: 4 },
-];
+// ALL VIDEOS FROM LOCALSTORAGE
+const videos = JSON.parse(localStorage.getItem("videos")) || [];
 
 
  function createLinks(video,grid){
@@ -20,7 +14,10 @@ const videos = [
   // 👇 teammate's card component (placeholder for now)
   link.innerHTML = `
     <div class="bg-white h-60 rounded-xl shadow flex items-center justify-center">
-      <span class="text-gray-500">Video ${video.id}</span>
+     <span class="text-gray-500">
+     ${video.title || `Video ${video.id}`}
+     </span>
+
     </div>
   `;
   grid.appendChild(link);
@@ -54,7 +51,8 @@ closeSidebar.addEventListener('click', () => {
 
 
 // search by keyword feature
-const searchInput = document.getElementById("searchinput");
+const searchInput = document.getElementById("searchInput");
+
 
 searchInput.addEventListener("input", (e) => {
   e.preventDefault();

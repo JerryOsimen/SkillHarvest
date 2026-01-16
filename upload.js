@@ -20,11 +20,22 @@ document.querySelectorAll(".btn").forEach(but=>{
     return;
   }
 
-  const videoData = {
-    title,
-    description,
-    videoURL: URL.createObjectURL(videoFile)
-  };
+const videoData = {
+  id: Date.now().toString(),
+  title,
+  description,
+  src: URL.createObjectURL(videoFile), // ✅ SAME KEY AS video.html
+  author: "You",
+  comments: [],
+  isTrending: false,
+  likes: 0,
+  location: "Unknown",
+  views: "0",
+  date: "Just now",
+  isPlaying: false
+};
+
+
 
   const videos = JSON.parse(localStorage.getItem("videos")) || [];
   videos.push(videoData);
