@@ -1,0 +1,142 @@
+* {
+  box-sizing: border-box;
+  font-family: poppins;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  gap:10;
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+.upload-screen {
+  padding: 2rem;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+.upload-video {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 10px 25px;
+  margin-bottom: 20px;
+}
+.upload-box {
+  display: flex;
+  border: 2px dashed #2e7d32;
+  padding: 40px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+.upload-box:hover {
+  background-color: #ffffff;
+  border-color: #2e7d32;
+}
+.upload-content p {
+  margin: 5px 0;
+  font-weight: bold;
+}
+.upload-content small {
+  color: #2e7d32;
+  font-size: 14px;
+}
+.upload-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.upload-btn:hover {
+  background-color: #2e7d32;
+  color: #ffffff;
+}
+
+.card {
+  background: #ffffff;
+  border: 2px solid #2e7d32;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.label {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.required {
+  font-weight: bold;
+}
+
+.hint {
+  color: #777;
+  font-size: 14px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 2px solid #2e7d32;
+  outline: none;
+  font-size: 16px;
+}
+
+textarea {
+  resize: none;
+}
+
+.counter {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #666;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-top: 1px solid #2e7d32;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+}
+
+.nav-item {
+  text-align: center;
+  background-color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 10px 20px;
+}
+
+.nav-item:hover {
+  background-color: #2e7d32;
+  color: #ffffff;
+}
+
+/* Desktop view */
+@media (min-width: 1024px) {
+  .upload-screen {
+    max-width: 1200px;
+    margin: auto;
+    padding: 2rem;
+  }
+}
