@@ -2,7 +2,7 @@
 /* LOAD SELECTED VIDEO FROM HOME PAGE*/
 const params = new URLSearchParams(window.location.search);
 const videoIndex = params.get("id");
-const cameFromHome = videoIndex !== null;
+
 const videos = JSON.parse(localStorage.getItem("videos")) || [];
 
 if (videoIndex !== null && videos[videoIndex]) {
@@ -258,17 +258,15 @@ document.getElementById('likes').addEventListener("click", () => {
 
 
 
-if (!cameFromHome) {
-  (
-    () => {
-      const updatemain = [videoData[0]];
-      videoData[0].isPlaying = true;
-      updatemain.forEach(value => {
-        mainScreenUpdate(value);
-      });
-    }
-  )();
-}
+( 
+ ()=>{
+    const updatemain = [videoData[0]]
+    videoData[0].isPlaying = true;
+    updatemain.forEach(value=>{
+        mainScreenUpdate(value)
+    })
+ }
+)()
 
 
 
