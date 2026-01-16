@@ -1,9 +1,15 @@
 
 /* LOAD SELECTED VIDEO FROM HOME PAGE*/
 const params = new URLSearchParams(window.location.search);
+<<<<<<< HEAD
 const videoURL = params.get("videoURL");
 const title = params.get("title");
 const description = params.get("desc");
+=======
+const videoIndex = params.get("id");
+
+const videos = JSON.parse(localStorage.getItem("videos")) || [];
+>>>>>>> parent of bebbcf6 (updated)
 
 if (videoURL) {
     const videoPlayer = document.getElementById("play-screen");
@@ -255,6 +261,7 @@ document.getElementById('likes').addEventListener("click", () => {
 });
 
 
+<<<<<<< HEAD
 
 
 
@@ -288,6 +295,17 @@ const allVideos = (videoData)=>{
     videoList.appendChild(card);
 });
 }
+=======
+( 
+ ()=>{
+    const updatemain = [videoData[0]]
+    videoData[0].isPlaying = true;
+    updatemain.forEach(value=>{
+        mainScreenUpdate(value)
+    })
+ }
+)()
+>>>>>>> parent of bebbcf6 (updated)
 
 allVideos(videoData)
 

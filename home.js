@@ -13,11 +13,15 @@ if (videos.length === 0) {
 
 videos.forEach((video, index) => {
   const card = document.createElement("a");
+<<<<<<< HEAD
   const url = new URL("video.html", window.location.origin);
 url.searchParams.set("title", video.title);
 url.searchParams.set("desc", video.description);
 url.searchParams.set("videoURL", video.videoURL);
 card.href = url.toString();
+=======
+  card.href = `video.html?id=${index}`;
+>>>>>>> parent of bebbcf6 (updated)
   card.className = "block";
 
   card.innerHTML = `
