@@ -1,23 +1,21 @@
 
 /* LOAD SELECTED VIDEO FROM HOME PAGE*/
 const params = new URLSearchParams(window.location.search);
-const videoIndex = params.get("id");
+const videoURL = params.get("videoURL");
+const title = params.get("title");
+const description = params.get("desc");
 
-const videos = JSON.parse(localStorage.getItem("videos")) || [];
+if (videoURL) {
+    const videoPlayer = document.getElementById("play-screen");
+    const videoSource = document.getElementById("main-screen-src");
 
-if (videoIndex !== null && videos[videoIndex]) {
-  const selectedVideo = videos[videoIndex];
+    videoSource.src = videoURL;
+    document.getElementById("video-title").textContent = title;
+    document.getElementById("video-description").textContent = description;
 
-  const videoPlayer = document.getElementById("play-screen");
-  const videoSource = document.getElementById("main-screen-src");
-
-  videoSource.src = selectedVideo.videoURL;
-  document.getElementById("video-title").textContent = selectedVideo.title;
-  document.getElementById("video-description").textContent =
-    selectedVideo.description || "";
-
-  videoPlayer.load();
+    videoPlayer.load();
 }
+
 
 const mainVideo = document.getElementById('play-screen'); 
 const menuBtn = document.getElementById('menuBtn'); 
@@ -258,15 +256,7 @@ document.getElementById('likes').addEventListener("click", () => {
 
 
 
-( 
- ()=>{
-    const updatemain = [videoData[0]]
-    videoData[0].isPlaying = true;
-    updatemain.forEach(value=>{
-        mainScreenUpdate(value)
-    })
- }
-)()
+
 
 
 
@@ -385,11 +375,6 @@ mainVideo.addEventListener('mouseleave', () => {
 /** ===========================
  *  INITIALIZE MAIN VIDEO ON LOAD
  * =========================== */
-(() => {
-    const first = videoData[0];
-    first.isPlaying = true;
-    mainScreenUpdate(first);
-})();
 
 
 /** ===========================
