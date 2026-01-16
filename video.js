@@ -210,13 +210,7 @@ const mainScreenUpdate = (video) => {
         ${video.likes}
     `;
 
-    const isMarked = getBookmarks().some(v => v.id === video.id);
-    updateBookmarkBtn(isMarked);
-
-    document.getElementById("bookmarkBtn").onclick = () => {
-    const status = toggleBookmark(video);
-    updateBookmarkBtn(status);
-};
+   
 
 };
 
@@ -324,31 +318,31 @@ mainVideo.addEventListener('mouseleave', () => {
 /** ===========================
  *  FETCH VIDEOS BY TAG
  * =========================== */
-// async function fetchVideosByTag(tagName="John", page = 1, limit = 2) {
+async function fetchVideosByTag() {
 
-//     const url = `https://skillharvest-backend.onrender.com/api/video/tag/${tagName}?page=${page}&limit=${limit}`;
+    const url = `https://skillharvest-backend.onrender.com/api/video`;
 
-//     try {
-//         const res = await fetch(url);
+    try {
+        const res = await fetch(url);
 
-//         if (!res.ok)
-//             throw new Error(`HTTP error! status: ${res.status}`);
+        if (!res.ok)
+            throw new Error(`HTTP error! status: ${res.status}`);
 
-//         const data = await res.json();
-//         console.log("Videos:", data);
+        const data = await res.json();
+        console.log("Videos:", data);
 
-//         // TODO: If you want to replace your static videoData with API videos:
-//         videoData = data.videos;
+        // TODO: If you want to replace your static videoData with API videos:
+        videoData = data.videos;
 
-//         return data;
+        return data;
 
-//     } catch (err) {
-//         console.error("Error fetching videos:", err);
-//     }
-// }
+    } catch (err) {
+        console.error("Error fetching videos:", err);
+    }
+}
 
 // request videos initially
-// fetchVideosByTag(1,2);
+fetchVideosByTag();
 
 
 /** ===========================
@@ -432,70 +426,9 @@ searchInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
         e.preventDefault();
         const query = e.target.value
-        query.trim().toLowerCase();
-        if (e.target.value!=="") handleSearch(query);
+        if (e.target.value!=="") handleSearch(query.trim().toLowerCase());
     }
 });
-
-
-
-// ---------- BOOKMARK SYSTEM ----------
-const BOOKMARK_KEY = "bookmarkedVideos";
-
-// Get all bookmarks
-function getBookmarks() {
-    return JSON.parse(localStorage.getItem(BOOKMARK_KEY)) || [];
-}
-
-// Save updated list
-function saveBookmarks(list) {
-    localStorage.setItem(BOOKMARK_KEY, JSON.stringify(list));
-}
-
-// Toggle bookmark for a video
-function toggleBookmark(video) {
-    let bookmarks = getBookmarks();
-
-    const exists = bookmarks.some(v => v.id === video.id);
-
-    if (exists) {
-        // Remove
-        bookmarks = bookmarks.filter(v => v.id !== video.id);
-        saveBookmarks(bookmarks);
-        alert("Removed from bookmarks");
-        return false;
-    } else {
-        // Add
-        bookmarks.push(video);
-        saveBookmarks(bookmarks);
-        alert("Added to bookmarks");
-        return true;
-    }
-}
-
-// Update UI (icon change)
-// function updateBookmarkBtn(isBookmarked) {
-//     const btn = document.getElementById("bookmarkBtn");
-//     if (!btn) return;
-
-//     const bookMarkbtnhtmlExist ="<i class= 'fa-regular text-red-700 fa-bookmark'></i>"
-//     const bookMarkbtnhtml ="<i class= 'fa-regular fa-bookmark'></i>"
-//     btn.textContent = isBookmarked ? `${btn.innerHTML= bookMarkbtnhtmlExist}` : `${btn.innerHTML= bookMarkbtnhtml}`;
-// }
-
-
-
-
-// document.querySelectorAll(".bookmarkCardBtn").forEach(btn => {
-//     btn.addEventListener("click", () => {
-//         const id = btn.dataset.videoid;
-//         const video = videoData.find(v => v.id == id);
-
-//         if (!video) return;
-
-//         toggleBookmark(video);
-//     });
-// });
 
 
 
