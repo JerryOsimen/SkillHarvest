@@ -3,19 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upload Video</title>
+  <title>Upload Screen</title>
+   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="upload.css">
 </head>
-<body>
 
-  <div class="upload-screen">
+<body  class="px-20">
 
-    <div class="header">
-      <h3>Add Video Details</h3>
-      <p>Help farmers find your knowledge.</p>
+  <div class="upload-screen min-w-lg max-sm:w-sm  max-md:w-sm lg:w-md px-40">
+
+    <div class="header py-2">
+      <h3 class="font-bold">Add Video Details</h3>
+      <p class="py-2">Help farmers find your knowledge.</p>
     </div>
 
-    <div class="upload-video">
+    <div class="upload-video flex flex-col w-full justify-center items-center">
       <label class="upload-box">
         <input type="file" id="videoInput" accept="video/*" hidden />
         <div class="upload-content">
@@ -26,28 +28,30 @@
 
       <video
         id="previewVideo"
-        class="hidden w-full mt-4 rounded-lg"
+        class="flex w-lg hidden justify-center items-center max-lg:max-w-sd mt-4 rounded-lg"
         controls>
       </video>
 
-      <button class="upload-btn" id="uploadBtn">Upload</button>
+      <button class="upload-btn btn" id="uploadBtn">Upload</button>
     </div>
 
     <div class="card">
-      <label class="label">
+      <label for="videoTitle" class="label">
         <span class="required">Title*</span>
       </label>
       <input type="text" id="videoTitle" />
     </div>
 
     <div class="card">
-      <label class="label">
+      <label for="videoDescription" class="label">
         <span class="required">Description*</span>
       </label>
       <textarea id="videoDescription" rows="6"></textarea>
     </div>
-
+    <button class="hover:bg-green-800 text-white btn py-2 rounded-xl w-full bg-[#2e7d32]" id="uploadBtn2">Upload</button>
   </div>
+
+ 
 
   <script src="upload.js"></script>
 </body>

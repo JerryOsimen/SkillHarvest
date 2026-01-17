@@ -9,7 +9,8 @@ videoInput.addEventListener("change", () => {
   previewVideo.classList.remove("hidden");
 });
 
-document.getElementById("uploadBtn").addEventListener("click", () => {
+document.querySelectorAll(".btn").forEach(but=>{
+  but.addEventListener("click", () => {
   const videoFile = videoInput.files[0];
   const title = document.getElementById("videoTitle").value.trim();
   const description = document.getElementById("videoDescription").value.trim();
@@ -19,16 +20,28 @@ document.getElementById("uploadBtn").addEventListener("click", () => {
     return;
   }
 
-  const videoData = {
-    title,
-    description,
-    videoURL: URL.createObjectURL(videoFile)
-  };
+const videoData = {
+  id: Date.now().toString(),
+  title,
+  description,
+  src: URL.createObjectURL(videoFile), // ✅ SAME KEY AS video.html
+  author: "You",
+  comments: [],
+  isTrending: false,
+  likes: 0,
+  location: "Unknown",
+  views: "0",
+  date: "Just now",
+  isPlaying: false
+};
+
+
 
   const videos = JSON.parse(localStorage.getItem("videos")) || [];
   videos.push(videoData);
   localStorage.setItem("videos", JSON.stringify(videos));
 
   alert("Video uploaded successfully!");
-  window.location.href = "Homepage.html";
+  window.location.href = "homepage.html";
 });
+})

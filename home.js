@@ -1,76 +1,74 @@
 const videoGrid = document.getElementById("videoGrid");
+const videoGrid2 = document.getElementById("videoGrid2");
 
-// Load uploaded videos
+// ALL VIDEOS FROM LOCALSTORAGE
 const videos = JSON.parse(localStorage.getItem("videos")) || [];
 
-if (videos.length === 0) {
-  videoGrid.innerHTML = `
-    <p class="text-gray-500 col-span-full text-center">
-      No videos uploaded yet
-    </p>
-  `;
-}
 
-videos.forEach((video, index) => {
-  const card = document.createElement("a");
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const url = new URL("video.html", window.location.origin);
-url.searchParams.set("title", video.title);
-url.searchParams.set("desc", video.description);
-url.searchParams.set("videoURL", video.videoURL);
-card.href = url.toString();
-=======
-  card.href = `video.html?id=${index}`;
->>>>>>> parent of bebbcf6 (updated)
-=======
-  card.href = `video.html?id=${index}`;
->>>>>>> parent of bebbcf6 (updated)
-  card.className = "block";
+ function createLinks(video,grid){
+   const link = document.createElement("a");
 
-  card.innerHTML = `
-    <div class="bg-white rounded-xl shadow overflow-hidden">
-      <video 
-        src="${video.videoURL}" 
-        class="w-full h-40 object-cover"
-        muted
-      ></video>
+  link.href = `video.html?id=${video.id}`;
+  link.className = "block";
 
-      <div class="p-4">
-        <h3 class="font-semibold text-lg">${video.title}</h3>
-        <p class="text-sm text-gray-600">${video.description}</p>
-      </div>
+  // 👇 teammate's card component (placeholder for now)
+  link.innerHTML = `
+    <div class="bg-white h-60 rounded-xl shadow flex items-center justify-center">
+     <span class="text-gray-500">
+     ${video.title || `Video ${video.id}`}
+     </span>
+
     </div>
   `;
+  grid.appendChild(link);
+ }
 
-  videoGrid.appendChild(card);
+videos.forEach(video => {
+  createLinks(video,videoGrid)
 });
 
-/* Sidebar */
+
+videos.forEach(video => {
+  createLinks(video,videoGrid2)
+});
+
+//side bar js
 const menuBtn = document.getElementById("menuBtn");
-const sidebar = document.getElementById("sidebar");
-const links = sidebar.querySelectorAll("a");
+const sideMenu = document.getElementById('sidebar');
+const closeSidebar = document.getElementById('closeBtn');
+const menuItems = document.getElementById('menuItems');
 
-menuBtn.addEventListener("click", () => {
-  sidebar.classList.toggle("-translate-x-full");
+//toggle sidebar
+menuBtn.addEventListener('click', () => {
+    sideMenu.classList.toggle('hidden');
 });
 
-links.forEach(link => {
-  link.addEventListener("click", () => {
-    sidebar.classList.add("-translate-x-full");
-  });
+
+// SIDEBAR
+closeSidebar.addEventListener('click', () => {
+    sideMenu.classList.add('hidden');
 });
 
-/* Search */
-const searchInput = document.getElementById("searchinput");
 
-searchInput.addEventListener("input", () => {
+// search by keyword feature
+const searchInput = document.getElementById("searchInput");
+
+
+searchInput.addEventListener("input", (e) => {
+  e.preventDefault();
   const query = searchInput.value.toLowerCase();
-  const cards = document.querySelectorAll("#videoGrid a");
+
+  const cards = document.querySelectorAll(".videoGrid a");
 
   cards.forEach(card => {
-    card.style.display = card.innerText.toLowerCase().includes(query)
-      ? "block"
-      : "none";
+    const text = card.innerText.toLowerCase();
+
+    if (text.includes(query)) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
   });
 });
+
+
