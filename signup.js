@@ -11,6 +11,7 @@ function showForm(form) {
     document.getElementById("forgotForm").classList.remove("hidden");
   }
 }
+const toggleElement = document.querySelector(".toggleElement");
 //show password toggle
 function togglePassword(inputId, toggleElement) {
   const input = document.getElementById(inputId);
@@ -22,60 +23,103 @@ function togglePassword(inputId, toggleElement) {
     toggleElement.textContent = "👁️ Show Password";
   }
 }
+const API_BASE_URL = "http://localhost:5000/api";
+
+const signupName = document.querySelector(".signupName");
+const signupEmail = document.querySelector(".signupEmail");
+const signupDob = document.querySelector(".dob");
+const signupGender = document.querySelector(".gender");
+const signupPhone = document.querySelector(".phone");
+const signupPassword = document.querySelector(".password");
+const signupExperience = document.querySelector(".experience");
+const signupLocation = document.querySelector(".farmLocation");
+const signupFarmType = document.querySelector(".farmType");
 
 /* =======================
    SIGN UP
 ======================= */
-document.getElementById("signupForm").addEventListener("submit", function (e) {
+document.getElementById("signupForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
   const user = {
-    name: this[0].value,
-    email: this[1].value,
-    dob: this[2].value,
-    gender: this[3].value,
-    phone: this[4].value,
-    password: this[5].value,
-    experience: this[6].value,
-    location: this[7].value,
-    farmType: this[8].value,
-    cac: this[9].value
+    name: signupName.value,
+    email: signupEmail.value,
+    DateOfBirth: signupDob.value, // Backend expects DateOfBirth
+    gender: signupGender.value,
+    phoneNumber: signupPhone.value, // Backend expects phoneNumber
+    password: signupPassword.value,
+    experience: signupExperience.value,
+    farmLocation: signupLocation.value, // Backend expects farmLocation
+    farmType: signupFarmType.value, // Backend expects farmType
   };
 
-  // save user (temporary)
-  localStorage.setItem("skillHarvestUser", JSON.stringify(user));
+  try {
+    console.log("Sending signup data:", user);
+    const response = await fetch(`${API_BASE_URL}/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
 
-  alert("Account created successfully!");
-  window.location.href = "Homepage.html";
+    const data = await response.json();
+    console.log("Signup response data:", data);
+
+    if (response.ok) {
+      alert("User registered successfully!");
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("skillHarvestUser", JSON.stringify(data.user));
+      window.location.href = "Homepage.html";
+    } else {
+      console.error("Signup failed:", data);
+      alert(data.message || "Registration failed. Check console for details.");
+    }
+  } catch (error) {
+    console.error("Signup error:", error);
+    alert("An error occurred during signup. Please try again.");
+  }
 });
 
 /* =======================
-   LOGIN
+    LOGIN
 ======================= */
-document.getElementById("loginForm").addEventListener("submit", function (e) {
+const loginName = document.querySelector(".loginName");
+const loginEmail = document.querySelector(".loginEmail");
+const loginPhone = document.querySelector(".loginPhone");
+const loginPassword = document.querySelector(".loginPassword");
+
+document.getElementById("loginForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
-  const storedUser = JSON.parse(
-    localStorage.getItem("skillHarvestUser")
-  );
+  const credentials = {
+    name: loginName.value,
+    email: loginEmail.value,
+    phoneNumber: loginPhone.value,
+    password: loginPassword.value,
+  };
 
-  if (!storedUser) {
-    alert("No account found. Please sign up.");
-    return;
-  }
+  try {
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
+    });
 
-  const name = this[0].value;
-  const phone = this[1].value;
-  const password = this[2].value;
+    const data = await response.json();
 
-  if (
-    name === storedUser.name &&
-    phone === storedUser.phone &&
-    password === storedUser.password
-  ) {
-    alert("Login successful!");
-    window.location.href = "Homepage.html";
-  } else {
-    alert("Incorrect login details");
+    if (response.ok) {
+      alert("Login successful!");
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("skillHarvestUser", JSON.stringify(data.user));
+      window.location.href = "Homepage.html";
+    } else {
+      alert(data.message || "Invalid login details");
+    }
+  } catch (error) {
+    console.error("Login error:", error);
+    alert("An error occurred during login. Please try again.");
   }
 });

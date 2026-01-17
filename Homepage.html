@@ -3,39 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <title>Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body class="bg-gray-100 min-h-screen">
   <!--fixed nav icon-->
-   <button
-   id="menuBtn"
-   class="fixed top-4 left-4 z-[60] p-3 bg-white rounded-md text-xl"
-   >
-   ☰
-   </button>
- <!--side bar-->
- <div
- id="sidebar"
- class="fixed top-0 left-0 h-full w-64 bg-white shadow-xl -translate-x-full
- transition-transform duration-300 z-40"
- >
-  <nav class="mt-24 flex flex-col gap-6 px-6 text-lg font-medium">
-    <a href="" class="hover:text-green-600">Home</a>
-    <a href="" class="hover:text-green-600">Profile</a>
-    <a href="" class="hover:text-green-600">Upload video</a>
-  </nav>
- </div>
+    <button
+    id="menuBtn"
+    class="fixed top-4 left-4 z-[60] p-3 bg-white rounded-md text-xl"
+    >
+    ☰
+    </button>
+  <!--side bar-->
+  <div
+  id="sidebar"
+  class="fixed top-0 left-0 h-full w-64 bg-white shadow-xl -translate-x-full
+  transition-transform duration-300 z-40"
+  >
+    <nav class="mt-24 flex flex-col gap-6 px-6 text-lg font-medium">
+      <a href="Homepage.html" class="hover:text-green-600">Home</a>
+      <a href="profile-content.html" class="hover:text-green-600">Profile</a>
+      <a href="upload.html" class="hover:text-green-600">Upload video</a>
+    </nav>
+  </div>
     <!--fixed search bar-->
-   <div class="fixed top-0 left-0 w-full bg-white shadow z-50 p-4 flex justify-center">
+  <div class="fixed top-0 left-0 w-full bg-white shadow z-50 p-4 flex justify-center">
     <input 
     id="searchinput" 
     type="text"
     placeholder="Search farming videos"
     class="w-full md:w-1/2 p-2 rounded-lg border border-gray-400 
     focus:outline-none focus:ring-green-500">
-   </div>
-   <!--main content-->
+  </div>
+  <!--main content-->
   <main class="max-w-7xl pt-28 mx-auto px-4 py-10">
+    
+    <!-- TRENDING VIDEOS SECTION -->
+    <div id="trendingSection" class="mb-12 hidden">
+      <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+        🔥 Trending Now
+      </h2>
+      <section
+        id="trendingGrid"
+        class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <!-- Trending cards injected here -->
+      </section>
+    </div>
+
     <h1 class="text-2xl font-bold mb-6">Latest Farming Videos</h1>
 
     <!-- VIDEO GRID -->
@@ -46,30 +60,27 @@
              sm:grid-cols-2
              md:grid-cols-3
              lg:grid-cols-4">
+      <!-- Global cards injected here -->
     </section>
-  </main>
 
-    <!-- Search Bar -->
-    <div
-      class="fixed top-0 left-0 w-full bg-white shadow z-50 p-4 flex justify-center"
-    >
-      <input
-        id="searchinput"
-        type="text"
-        placeholder="Search farming videos"
-        class="w-full md:w-1/2 p-2 rounded-lg border border-gray-400 focus:outline-none focus:ring-green-500"
-      />
+    <!-- PAGINATION CONTROLS -->
+    <div class="mt-12 flex justify-center items-center gap-4">
+      <button 
+        id="prevPage" 
+        class="px-4 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        disabled
+      >
+        Previous
+      </button>
+      <span id="pageInfo" class="font-medium text-gray-700">Page 1</span>
+      <button 
+        id="nextPage" 
+        class="px-4 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+      >
+        Next
+      </button>
     </div>
-
-    <!-- Main Content -->
-    <main class="max-w-7xl pt-28 mx-auto px-4 py-10">
-      <h1 class="text-2xl font-bold mb-6">Latest Farming Videos</h1>
-
-      <section
-        id="videoGrid"
-        class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-      ></section>
-    </main>
+  </main>
 
     <script src="home.js"></script>
   </body>
