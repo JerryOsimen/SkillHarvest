@@ -27,11 +27,6 @@ videos.forEach(video => {
   createLinks(video,videoGrid)
 });
 
-
-videos.forEach(video => {
-  createLinks(video,videoGrid2)
-});
-
 //side bar js
 const menuBtn = document.getElementById("menuBtn");
 const sideMenu = document.getElementById('sidebar');
