@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Profile Page</title>
   <link rel="stylesheet" href="profile-page.css" />
+  <link rel="stylesheet" href="notifications.css" />
 </head>
 <body>
 
@@ -13,6 +14,7 @@
 
 <!-- Sidebar -->
 <aside class="sidebar" id="sidebar">
+  <div class="close-sidebar" id="closeSidebar">&times;</div>
   <h2>Menu</h2>
   <a href="Homepage.html">Home</a>
   <a href="profile.html">Profile</a>
@@ -23,9 +25,29 @@
 <div class="main-content">
 
   <div class="profile-header">
-    <h1>WELCOME</h1>
-    <a href="profile-content.html" class="btn">View Profile</a>
+    <h1 id="welcomeUser">WELCOME</h1>
+    <div class="stats">
+      <span><strong id="followersCount">0</strong> Followers</span>
+      <span><strong id="followingCount">0</strong> Following</span>
+    </div>
+    <a href="profile-content.html" class="btn">View Identity Info</a>
   </div>
+
+  <!-- My Videos -->
+  <section class="my-videos">
+    <div class="section-header">
+      <h2>My Videos</h2>
+    </div>
+    <div class="video-grid" id="myVideosGrid"></div>
+  </section>
+
+  <!-- Bookmarks -->
+  <section class="bookmarks">
+    <div class="section-header">
+      <h2>Bookmarks</h2>
+    </div>
+    <div class="video-grid" id="bookmarksGrid"></div>
+  </section>
 
   <!-- Watch History -->
   <section class="history">
@@ -45,6 +67,7 @@
 
 </div>
 
+<script src="notifications.js"></script>
 <script src="profile.js"></script>
 <script src="hamburger.js"></script>
 </body>

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>SkillHarvest</title>
-  <link rel="stylesheet" href="signup.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="signup.css">
+  <link rel="stylesheet" href="notifications.css">
 </head>
 <body>
 
@@ -18,76 +20,109 @@
     <!-- SIGN UP FORM -->
     <form id="signupForm" class="form hidden">
       <h2>Sign Up</h2>
-
-      <input type="text" placeholder="Full Name" required />
-      <input type="email" placeholder="Email" required />
-      <input type="date" placeholder="Date of Birth" required />
-      <input type="text" placeholder="Gender" required />
-      <input type="tel" placeholder="Phone Number" required />
-      <div class="password-wrapper">
-       <input
-        type="password"
-        id="signupPassword"
-        placeholder="Password"
-        required
-       />
-       <span onclick="togglePassword('signupPassword')">👁️ show password</span>
+      <div class="input-group">
+        <input type="text" placeholder="Full Name" required class="signupName" name="name"/>
+        <span class="error-text" id="signup-name-error"></span>
+      </div>
+      <div class="input-group">
+        <input type="email" placeholder="Email" required name="email" class="signupEmail"/>
+        <span class="error-text" id="signup-email-error"></span>
+      </div>
+      <div class="input-group">
+        <input type="date" placeholder="Date of Birth" required name="DateOfBirth" class="dob"/>
+        <span class="error-text" id="signup-DateOfBirth-error"></span>
+      </div>
+      <div class="input-group">
+        <input type="text" placeholder="Gender" required name="gender" class="gender"/>
+        <span class="error-text" id="signup-gender-error"></span>
+      </div>
+      <div class="input-group">
+        <input type="tel" placeholder="Phone Number" required name="phoneNumber" class="phone"/>
+        <span class="error-text" id="signup-phoneNumber-error"></span>
+      </div>
+      <div class="input-group">
+        <div class="password-wrapper">
+          <input type="password" id="signupPassword" placeholder="Password" required name="password" class="password" />
+          <span onclick="togglePassword('signupPassword', this)" class="toggleElement">👁️ show password</span>
+        </div>
+        <span class="error-text" id="signup-password-error"></span>
       </div>
 
-      <input type="number" placeholder="Years of Experience" required />
-      <input type="text" placeholder="Farm Location" required />
-      <input type="text" placeholder="Farm Type (Poultry, Rice, Pig etc)" required />
+      <div class="input-group">
+        <input type="number" placeholder="Years of Experience" required name="experience" class="experience"/>
+        <span class="error-text" id="signup-experience-error"></span>
+      </div>
+      <div class="input-group">
+        <input type="text" placeholder="Farm Location" required name="farmLocation" class="farmLocation"/>
+        <span class="error-text" id="signup-farmLocation-error"></span>
+      </div>
+      <div class="input-group">
+        <input type="text" placeholder="Farm Type (Poultry, Rice, Pig etc)" required name="farmType" class="farmType"/>
+        <span class="error-text" id="signup-farmType-error"></span>
+      </div>
       
-
       <button type="submit">Create Account</button>
     </form>
 
     <!-- LOGIN FORM -->
     <form id="loginForm" class="form hidden">
       <h2>Sign In</h2>
-
-      <input type="text" placeholder="Full Name" required />
-      <input type="tel" placeholder="Phone Number" required />
-      <div class="password-wrapper">
-       <input
-         type="password"
-         id="loginPassword"
-         placeholder="Password"
-         required
-       />
-       <span onclick="togglePassword('loginPassword')">👁️ show password</span>
+      <div class="input-group">
+        <input type="text" placeholder="Full Name" required name="name" class="loginName"/>
+        <span class="error-text" id="login-name-error"></span>
       </div>
+      <div class="input-group">
+        <input type="email" placeholder="Email" required name="email" class="loginEmail"/>
+        <span class="error-text" id="login-email-error"></span>
+      </div>
+      <div class="input-group">
+        <input type="tel" placeholder="Phone Number" required name="phone" class="loginPhone"/>
+        <span class="error-text" id="login-phone-error"></span>
+      </div>
+      <div class="input-group">
+        <div class="password-wrapper">
+          <input type="password" id="loginPassword" placeholder="Password" required class="loginPassword" />
+          <span onclick="togglePassword('loginPassword', this)" class="toggleElement">👁️ show password</span>
+        </div>
+        <span class="error-text" id="login-password-error"></span>
+      </div>
+      <span class="error-text" id="login-general-error"></span>
 
       <p class="forgot" onclick="showForm('forgot')">
         Forgot Password?
       </p>
 
-
-
       <button type="submit">Login</button>
     </form>
-  <!-- FORGOT PASSWORD FORM -->
-   <form id="forgotForm" class="form hidden">
-    <h2>Reset Password</h2>
 
-    <input type="text" placeholder="Full Name" required />
-    <input type="tel" placeholder="Phone Number" required />
-    <div class="password-wrapper">
-     <input
-       type="password"
-       id="forgotPassword"
-       placeholder="Password"
-       required
-      />
-      <span onclick="togglePassword('forgotPassword')">👁️ show password</span>
-    </div>
+    <!-- FORGOT PASSWORD FORM -->
+    <form id="forgotForm" class="form hidden">
+      <h2>Reset Password</h2>
+      <div class="input-group">
+        <input type="text" placeholder="Full Name" required name="name" class="forgotName"/>
+        <span class="error-text" id="forgot-name-error"></span>
+      </div>
+      <div class="input-group">
+        <input type="tel" placeholder="Phone Number" required name="phone" class="forgotPhone"/>
+        <span class="error-text" id="forgot-phone-error"></span>
+      </div>
+      <div class="input-group">
+        <div class="password-wrapper">
+          <input type="password" id="resetPassword" placeholder="New Password" required />
+          <span onclick="togglePassword('resetPassword', this)" class="toggleElement">👁️show password</span>
+        </div>
+        <span class="error-text" id="forgot-password-error"></span>
+      </div>
+      <span class="error-text" id="forgot-general-error"></span>
 
-
-    <button type="submit">Reset Password</button>
-   </form>
+      <button type="submit">Reset Password</button>
+    </form>
     
   </div>
 
+  <script src="notifications.js"></script>
   <script src="signup.js"></script>
+
+
 </body>
 </html>
