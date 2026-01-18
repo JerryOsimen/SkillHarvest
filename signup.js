@@ -21,15 +21,18 @@ function showForm(form) {
   document.getElementById("signupForm").classList.add("hidden");
   document.getElementById("loginForm").classList.add("hidden");
   document.getElementById("forgotForm").classList.add("hidden");
-
-  if (form === "signup") {
-    document.getElementById("signupForm").classList.remove("hidden");
+  document.getElementById("welcome").classList.add("hidden")
+  document.getElementById("holder").classList.remove("hidden")
+ if (form === "signup") {
+     document.getElementById("signupForm").classList.remove("hidden");
   } else if (form === "login") {
     document.getElementById("loginForm").classList.remove("hidden");
   } else {
     document.getElementById("forgotForm").classList.remove("hidden");
   }
 }
+
+
 const toggleElement = document.querySelector(".toggleElement");
 //show password toggle
 function togglePassword(inputId, toggleElement) {

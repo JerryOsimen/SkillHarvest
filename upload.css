@@ -6,12 +6,17 @@
 }
 
 body {
+  display: flex;
+  justify-content: center;
   background-color: #ffffff;
+  padding: 20px
 }
 
 .upload-screen {
-  width: 100%;
-  padding: 1rem;
+  border-radius: 20px;
+  width: 55%;
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+  padding: 2rem;
 }
 
 h3 {
@@ -19,16 +24,17 @@ h3 {
 }
 
 .header p {
-  padding: 8px 0 0 20px;
-  font-size: 20px;
+  padding: 8px 0;
+  font-size: 14px;
+  
 }
 
 .upload-video {
   background-color: #ffffff;
-  padding: 25px;
+  width: 100%;
+  padding: 25px 0;
   border-radius: 14px;
   text-align: center;
-  box-shadow: 0 10px 25px;
   margin-bottom: 20px;
 }
 
@@ -172,6 +178,12 @@ textarea {
   .upload-screen {
     max-width: 1200px;
     margin: auto;
-    padding: 2rem;
+    padding: 5rem;
+  }
+}
+
+@media(max-width:600px){
+  .upload-screen {
+    width:80%;
   }
 }

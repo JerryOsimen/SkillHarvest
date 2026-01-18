@@ -1,128 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="signup.css">
-  <link rel="stylesheet" href="notifications.css">
+  <meta charset="UTF-8" />
+  <title>SkillHarvest</title>
+  <link rel="stylesheet" href="signup.css" />
+  <link rel="stylesheet" href="notifications.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
 
-  <div class="container">
-    <h1>Welcome to SkillHarvest</h1>
+<body class="flex flex-col w-full min-h-screen justify-center items-center py-40 md:px-10 md:py-10">
 
+  <!-- WELCOME PAGE -->
+  <div class="container max-w-lg md:max-w-xl" id="welcome">
+    <h1 class="h1 font-bold text-2xl py-2">Welcome to SkillHarvest</h1>
     <div class="btn-group">
-      <button onclick="showForm('signup')">Sign Up</button>
-      <button onclick="showForm('login')">Sign In</button>
+      <button class="home" onclick="showForm('signup')">Sign Up</button>
+      <button class="home" onclick="showForm('login')">Sign In</button>
     </div>
+  </div>
+
+  <!-- FORM HOLDER -->
+  <div class="container hidden w-full max-w-lg mx-auto" id="holder">
 
     <!-- SIGN UP FORM -->
-    <form id="signupForm" class="form hidden">
-      <h2>Sign Up</h2>
+    <form id="signupForm" class="form hidden flex flex-col gap-4">
+      <h1 class="font-bold text-2xl text-center text-[#EAB76A] py-3">Create Account</h1>
+
       <div class="input-group">
-        <input type="text" placeholder="Full Name" required class="signupName" name="name"/>
+        <label for="fullName" class="self-start py-4">Full Name</label>
+        <input type="text" id="fullName" class="signupName" name="name" placeholder="Full Name" required />
         <span class="error-text" id="signup-name-error"></span>
       </div>
+
       <div class="input-group">
-        <input type="email" placeholder="Email" required name="email" class="signupEmail"/>
+        <label for="email" class="self-start py-2">Email</label>
+        <input type="email" id="email" class="signupEmail" name="email" placeholder="Email" required />
         <span class="error-text" id="signup-email-error"></span>
       </div>
+
       <div class="input-group">
-        <input type="date" placeholder="Date of Birth" required name="DateOfBirth" class="dob"/>
+        <label for="dob" class="self-start py-2">Date of Birth</label>
+        <input type="date" id="dob" class="dob" name="DateOfBirth" required />
         <span class="error-text" id="signup-DateOfBirth-error"></span>
       </div>
+
       <div class="input-group">
-        <input type="text" placeholder="Gender" required name="gender" class="gender"/>
+        <label for="gender" class="self-start py-2">Gender</label>
+        <input type="text" id="gender" class="gender" name="gender" placeholder="Gender" required />
         <span class="error-text" id="signup-gender-error"></span>
       </div>
+
       <div class="input-group">
-        <input type="tel" placeholder="Phone Number" required name="phoneNumber" class="phone"/>
+        <label for="phoneNumber" class="self-start py-2">Phone Number</label>
+        <input type="tel" id="phoneNumber" class="phone" name="phoneNumber" placeholder="Phone Number" required />
         <span class="error-text" id="signup-phoneNumber-error"></span>
       </div>
+
       <div class="input-group">
-        <div class="password-wrapper">
-          <input type="password" id="signupPassword" placeholder="Password" required name="password" class="password" />
-          <span onclick="togglePassword('signupPassword', this)" class="toggleElement">👁️ show password</span>
+        <label for="signupPassword" class="self-start py-2">Password</label>
+        <div class="flex w-full justify-between items-center border rounded-sm py-0 border-[#cccccc]">
+          <input type="password" id="signupPassword" class="password outline-none w-full" placeholder="Password" required />
+          <span class="text-blue-500 toggleElement text-sm cursor-pointer pt-1 mr-4"
+            onclick="togglePassword('signupPassword', this)">👁️ Show Password</span>
         </div>
         <span class="error-text" id="signup-password-error"></span>
       </div>
 
       <div class="input-group">
-        <input type="number" placeholder="Years of Experience" required name="experience" class="experience"/>
+        <label for="experience" class="self-start py-2">Years of Experience</label>
+        <input type="number" id="experience" class="experience" name="experience" placeholder="Experience" required />
         <span class="error-text" id="signup-experience-error"></span>
       </div>
+
       <div class="input-group">
-        <input type="text" placeholder="Farm Location" required name="farmLocation" class="farmLocation"/>
+        <label for="farmLocation" class="self-start py-2">Farm Location</label>
+        <input type="text" id="farmLocation" class="farmLocation" name="farmLocation" placeholder="Farm Location" required />
         <span class="error-text" id="signup-farmLocation-error"></span>
       </div>
+
       <div class="input-group">
-        <input type="text" placeholder="Farm Type (Poultry, Rice, Pig etc)" required name="farmType" class="farmType"/>
+        <label for="farmType" class="self-start py-2">Farm Type</label>
+        <input type="text" id="farmType" class="farmType" name="farmType" placeholder="Farm Type (Poultry, Rice, Pig etc)" required />
         <span class="error-text" id="signup-farmType-error"></span>
       </div>
-      
-      <button type="submit">Create Account</button>
+
+      <span class="error-text" id="signup-general-error"></span>
+
+      <button class="btn mt-3" type="submit">Create Account</button>
+
+      <div class="py-6 text-center">
+        Already have an account?
+        <span class="text-[#EAB76A] cursor-pointer px-2" onclick="showForm('login')">Login</span>
+      </div>
     </form>
 
     <!-- LOGIN FORM -->
-    <form id="loginForm" class="form hidden">
-      <h2>Sign In</h2>
+    <form id="loginForm" class="form flex flex-col gap-4 hidden">
+      <h2 class="font-bold text-2xl text-center text-[#EAB76A] py-3">Sign In</h2>
+
       <div class="input-group">
-        <input type="text" placeholder="Full Name" required name="name" class="loginName"/>
+        <label for="loginName" class="self-start py-2">Full Name</label>
+        <input type="text" id="loginName" class="loginName" placeholder="Full Name" required />
         <span class="error-text" id="login-name-error"></span>
       </div>
+
       <div class="input-group">
-        <input type="email" placeholder="Email" required name="email" class="loginEmail"/>
+        <label class="self-start py-2">Email</label>
+        <input type="email" id="loginEmail" class="loginEmail" placeholder="Email" required />
         <span class="error-text" id="login-email-error"></span>
       </div>
+
       <div class="input-group">
-        <input type="tel" placeholder="Phone Number" required name="phone" class="loginPhone"/>
+        <label class="self-start py-2">Phone Number</label>
+        <input type="tel" id="loginPhone" class="loginPhone" placeholder="Phone Number" />
         <span class="error-text" id="login-phone-error"></span>
       </div>
+
       <div class="input-group">
-        <div class="password-wrapper">
-          <input type="password" id="loginPassword" placeholder="Password" required class="loginPassword" />
-          <span onclick="togglePassword('loginPassword', this)" class="toggleElement">👁️ show password</span>
+        <label for="loginPassword" class="self-start py-2">Password</label>
+        <div class="flex w-full justify-between items-center border rounded-sm py-0 border-[#cccccc]">
+          <input type="password" id="loginPassword" class="loginPassword outline-none w-full" placeholder="Password" required />
+          <span class="text-blue-500 text-sm cursor-pointer pt-1 mr-4"
+            onclick="togglePassword('loginPassword', this)">👁️ Show Password</span>
         </div>
         <span class="error-text" id="login-password-error"></span>
       </div>
+
       <span class="error-text" id="login-general-error"></span>
 
-      <p class="forgot" onclick="showForm('forgot')">
-        Forgot Password?
-      </p>
+      <div class="flex">
+        <p class="text-blue-500 cursor-pointer" onclick="showForm('forgot')">Forgot Password?</p>
+        <span class="text-[#EAB76A] cursor-pointer px-2" onclick="showForm('signup')">Sign Up</span>
+      </div>
 
-      <button type="submit">Login</button>
+      <button class="btn" type="submit">Login</button>
     </form>
 
     <!-- FORGOT PASSWORD FORM -->
-    <form id="forgotForm" class="form hidden">
-      <h2>Reset Password</h2>
+    <form id="forgotForm" class="form flex flex-col gap-4 hidden">
+      <h2 class="font-bold text-xl text-center text-[#EAB76A] py-3">Reset Password</h2>
+
       <div class="input-group">
-        <input type="text" placeholder="Full Name" required name="name" class="forgotName"/>
+        <label class="self-start py-2">Email</label>
+        <input type="email" id="forgotName" class="forgotName" placeholder="Email" required />
         <span class="error-text" id="forgot-name-error"></span>
       </div>
+
       <div class="input-group">
-        <input type="tel" placeholder="Phone Number" required name="phone" class="forgotPhone"/>
-        <span class="error-text" id="forgot-phone-error"></span>
-      </div>
-      <div class="input-group">
-        <div class="password-wrapper">
-          <input type="password" id="resetPassword" placeholder="New Password" required />
-          <span onclick="togglePassword('resetPassword', this)" class="toggleElement">👁️show password</span>
+        <label class="self-start py-2">New Password</label>
+        <div class="flex w-full justify-between items-center border rounded-sm py-0 border-[#cccccc]">
+          <input type="password" id="resetPassword" class="resetPassword outline-none w-full" placeholder="New Password" required />
+          <span class="text-blue-500 text-sm cursor-pointer pt-1 mr-4"
+            onclick="togglePassword('resetPassword', this)">👁️ Show Password</span>
         </div>
         <span class="error-text" id="forgot-password-error"></span>
       </div>
+
       <span class="error-text" id="forgot-general-error"></span>
 
-      <button type="submit">Reset Password</button>
+      <button class="btn" type="submit">Reset Password</button>
     </form>
-    
+
   </div>
 
   <script src="notifications.js"></script>
   <script src="signup.js"></script>
-
 
 </body>
 </html>

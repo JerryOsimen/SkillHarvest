@@ -136,24 +136,27 @@ nextPageBtn.addEventListener("click", () => {
 });
 
 /* Sidebar */
+const sideMenu = document.getElementById('sidebar');
 const menuBtn = document.getElementById("menuBtn");
-const sidebar = document.getElementById("sidebar");
 const links = sidebar.querySelectorAll("a");
 
-menuBtn.addEventListener("click", () => {
-  sidebar.classList.toggle("-translate-x-full");
-});
+const closeSidebar = document.getElementById('closeBtn');
+const menuItems = document.getElementById('menuItems');
 
-links.forEach(link => {
-  link.addEventListener("click", () => {
-    sidebar.classList.add("-translate-x-full");
-  });
-});
+  closeSidebar.addEventListener('click', () => {
+        sideMenu.classList.add('hidden');
+    });
+
+    menuBtn.addEventListener('click', () => {
+        sideMenu.classList.toggle('hidden');
+    });
+
 
 /* Search */
-const searchInput = document.getElementById("searchinput");
+const searchInput = document.getElementById("searchInput");
 
-searchInput.addEventListener("input", () => {
+searchInput.addEventListener("input", (e) => {
+  e.preventDefault();
   const query = searchInput.value.toLowerCase();
   const cards = document.querySelectorAll("main a.block");
 
