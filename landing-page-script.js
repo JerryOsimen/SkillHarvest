@@ -45,5 +45,5 @@ updateSlider();
 });
 // Skip button click
 skipBtn.addEventListener("click", () => {
-  window.location.href = "signup.html"; 
+  window.location.href = "homepage.html"; 
 });
