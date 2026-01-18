@@ -1,7 +1,8 @@
 /* LOAD SELECTED VIDEO FROM HOME PAGE*/
 document.addEventListener('DOMContentLoaded', () => {
-    const API_BASE_URL = "http://127.0.0.1:5000/api";
+    const API_BASE_URL = "http://localhost:5000/api";
     let videoData = [];
+    let currentAuthorId = null;
     const params = new URLSearchParams(window.location.search);
     const videoURL = params.get("videoURL");
     const upload = document.querySelector('.upload')
@@ -9,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const description = params.get("desc");
     const videoId = params.get("id");
     const token = localStorage.getItem("token");
+    const authorId = params.get("authorId");
+    const authorName = params.get("authorName");
     const author = document.querySelector('.authorsName');
     const location = document.getElementById('location');
     const logout = document.querySelector('.logout')
@@ -20,14 +23,22 @@ document.addEventListener('DOMContentLoaded', () => {
         videoSource.src = videoURL;
         document.getElementById("video-title").textContent = title;
         document.getElementById("video-description").textContent = description;
-        // author.textContent = authorName;
+
+        if (authorName) author.textContent = authorName;
+        currentAuthorId = authorId;
+
         const userInfo = localStorage.getItem("skillHarvestUser");
-        const user = JSON.parse(userInfo);
-        author.textContent = user.name;
-        location.textContent = user.farmLocation;
-        console.log(user);
+        if (userInfo) {
+            const user = JSON.parse(userInfo);
+            location.textContent = user.farmLocation || "Unknown Location";
+        }
         videoPlayer.load();
+        incrementVideoViews(videoId);
+
+        // Initial sync of follow status
+        if (authorId) syncFollowStatus(authorId);
     }
+
 
 
     const mainVideo = document.getElementById('play-screen');
@@ -44,6 +55,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const commentBtn = document.getElementById('submit-comment');
     const mainVideoSrc = document.getElementById('main-screen-src');
     const videoList = document.getElementById("videoList");
+
+    // Modal Elements
+    const customModal = document.getElementById('customModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    const modalCancel = document.getElementById('modalCancel');
+    const modalConfirm = document.getElementById('modalConfirm');
+    const closeModal = document.getElementById('closeModal');
 
 
     // SHOW / HIDE VIDEO DESCRIPTION
@@ -63,11 +82,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (mainVideo.paused) {
             mainVideo.play();
             playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            // Increment views when user starts playing
+            if (videoId) incrementVideoViews(videoId);
         } else {
             mainVideo.pause();
             playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
         }
     });
+
+    async function incrementVideoViews(id) {
+        try {
+            await fetch(`${API_BASE_URL}/video/${id}/views`, { method: "POST" });
+        } catch (err) {
+            console.error("Failed to increment views:", err);
+        }
+    }
 
 
     // SIDEBAR
@@ -81,12 +110,12 @@ document.addEventListener('DOMContentLoaded', () => {
         mainVideo.controls = !mainVideo.controls;
     });
 
-    
-    
+
+
     upload.addEventListener('click', (e) => {
         // 1. Stop the anchor tag from navigating automatically
         e.preventDefault();
-    
+
         if (!token) {
             // 2. Redirect to signup if no token
             window.location.href = 'signup.html';
@@ -97,81 +126,260 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     logout.addEventListener('click', (e) => {
         e.preventDefault();
-        alert('logging out')
+        showNotification('Logging out...', 'info');
         localStorage.removeItem("token");
         localStorage.removeItem("skillHarvestUser")
-        window.location.replace('signup.html');
+        setTimeout(() => window.location.replace('signup.html'), 1000);
     })
 
 
 
     // RENDER COMMENT ITEM
-    const createCommentElement = (value) => {
+    const createCommentElement = (comment) => {
         const item = document.createElement('li');
+        item.id = `comment-${comment.id}`;
         item.classList.add(
-            "w-full", "py-2", "px-4", "max-w-full",
+            "w-full", "py-3", "px-4", "max-w-full",
             "break-words", "whitespace-normal",
             "overflow-hidden", "bg-green-800",
-            "rounded-lg", "mb-2", "text-white"
+            "rounded-lg", "mb-3", "text-white",
+            "relative", "group"
         );
 
+        const header = document.createElement("div");
+        header.classList.add("flex", "items-center", "mb-2", "gap-2");
+
         const img = document.createElement("img");
-        img.classList.add("size-8", "rounded-full", "mr-2", "bg-green-900");
-        img.src = value.commentorsImg;
+        img.classList.add("size-8", "rounded-full", "bg-green-900");
+        img.src = "./Videocard/assets/ooui_user-avatar-outline.png";
         img.alt = "User Icon";
 
-        item.appendChild(img);
-        item.appendChild(document.createTextNode(value.comment));
+        const authorName = document.createElement("span");
+        authorName.classList.add("font-bold", "text-sm");
+        authorName.textContent = comment.user?.name || "User";
+
+        const date = document.createElement("span");
+        date.classList.add("text-xs", "text-green-200");
+        date.textContent = new Date(comment.createdAt).toLocaleDateString();
+
+        header.appendChild(img);
+        header.appendChild(authorName);
+        header.appendChild(date);
+
+        const content = document.createElement("div");
+        content.classList.add("text-sm", "mt-1", "comment-content");
+        content.textContent = comment.content;
+
+        item.appendChild(header);
+        item.appendChild(content);
+
+        // AUTHOR ACTIONS (Edit/Delete)
+        const currentUser = JSON.parse(localStorage.getItem("skillHarvestUser"));
+        if (currentUser && currentUser.id === comment.userId) {
+            const actions = document.createElement("div");
+            actions.classList.add("absolute", "top-2", "right-2", "flex", "gap-2", "opacity-0", "group-hover:opacity-100", "transition-opacity");
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.innerHTML = '<i class="fas fa-trash-alt text-xs"></i>';
+            deleteBtn.classList.add("hover:text-red-400");
+            deleteBtn.onclick = () => handleDeleteComment(comment.id);
+
+            const editBtn = document.createElement("button");
+            editBtn.innerHTML = '<i class="fas fa-edit text-xs"></i>';
+            editBtn.classList.add("hover:text-blue-400");
+            editBtn.onclick = () => handleEditComment(comment.id, comment.content, content);
+
+            actions.appendChild(editBtn);
+            actions.appendChild(deleteBtn);
+            item.appendChild(actions);
+        }
+
         return item;
     };
 
+    /** ===========================
+     *  COMMENT ACTIONS
+     * =========================== */
+    async function fetchComments(videoId) {
+        try {
+            const res = await fetch(`${API_BASE_URL}/comments/${videoId}`);
+            const data = await res.json();
+            if (data.success) {
+                commentBox.innerHTML = "";
+                data.comments.forEach(c => {
+                    commentBox.appendChild(createCommentElement(c));
+                });
+                updateCommentCount(data.count);
+            }
+        } catch (err) {
+            console.error("Error fetching comments:", err);
+        }
+    }
 
-    // ADD COMMENT
-    const updateCommentField = (video) => {
-        const commentText = commentInput.value.trim();
-        if (commentText === "") return;
+    async function handleAddComment() {
+        if (!token) {
+            showNotification("Please login to comment", "error");
+            return;
+        }
 
-        const newComment = {
-            comment: commentText,
-            commentorsImg: "./Videocard/assets/ooui_user-avatar-outline.png"
+        const activeVideo = videoData.find(v => v.isPlaying);
+        if (!activeVideo) return;
+
+        const content = commentInput.value.trim();
+        if (!content) return;
+
+        try {
+            const res = await fetch(`${API_BASE_URL}/comments/${activeVideo.id}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ content })
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                commentBox.prepend(createCommentElement(data.comment));
+                commentInput.value = "";
+                // Refresh count
+                const currentCount = parseInt(document.querySelector(".comments").innerText.trim()) || 0;
+                updateCommentCount(currentCount + 1);
+                showNotification("Comment posted", "success");
+            } else {
+                showNotification(data.message || "Failed to post comment", "error");
+            }
+        } catch (err) {
+            console.error("Error posting comment:", err);
+        }
+    }
+
+    /** ===========================
+     *  CUSTOM MODAL LOGIC
+     * =========================== */
+    function showCustomModal({ title, body, confirmText, confirmClass, onConfirm, isPrompt, defaultValue }) {
+        modalTitle.textContent = title;
+        modalConfirm.textContent = confirmText || "Confirm";
+        modalConfirm.className = `modal-btn ${confirmClass || 'confirm'}`;
+
+        modalBody.innerHTML = "";
+        let inputEl = null;
+
+        if (isPrompt) {
+            inputEl = document.createElement('textarea');
+            inputEl.className = "modal-textarea";
+            inputEl.value = defaultValue || "";
+            modalBody.appendChild(inputEl);
+        } else {
+            const p = document.createElement('p');
+            p.textContent = body;
+            modalBody.appendChild(p);
+        }
+
+        customModal.classList.add('active');
+
+        const cleanup = () => {
+            customModal.classList.remove('active');
+            modalConfirm.onclick = null;
+            modalCancel.onclick = null;
+            closeModal.onclick = null;
         };
 
-        video.comments.push(newComment);
-        commentBox.appendChild(createCommentElement(newComment));
+        modalConfirm.onclick = () => {
+            const value = inputEl ? inputEl.value.trim() : true;
+            if (isPrompt && !value) return; // Don't allow empty prompts
+            onConfirm(value);
+            cleanup();
+        };
 
-        document.querySelector(".comments").innerHTML = `
-    < i class="fa-regular fa-comment px-2" ></i >
-        ${video.comments.length}
-`;
+        modalCancel.onclick = cleanup;
+        closeModal.onclick = cleanup;
+    }
 
-        commentInput.value = "";
-    };
+    async function handleDeleteComment(commentId) {
+        showCustomModal({
+            title: "Delete Comment",
+            body: "Are you sure you want to delete this comment? This action cannot be undone.",
+            confirmText: "Delete",
+            confirmClass: "delete",
+            onConfirm: async () => {
+                try {
+                    const res = await fetch(`${API_BASE_URL}/comments/${commentId}`, {
+                        method: "DELETE",
+                        headers: { "Authorization": `Bearer ${token}` }
+                    });
+
+                    if (res.ok) {
+                        const el = document.getElementById(`comment-${commentId}`);
+                        if (el) el.remove();
+                        const currentCount = parseInt(document.querySelector(".comments").innerText.trim()) || 0;
+                        updateCommentCount(currentCount - 1);
+                        showNotification("Comment deleted", "info");
+                    }
+                } catch (err) {
+                    console.error("Error deleting comment:", err);
+                }
+            }
+        });
+    }
+
+    async function handleEditComment(commentId, oldContent, contentEl) {
+        showCustomModal({
+            title: "Edit Comment",
+            isPrompt: true,
+            defaultValue: oldContent,
+            confirmText: "Update",
+            confirmClass: "confirm",
+            onConfirm: async (newContent) => {
+                if (newContent === oldContent) return;
+                try {
+                    const res = await fetch(`${API_BASE_URL}/comments/${commentId}`, {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ content: newContent })
+                    });
+
+                    if (res.ok) {
+                        contentEl.textContent = newContent;
+                        showNotification("Comment updated", "success");
+                    }
+                } catch (err) {
+                    console.error("Error updating comment:", err);
+                }
+            }
+        });
+    }
+
+    function updateCommentCount(count) {
+        const commentBadge = document.querySelector(".comments");
+        if (commentBadge) {
+            commentBadge.innerHTML = `<i class="fa-regular fa-comment px-2"></i> ${count}`;
+        }
+    }
+
 
     // ENTER KEY SUBMIT
     commentInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' && commentInput.value.trim() !== '') {
-            const activeVideo = videoData.find(v => v.isPlaying);
-            if (activeVideo) updateCommentField(activeVideo);
+            handleAddComment();
         }
     });
 
     // BUTTON SUBMIT
     commentBtn.addEventListener('click', () => {
-        const activeVideo = videoData.find(v => v.isPlaying);
-        if (activeVideo) updateCommentField(activeVideo);
+        handleAddComment();
     });
 
 
     // UPDATE MAIN SCREEN
     const mainScreenUpdate = (video) => {
 
-        // Reset comments area
-        commentBox.innerHTML = "";
-
-        // Load existing comments
-        video.comments.forEach(c => {
-            commentBox.appendChild(createCommentElement(c));
-        });
+        // Fetch comments from backend
+        fetchComments(video.id);
+        updateCommentCount(video.commentCount || 0);
 
         videoData.forEach(v => v.isPlaying = false);
         video.isPlaying = true;
@@ -179,6 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mainVideoSrc.src = video.src;
         mainVideo.load();
         mainVideo.play();
+        incrementVideoViews(video.id);
 
         // Update UI text
         document.getElementById("location").innerText = video.location;
@@ -186,11 +395,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll(".authorsName").forEach(n => {
             n.innerText = video.author;
         });
-
-        document.querySelector(".comments").innerHTML = `
-    <i class="fa-regular fa-comment px-2"></i>
-        ${video.comments.length}
-`;
 
         document.querySelectorAll(".uploadDate").forEach(d => {
             d.innerText = video.date;
@@ -208,8 +412,14 @@ document.addEventListener('DOMContentLoaded', () => {
         ${video.likes}
 `;
 
+        currentAuthorId = video.authorId;
+        updateFollowBtnState(video.isFollowing);
+
         const isMarked = getBookmarks().some(v => v.id === video.id);
         updateBookmarkBtn(isMarked);
+
+        // Sync follow status for the current author
+        syncFollowStatus(video.authorId);
 
         document.getElementById("bookmarkBtn").onclick = () => {
             const status = toggleBookmark(video);
@@ -222,7 +432,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // LIKE BUTTON
     const addToLikes = async (video) => {
         if (!token) {
-            alert("Please login to like videos");
+            showNotification("Please login to like videos", "error");
             return;
         }
 
@@ -236,11 +446,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await res.json();
 
             if (res.ok) {
-                
+
                 if (data.liked) {
                     video.likes++;
+                    showNotification("Video liked!", "success");
                 } else {
                     video.likes--;
+                    showNotification("Like removed", "info");
                 }
 
                 document.getElementById('likes').innerHTML = `
@@ -248,7 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ${video.likes}
                 `;
             } else {
-                alert(data.message || "Error liking video");
+                showNotification(data.message || "Error liking video", "error");
             }
         } catch (error) {
             console.error("Error liking video:", error);
@@ -259,6 +471,75 @@ document.addEventListener('DOMContentLoaded', () => {
         const activeVideo = videoData.find(v => v.isPlaying);
         if (activeVideo) addToLikes(activeVideo);
     });
+
+    // FOLLOW BUTTON
+    const followBtn = document.getElementById('followBtn');
+
+    async function toggleFollowAuthor() {
+        if (!token) {
+            showNotification("Please login to follow creators", "error");
+            return;
+        }
+        if (!currentAuthorId) return;
+
+        try {
+            const res = await fetch(`${API_BASE_URL}/follow/${currentAuthorId}`, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            const data = await res.json();
+
+            if (res.ok) {
+                updateFollowBtnState(data.following);
+                const activeVideo = videoData.find(v => v.isPlaying);
+                if (activeVideo) activeVideo.isFollowing = data.following;
+
+                showNotification(data.following ? "Following creator" : "Unfollowed creator", "success");
+            } else {
+                showNotification(data.message || "Error toggling follow", "error");
+            }
+        } catch (error) {
+            console.error("Error following creator:", error);
+            showNotification("Connection error", "error");
+        }
+    }
+
+    function updateFollowBtnState(isFollowing) {
+        if (!followBtn) return;
+        if (isFollowing) {
+            followBtn.textContent = "Following";
+            followBtn.classList.replace('bg-[#2e7d32]', 'bg-gray-500');
+        } else {
+            followBtn.textContent = "Follow";
+            followBtn.classList.replace('bg-gray-500', 'bg-[#2e7d32]');
+        }
+    }
+
+    async function syncFollowStatus(targetId) {
+        if (!token || !targetId) return;
+        try {
+            const res = await fetch(`${API_BASE_URL}/follow/${targetId}/status`, {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+            const data = await res.json();
+            if (data.success) {
+                updateFollowBtnState(data.isFollowing);
+                // Update local status in videoData
+                const activeVideo = videoData.find(v => v.id === (params.get("id") || (videoData.find(v => v.isPlaying)?.id)));
+                if (activeVideo && activeVideo.authorId === targetId) {
+                    activeVideo.isFollowing = data.isFollowing;
+                }
+            }
+        } catch (err) {
+            console.error("Error syncing follow status:", err);
+        }
+    }
+
+    if (followBtn) {
+        followBtn.addEventListener('click', toggleFollowAuthor);
+    }
 
 
 
@@ -370,16 +651,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     id: v.id,
                     title: v.title,
                     author: v.user?.name || "Unknown Author",
+                    authorId: v.userId,
                     views: v.views,
                     date: new Date(v.createdAt).toLocaleDateString(),
                     src: v.videoUrl,
-                    location: user.farmLocation,
-                    comments: v.comments?.map(c => ({
-                        comment: c.content,
-                        commentorsImg: "./Videocard/assets/ooui_user-avatar-outline.png"
-                    })) || [],
+                    location: user?.farmLocation || "N/A",
+                    commentCount: v._count?.comments || 0,
                     likes: v._count?.likes || 0,
-                    isPlaying: false
+                    isPlaying: false,
+                    isFollowing: false
                 }));
                 allVideos(videoData);
             }
@@ -397,16 +677,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     id: v.id,
                     title: v.title,
                     author: v.user?.name || "Unknown Author",
+                    authorId: v.userId,
                     views: v.views,
                     date: new Date(v.createdAt).toLocaleDateString(),
                     src: v.videoUrl,
                     location: v.user?.farmLocation || "N/A",
-                    comments: v.comments?.map(c => ({
-                        comment: c.content,
-                        commentorsImg: "./Videocard/assets/ooui_user-avatar-outline.png"
-                    })) || [],
+                    commentCount: v._count?.comments || 0,
                     likes: v._count?.likes || 0,
-                    isPlaying: false
+                    isPlaying: false,
+                    isFollowing: false
                 }));
                 allVideos(trendingData);
             }
@@ -425,16 +704,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     id: v.id,
                     title: v.title,
                     author: v.user?.name || "Unknown Author",
+                    authorId: v.userId,
                     views: v.views,
                     date: new Date(v.createdAt).toLocaleDateString(),
                     src: v.videoUrl,
                     location: v.user?.farmLocation || "N/A",
-                    comments: v.comments?.map(c => ({
-                        comment: c.content,
-                        commentorsImg: "./Videocard/assets/ooui_user-avatar-outline.png"
-                    })) || [],
+                    commentCount: v._count?.comments || 0,
                     likes: v._count?.likes || 0,
-                    isPlaying: false
+                    isPlaying: false,
+                    isFollowing: false
                 }));
                 allVideos(similarData);
             }
@@ -541,7 +819,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Toggle bookmark for a video
     async function toggleBookmark(video) {
         if (!token) {
-            alert("Please login to bookmark videos");
+            showNotification("Please login to bookmark videos", "error");
             return false;
         }
 
@@ -554,11 +832,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (data.success) {
                 if (data.bookmarked) {
-                    alert("Added to bookmarks");
+                    showNotification("Added to bookmarks", "success");
                     bookmarkedVideos.push(video); // Optimistic update or refetch
                     return true;
                 } else {
-                    alert("Removed from bookmarks");
+                    showNotification("Removed from bookmarks", "success");
                     bookmarkedVideos = bookmarkedVideos.filter(v => v.id !== video.id);
                     return false;
                 }
@@ -604,7 +882,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             // Fallback for desktop
             navigator.clipboard.writeText(shareUrl);
-            alert("Link copied to clipboard!");
+            showNotification("Link copied to clipboard!", "success");
         }
     }
 

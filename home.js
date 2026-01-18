@@ -22,6 +22,8 @@ function renderVideoCard(video) {
   url.searchParams.set("title", video.title);
   url.searchParams.set("desc", video.description);
   url.searchParams.set("videoURL", video.videoUrl);
+  url.searchParams.set("authorId", video.userId);
+  url.searchParams.set("authorName", video.user?.name || "Farmer");
   card.href = url.href;
 
   card.className = "block bg-white rounded-xl shadow overflow-hidden transform transition-transform hover:scale-[1.02]";
@@ -72,9 +74,12 @@ async function fetchTrendingVideos() {
       data.videos.forEach(video => {
         trendingGrid.appendChild(renderVideoCard(video));
       });
+    } else if (!response.ok) {
+      showNotification(data.message || "Failed to load trending videos.", "error");
     }
   } catch (error) {
     console.error("Error fetching trending videos:", error);
+    showNotification("Failed to load trending videos.", "error");
   }
 }
 
@@ -89,8 +94,6 @@ async function fetchGlobalVideos(page = 1) {
     if (response.ok && data.success) {
       videoGrid.innerHTML = "";
 
-      // Backend uses 'totalVideos' for global, 'count' for trending/search usually
-      // We can use data.videos.length to check for emptiness safely
       if (data.videos.length === 0) {
         videoGrid.innerHTML = `
           <p class="text-gray-500 col-span-full text-center py-10">
@@ -103,18 +106,18 @@ async function fetchGlobalVideos(page = 1) {
         });
       }
 
-      // Update pagination state based on backend response structure:
-      // { page, totalPages, totalVideos, videos }
+      // Update pagination state
       currentPage = data.page;
       pageInfo.textContent = `Page ${currentPage} of ${data.totalPages || 1}`;
       prevPageBtn.disabled = currentPage <= 1;
       nextPageBtn.disabled = currentPage >= (data.totalPages || 1);
-
     } else {
       console.error("Failed to fetch videos:", data.message);
+      showNotification(data.message || "Failed to load videos.", "error");
     }
   } catch (error) {
     console.error("Error fetching global videos:", error);
+    showNotification("Failed to load videos. Is the backend running?", "error");
     videoGrid.innerHTML = `<p class="text-red-500 col-span-full text-center">Failed to load videos. Is the backend running?</p>`;
   }
 }

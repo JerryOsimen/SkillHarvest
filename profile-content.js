@@ -1,13 +1,24 @@
 // Get user data from localStorage
-const user = JSON.parse(localStorage.getItem("userProfile"));
-
+const user = JSON.parse(localStorage.getItem("skillHarvestUser"));
+const date = user.DateOfBirth || user.dob;
+const dob = new Date(date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 if (user) {
-  document.getElementById("name").textContent = user.name || "";
-  document.getElementById("email").textContent = user.email || "";
-  document.getElementById("cac").textContent = user.cac || "";
-  document.getElementById("dob").textContent = user.dob || "";
-  document.getElementById("gender").textContent = user.gender || "";
-  document.getElementById("phone").textContent = user.phone || "";
+  const fields = {
+    name: user.name,
+    email: user.email,
+    dob: dob,
+    gender: user.gender,
+    phone: user.phoneNumber
+  };
+
+  const displayNameEl = document.getElementById("display-name");
+  if (displayNameEl) displayNameEl.textContent = user.name || "User";
+
+  for (const [id, value] of Object.entries(fields)) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value || "N/A";
+  }
 } else {
-  document.querySelector(".profile-info").innerHTML = "<p>No profile info available.</p>";
+  const info = document.querySelector(".identity-card-container");
+  if (info) info.innerHTML = "<p>No profile info available.</p>";
 }

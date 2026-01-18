@@ -20,12 +20,12 @@ document.getElementById("uploadBtn").addEventListener("click", async () => {
   const token = localStorage.getItem("token");
 
   if (!videoFile || !title || !description || !tags) {
-    alert("Please fill all fields and select a video.");
+    showNotification("Please fill all fields and select a video.", "error");
     return;
   }
 
   if (!token) {
-    alert("You must be logged in to upload a video.");
+    showNotification("You must be logged in to upload a video.", "error");
     window.location.href = "signup.html";
     return;
   }
@@ -52,16 +52,16 @@ document.getElementById("uploadBtn").addEventListener("click", async () => {
     const data = await response.json();
 
     if (response.ok) {
-      alert("Video uploaded successfully!");
+      showNotification("Video uploaded successfully!", "success");
       window.location.href = "Homepage.html";
     } else {
-      alert(data.message || "Upload failed. Please ensure the video is between 2-5 minutes.");
+      showNotification(data.message || "Upload failed. Please ensure the video is between 2-5 minutes.", "error");
       uploadBtn.textContent = "Upload";
       uploadBtn.disabled = false;
     }
   } catch (error) {
     console.error("Upload error:", error);
-    alert("An error occurred during upload. Please try again.");
+    showNotification("An error occurred during upload. Please try again.", "error");
     document.getElementById("uploadBtn").textContent = "Upload";
     document.getElementById("uploadBtn").disabled = false;
   }

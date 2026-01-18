@@ -10,6 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script defer src="https://kit.fontawesome.com/79e3c5887d.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="video.css">
+    <link rel="stylesheet" href="notifications.css">
     <title>Video Player</title>
 </head>
 
@@ -151,7 +152,7 @@
                         </div>
                     </div>
 
-                    <button class="px-3 bg-[#2e7d32] video-card py-2 rounded-2xl text-white">Follow</button>
+                    <button id="followBtn" class="px-3 bg-[#2e7d32] video-card py-2 rounded-2xl text-white">Follow</button>
                 </div>
 
                 <!-- ABOUT VIDEO -->
@@ -211,6 +212,26 @@
 
     <!-- JAVASCRIPT -->
     
+    <!-- Custom Modal Popup -->
+    <div id="customModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Modal Title</h3>
+                <button id="closeModal" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic content (text or textarea) -->
+            </div>
+            <div class="modal-footer">
+                <button id="modalCancel" class="modal-btn cancel">Cancel</button>
+                <button id="modalConfirm" class="modal-btn confirm">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="notifications.js"></script>
     <script src="video.js"></script>
 </body>
 

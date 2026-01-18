@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>User Profile</title>
-  <link rel="stylesheet" href="profile-page.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="profile-page.css">
 </head>
 <body>
 
@@ -13,27 +14,67 @@
 
 <!-- Sidebar -->
 <aside class="sidebar" id="sidebar">
+  <div class="close-sidebar" id="closeSidebar">&times;</div>
   <h2>Menu</h2>
-  <a href="Homepage.html">Home</a>
-  <a href="profile.html">Profile</a>
-  <a href="upload.html">Upload Video</a>
+  <a href="Homepage.html"><i class="fas fa-home"></i> Home</a>
+  <a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+  <a href="upload.html"><i class="fas fa-upload"></i> Upload Video</a>
 </aside>
 
 <!-- Main content -->
 <div class="main-content">
 
   <div class="profile-header">
-    <h1>My Profile</h1>
+    <h1>Identity Information</h1>
+    <p class="header-subtitle">Your personal details and account info</p>
   </div>
 
-  <div class="profile-content center-page">
-    <div class="profile-info">
-      <h2>PROFILE INFO</h2>
-      <p><strong>Name:</strong> <span id="name"></span></p>
-      <p><strong>Email:</strong> <span id="email"></span></p>
-      <p><strong>Date of Birth:</strong> <span id="dob"></span></p>
-      <p><strong>Gender:</strong> <span id="gender"></span></p>
-      <p><strong>Phone Number:</strong> <span id="phone"></span></p>
+  <div class="identity-card-container">
+    <div class="identity-card">
+      <div class="avatar-section">
+        <div class="avatar-circle">
+          <i class="fas fa-user"></i>
+        </div>
+        <h2 id="display-name">User Name</h2>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <i class="fas fa-id-card icon"></i>
+          <div class="info-label">Full Name</div>
+          <div class="info-value" id="name">Loading...</div>
+        </div>
+
+        <div class="info-item">
+          <i class="fas fa-envelope icon"></i>
+          <div class="info-label">Email Address</div>
+          <div class="info-value" id="email">Loading...</div>
+        </div>
+
+        <div class="info-item">
+          <i class="fas fa-calendar-alt icon"></i>
+          <div class="info-label">Date of Birth</div>
+          <div class="info-value" id="dob">Loading...</div>
+        </div>
+
+        <div class="info-item">
+          <i class="fas fa-venus-mars icon"></i>
+          <div class="info-label">Gender</div>
+          <div class="info-value" id="gender">Loading...</div>
+        </div>
+
+        <div class="info-item">
+          <i class="fas fa-phone icon"></i>
+          <div class="info-label">Phone Number</div>
+          <div class="info-value" id="phone">Loading...</div>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <a href="profile.html" class="back-btn">
+          <i class="fas fa-arrow-left"></i> Back to Profile
+        </a>
+      </div>
     </div>
   </div>
 

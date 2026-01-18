@@ -17,6 +17,7 @@ body {
 h3 {
   font-size: 24px;
 }
+
 .header p {
   padding: 8px 0 0 20px;
   font-size: 20px;
@@ -30,6 +31,7 @@ h3 {
   box-shadow: 0 10px 25px;
   margin-bottom: 20px;
 }
+
 .upload-box {
   display: block;
   border: 2px dashed #2e7d32;
@@ -38,30 +40,60 @@ h3 {
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
 }
+
 .upload-box:hover {
   background-color: #ffffff;
   border-color: #2e7d32;
 }
+
 .upload-content p {
   margin: 5px 0;
   font-weight: bold;
 }
+
 .upload-content small {
   color: #2e7d32;
   font-size: 14px;
 }
+
 .upload-btn {
-  margin-top: 15px;
-  padding: 10px 20px;
-  background-color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-}
-.upload-btn:hover {
+  margin-top: 30px;
+  padding: 14px 28px;
   background-color: #2e7d32;
   color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+}
+
+.upload-btn:hover {
+  background-color: #1b5e20;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(46, 125, 50, 0.3);
+}
+
+.upload-btn:active {
+  transform: translateY(0);
+}
+
+.upload-btn:disabled {
+  background-color: #a5d6a7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+#previewVideo {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  margin: 20px auto;
+  display: block;
+  border: 1px solid #e0e0e0;
 }
 
 .card {
