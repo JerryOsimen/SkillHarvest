@@ -42,7 +42,7 @@ function togglePassword(inputId, toggleElement) {
     toggleElement.textContent = "👁️ Show Password";
   }
 }
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "https://skillharvest-backend.onrender.com/api";
 
 const signupName = document.querySelector(".signupName");
 const signupEmail = document.querySelector(".signupEmail");

@@ -9,7 +9,7 @@ videoInput.addEventListener("change", () => {
   previewVideo.classList.remove("hidden");
 });
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "https://skillharvest-backend.onrender.com/api";
 
 document.getElementById("uploadBtn").addEventListener("click", async () => {
   const videoInput = document.getElementById("videoInput");

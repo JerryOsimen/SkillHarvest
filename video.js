@@ -1,6 +1,6 @@
 /* LOAD SELECTED VIDEO FROM HOME PAGE*/
 document.addEventListener('DOMContentLoaded', () => {
-    const API_BASE_URL = "http://localhost:5000/api";
+    const API_BASE_URL = "https://skillharvest-backend.onrender.com/api";
     let videoData = [];
     let currentAuthorId = null;
     const params = new URLSearchParams(window.location.search);
