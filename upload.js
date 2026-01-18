@@ -66,4 +66,4 @@ document.getElementById("uploadBtn").addEventListener("click", async () => {
     document.getElementById("uploadBtn").disabled = false;
   }
 });
-})
+
