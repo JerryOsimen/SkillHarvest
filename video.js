@@ -46,9 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sideMenu = document.getElementById('sidebar');
 
     const closeSidebar = document.getElementById('closeBtn');
-    const menuItems = document.getElementById('menuItems');
     const playBtn = document.getElementById('playBtn');
-    const playOverlay = document.getElementById('playOverlay');
     const authorsDetails = document.getElementById('authorsDetails');
     const commentInput = document.getElementById('comment-input');
     const commentBox = document.getElementById('commentBox');
