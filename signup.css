@@ -1,6 +1,4 @@
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
 }
@@ -12,6 +10,18 @@ body {
   justify-content: center;
   align-items: center;
   background: #f4f4f4; /* light neutral background */
+}
+
+#signupPassword,
+#forgotPassword,
+#loginPassword{
+  display: flex;
+  align-items: center;
+  border: none;
+  width: 65%;
+  padding:6px 12px;
+  margin-top: 10px;
+  margin-bottom: 0;
 }
 
 /* MAIN WHITE BOX */
@@ -58,14 +68,13 @@ button:hover {
 
 .form input {
   width: 100%;
+  margin-top:10px;
   padding: 12px;
-  margin-bottom: 4px;
   border-radius: 6px;
   border: 1px solid #ccc;
 }
 
 .input-group {
-  margin-bottom: 12px;
   text-align: left;
 }
 
