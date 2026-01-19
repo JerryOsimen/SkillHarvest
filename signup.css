@@ -14,7 +14,6 @@ body {
 
 #signupPassword,
 #forgotPassword,
-#resetPassword,
 #loginPassword{
   display: flex;
   align-items: center;
