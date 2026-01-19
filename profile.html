@@ -6,6 +6,8 @@
   <title>Profile Page</title>
   <link rel="stylesheet" href="profile-page.css" />
   <link rel="stylesheet" href="notifications.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script defer src="https://kit.fontawesome.com/79e3c5887d.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -13,19 +15,30 @@
 <div class="hamburger" id="hamburger">&#9776;</div>
 
 <!-- Sidebar -->
-<aside class="sidebar" id="sidebar">
-  <div class="close-sidebar" id="closeSidebar">&times;</div>
-  <h2>Menu</h2>
-  <a href="Homepage.html">Home</a>
-  <a href="profile.html">Profile</a>
-  <a href="upload.html">Upload Video</a>
-</aside>
+<aside id="sidebar"
+        class="w-64 h-full bg-[#2e7d32] text-white fixed top-0 left-0 z-40 transition-transform duration-300 ease-in-out max-md:w-full max-md:h-auto">
+
+        <div class="flex justify-between items-center mt-8 px-4">
+            <h2 class="font-bold text-white pl-4">Menu</h2>
+        </div>
+
+        <ul class="flex flex-col gap-4 px-5 py-4" id="menuItems">
+            <li><a href="Homepage.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
+                        class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="signup.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
+                        class="fa-solid fa-compass"></i>Sign In</a></li>
+            <li><a href="profile.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
+                        class="fa-solid fa-user"></i> Profile</a></li>
+            <li><a href="landingpage.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i class="fa-solid fa-plane-arrival"></i> Landing page </a>
+                </li>
+        </ul>
+    </aside>
 
 <!-- Main content -->
-<div class="main-content">
+<div class="main-content px-5">
 
-  <div class="profile-header">
-    <h1 id="welcomeUser">WELCOME</h1>
+  <div class="profile-header mb-5">
+    <h1 id="welcomeUser" class="text-xl font-bold">WELCOME</h1>
     <div class="stats">
       <span><strong id="followersCount">0</strong> Followers</span>
       <span><strong id="followingCount">0</strong> Following</span>
@@ -34,7 +47,7 @@
   </div>
 
   <!-- My Videos -->
-  <section class="my-videos">
+  <section class="my-videos font-bold text-xl px-5 py-2">
     <div class="section-header">
       <h2>My Videos</h2>
     </div>
@@ -42,7 +55,7 @@
   </section>
 
   <!-- Bookmarks -->
-  <section class="bookmarks">
+  <section class="bookmarks font-bold text-xl px-5 py-2">
     <div class="section-header">
       <h2>Bookmarks</h2>
     </div>
@@ -50,7 +63,7 @@
   </section>
 
   <!-- Watch History -->
-  <section class="history">
+  <section class="history font-bold text-xl px-5 py-2">
     <div class="section-header">
       <h2>History</h2>
     </div>
@@ -58,7 +71,7 @@
   </section>
 
   <!-- Liked Videos -->
-  <section class="likes">
+  <section class="likes font-bold text-xl px-5 py-2">
     <div class="section-header">
       <h2>Likes</h2>
     </div>

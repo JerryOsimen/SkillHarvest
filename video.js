@@ -46,9 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sideMenu = document.getElementById('sidebar');
 
     const closeSidebar = document.getElementById('closeBtn');
-    const menuItems = document.getElementById('menuItems');
     const playBtn = document.getElementById('playBtn');
-    const playOverlay = document.getElementById('playOverlay');
     const authorsDetails = document.getElementById('authorsDetails');
     const commentInput = document.getElementById('comment-input');
     const commentBox = document.getElementById('commentBox');
@@ -547,20 +545,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const allVideos = (videoData) => {
         videoData.forEach(video => {
             const card = document.createElement("div");
-            card.className = "video-card text-white grid h-32 max-lg:h-full grid-cols-[1fr_2fr] max-lg:grid-cols-[1fr] bg-[#2e7d32] hover:bg-[#1b5e20] rounded-3xl gap-2 p-3";
+            card.className = "video-card text-white grid h-32 max-lg:h-full grid-cols-[1fr_2fr] max-lg:grid-cols-[1fr] bg-[#2e7d32] hover:bg-[#1b5e20] rounded-3xl max-lg:p-0 gap-2 p-3";
 
             card.innerHTML = `
-                <video muted class="object-cover h-full rounded-xl max-lg:rounded-t-xl">
+                <video muted class="object-cover max-w-full h-full rounded-xl max-lg:rounded-b-none max-lg:rounded-t-xl">
                         <source src="${video.src}">
                 </video>
-                <div class="flex flex-col justify-center max-lg:items-center px-10 max-lg:px-2 max-lg:text-center">
+                <div class="flex flex-col justify-center max-lg:items-center px-10 max-lg:p-2 max-lg:text-center">
                     <h3 class="font-bold">${video.title}</h3>
                     <p class="text-sm">${video.author}</p>
                     <p class="text-sm">${video.views} views</p>
                     <p class="text-sm">${video.date}</p>
                 </div>
             `;
+            if(video.id==="7d3154d3-9774-463e-bd98-aa5e1370ab6a"){
+                card.innerHTML=""
+                card.classList.add("hidden")
 
+            }
             document.getElementById("shareBtn").onclick = () => shareVideo(video);
 
             card.onclick = () => {
@@ -783,7 +785,7 @@ document.addEventListener('DOMContentLoaded', () => {
         allVideos(found)
     }
 
-
+    document.getElementById("similarVideos").addEventListener ("click",()=>{trendingSearch(videoData)})
     const searchInput = document.getElementById("search-bar")
 
     searchInput.addEventListener('keydown', (e) => {
@@ -838,6 +840,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     showNotification("Removed from bookmarks", "success");
                     bookmarkedVideos = bookmarkedVideos.filter(v => v.id !== video.id);
+                    document.getElementById("bookmarkBtn").innerHTML= `<i
+                            class="fa-regular fa-bookmark"></i>`
+
                     return false;
                 }
             }
