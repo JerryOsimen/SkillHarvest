@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
   font-family: Arial, sans-serif;
+
 }
 
 body {
@@ -9,7 +10,7 @@ body {
   padding: 40px;
   justify-content: center;
   align-items: center;
-  background: #f4f4f4; /* light neutral background */
+  background:#1b5e20 ; /* light neutral background */
 }
 
 #signupPassword,
@@ -31,7 +32,6 @@ body {
   max-width: 500px;
   padding: 40px;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
 /* BUTTONS */
@@ -39,6 +39,7 @@ body {
   display: flex;
   justify-content: space-between;
   margin: 20px 0;
+  font-size: 20px;
 }
 
  
@@ -99,7 +100,10 @@ button:hover {
 /* RESPONSIVE */
 @media (max-width: 600px) {
   .container {
-    padding: 25px;
+    width: 100%;
+    max-width: 100%;
+    padding: 28px;
+    transform: scale(1.05);
   }
 }
 .password-wrapper {
@@ -113,3 +117,19 @@ button:hover {
   transform: translateY(-50%);
   cursor: pointer;
 }
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+}
+@media (max-width: 600px) {
+  .form input {
+    padding: 14px;
+    font-size: 16px;
+  }
+
+  button {
+    font-size: 16px;
+  }
+}
+
