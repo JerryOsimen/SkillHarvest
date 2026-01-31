@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SkillHarvest</title>
 
-  <!-- Notification styles -->
   <link rel="stylesheet" href="notifications.css" />
-
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
   <style>
@@ -15,195 +13,138 @@
       height: 100%;
       overflow-x: hidden;
     }
+
+    label {
+      color: #000;
+      font-weight: 500;
+    }
   </style>
 </head>
 
-<body class="w-full h-full bg-white md:bg-[#1b5e20]">
+<body class="w-full min-h-screen bg-white md:bg-[#1b5e20]">
 
-  <!-- MAIN -->
-  <main class="w-full h-full flex flex-col">
+<main class="w-full min-h-screen">
 
-    <!-- ================= WELCOME PAGE ================= -->
-    <section
-      id="welcome"
-      class="w-full h-screen flex items-center justify-center overflow-hidden">
+  <!-- ================= WELCOME ================= -->
+  <section id="welcome" class="w-full h-screen flex items-center justify-center">
+    <div class="w-full h-full flex flex-col items-center justify-center px-6
+                md:h-auto md:max-w-2xl md:bg-white md:rounded-2xl md:shadow-2xl md:p-12">
 
-      <!-- MOBILE = full width, no card -->
-      <!-- TABLET/PC = centered card -->
-      <div
-        class="w-full h-full flex flex-col items-center justify-center px-6
-               md:h-auto md:max-w-2xl md:bg-white md:rounded-2xl md:shadow-2xl md:p-12">
+      <h1 class="text-3xl md:text-4xl font-bold text-[#1b5e20] text-center">
+        Welcome to SkillHarvest
+      </h1>
 
-        <h1 class="font-bold text-3xl md:text-4xl text-center text-[#1b5e20] md:text-[#1b5e20]">
-          Welcome to SkillHarvest
-        </h1>
+      <div class="flex w-full gap-4 mt-8">
+        <button class="w-1/2 py-3 rounded-lg bg-[#2e7d32] text-white"
+          onclick="showForm('signup')">Sign Up</button>
 
-        <div class="flex w-full gap-4 mt-6">
-          <button
-            type="button"
-            class="w-1/2 py-3 rounded-lg bg-[#2e7d32] text-white font-medium"
-            onclick="showForm('signup')">
-            Sign Up
-          </button>
+        <button class="w-1/2 py-3 rounded-lg bg-[#2e7d32] text-white"
+          onclick="showForm('login')">Sign In</button>
+      </div>
+    </div>
+  </section>
 
-          <button
-            type="button"
-            class="w-1/2 py-3 rounded-lg bg-[#2e7d32] text-white font-medium"
-            onclick="showForm('login')">
-            Sign In
-          </button>
+  <!-- ================= FORMS ================= -->
+  <section id="holder" class="hidden w-full min-h-screen flex justify-center">
+
+    <div class="w-full min-h-screen px-6 py-8
+                md:min-h-0 md:max-w-lg md:bg-white md:rounded-2xl md:shadow-xl md:p-10">
+
+      <!-- ================= SIGN UP ================= -->
+      <form id="signupForm" class="hidden flex flex-col gap-4">
+        <h2 class="text-2xl font-bold text-center text-[#2e7d32]">Create Account</h2>
+
+        <div><label>Full Name</label><input class="signupName border p-3 rounded-lg w-full" /></div>
+        <div><label>Email</label><input class="signupEmail border p-3 rounded-lg w-full" /></div>
+        <div><label>Date of Birth</label><input type="date" class="dob border p-3 rounded-lg w-full" /></div>
+        <div><label>Gender</label><input class="gender border p-3 rounded-lg w-full" /></div>
+        <div><label>Phone Number</label><input class="phone border p-3 rounded-lg w-full" /></div>
+        <div><label>Password</label><input type="password" class="password border p-3 rounded-lg w-full" /></div>
+        <div><label>Years of Experience</label><input class="experience border p-3 rounded-lg w-full" /></div>
+        <div><label>Farm Location</label><input class="farmLocation border p-3 rounded-lg w-full" /></div>
+        <div><label>Farm Type</label><input class="farmType border p-3 rounded-lg w-full" /></div>
+
+        <button type="submit" class="bg-[#2e7d32] text-white py-3 rounded-lg mt-2">
+          Create Account
+        </button>
+
+        <p class="text-center text-sm">
+          Already have an account?
+          <span class="text-[#2e7d32] cursor-pointer" onclick="showForm('login')">Login</span>
+        </p>
+      </form>
+
+      <!-- ================= LOGIN ================= -->
+      <form id="loginForm" class="hidden flex flex-col gap-4">
+        <h2 class="text-2xl font-bold text-center text-[#2e7d32]">Sign In</h2>
+
+        <div><label>Email</label><input class="loginEmail border p-3 rounded-lg w-full" /></div>
+        <div><label>Password</label><input type="password" class="loginPassword border p-3 rounded-lg w-full" /></div>
+
+        <p class="text-sm text-right text-[#2e7d32] cursor-pointer"
+           onclick="showForm('forgot')">
+          Forgot password?
+        </p>
+
+        <button type="submit" class="bg-[#2e7d32] text-white py-3 rounded-lg">
+          Login
+        </button>
+
+        <p class="text-center text-sm">
+          Don’t have an account?
+          <span class="text-[#2e7d32] cursor-pointer" onclick="showForm('signup')">Sign Up</span>
+        </p>
+      </form>
+
+      <!-- ================= FORGOT PASSWORD ================= -->
+      <form id="forgotForm" class="hidden flex flex-col gap-4">
+        <h2 class="text-2xl font-bold text-center text-[#2e7d32]">Reset Password</h2>
+
+        <div>
+          <label>Email</label>
+          <input class="forgotName border p-3 rounded-lg w-full" />
         </div>
 
-      </div>
-    </section>
+        <div>
+          <label>New Password</label>
+          <input type="password" id="resetPassword" class="border p-3 rounded-lg w-full" />
+        </div>
 
-    <!-- ================= FORMS ================= -->
-    <section
-      id="holder"
-      class="hidden w-full min-h-screen flex items-center justify-center">
+        <button type="submit" class="bg-[#2e7d32] text-white py-3 rounded-lg">
+          Reset Password
+        </button>
 
-      <!-- FULL WIDTH ON MOBILE -->
-      <!-- CARD ONLY ON md+ -->
-      <div
-        class="w-full min-h-screen px-6 py-10
-               md:min-h-0 md:max-w-lg md:bg-white md:shadow-lg md:rounded-2xl md:p-10">
+        <p class="text-center text-sm">
+          Remembered your password?
+          <span class="text-[#2e7d32] cursor-pointer" onclick="showForm('login')">
+            Back to Login
+          </span>
+        </p>
+      </form>
 
-        <!-- SIGN UP FORM -->
-        <form id="signupForm" class="hidden flex flex-col gap-4">
+    </div>
+  </section>
+</main>
 
-          <h2 class="text-2xl font-bold text-center text-[#2e7d32]">
-            Create Account
-          </h2>
+<!-- FORM SWITCHING -->
+<script>
+  function showForm(type) {
+    welcome.classList.add("hidden");
+    holder.classList.remove("hidden");
 
-          <div class="flex flex-col gap-1">
-            <label>Full Name</label>
-            <input class="border rounded-lg p-3 signupName" />
-            <span class="error-text" id="signup-name-error"></span>
-          </div>
+    signupForm.classList.add("hidden");
+    loginForm.classList.add("hidden");
+    forgotForm.classList.add("hidden");
 
-          <div class="flex flex-col gap-1">
-            <label>Email</label>
-            <input class="border rounded-lg p-3 signupEmail" />
-            <span class="error-text" id="signup-email-error"></span>
-          </div>
+    if (type === "signup") signupForm.classList.remove("hidden");
+    if (type === "login") loginForm.classList.remove("hidden");
+    if (type === "forgot") forgotForm.classList.remove("hidden");
+  }
+</script>
 
-          <div class="flex flex-col gap-1">
-            <label>Date of Birth</label>
-            <input type="date" class="border rounded-lg p-3 dob" />
-          </div>
+<script src="notifications.js"></script>
+<script src="signup.js"></script>
 
-          <div class="flex flex-col gap-1">
-            <label>Gender</label>
-            <input class="border rounded-lg p-3 gender" />
-          </div>
-
-          <div class="flex flex-col gap-1">
-            <label>Phone Number</label>
-            <input class="border rounded-lg p-3 phone" />
-          </div>
-
-          <div class="flex flex-col gap-1">
-            <label>Password</label>
-            <div class="flex items-center border rounded-lg px-3">
-              <input
-                type="password"
-                id="signupPassword"
-                class="w-full py-3 outline-none password" />
-              <span
-                class="text-sm cursor-pointer text-blue-600"
-                onclick="togglePassword('signupPassword', this)">
-                👁️ Show
-              </span>
-            </div>
-            <span class="error-text" id="signup-password-error"></span>
-          </div>
-
-          <div class="flex flex-col gap-1">
-            <label>Years of Experience</label>
-            <input class="border rounded-lg p-3 experience" />
-          </div>
-
-          <div class="flex flex-col gap-1">
-            <label>Farm Location</label>
-            <input class="border rounded-lg p-3 farmLocation" />
-          </div>
-
-          <div class="flex flex-col gap-1">
-            <label>Farm Type</label>
-            <input class="border rounded-lg p-3 farmType" />
-          </div>
-
-          <span class="error-text" id="signup-general-error"></span>
-
-          <button
-            type="submit"
-            class="mt-4 bg-[#2e7d32] text-white py-3 rounded-lg">
-            Create Account
-          </button>
-
-          <p class="text-center text-sm">
-            Already have an account?
-            <span
-              class="text-[#2e7d32] cursor-pointer"
-              onclick="showForm('login')">
-              Login
-            </span>
-          </p>
-        </form>
-
-        <!-- LOGIN FORM -->
-        <form id="loginForm" class="hidden flex flex-col gap-4">
-
-          <h2 class="text-2xl font-bold text-center text-[#2e7d32]">
-            Sign In
-          </h2>
-
-          <div class="flex flex-col gap-1">
-            <label>Email</label>
-            <input class="border rounded-lg p-3 loginEmail" />
-            <span class="error-text" id="login-email-error"></span>
-          </div>
-
-          <div class="flex flex-col gap-1">
-            <label>Password</label>
-            <div class="flex items-center border rounded-lg px-3">
-              <input
-                type="password"
-                id="loginPassword"
-                class="w-full py-3 outline-none loginPassword" />
-              <span
-                class="text-sm cursor-pointer text-blue-600"
-                onclick="togglePassword('loginPassword', this)">
-                👁️ Show
-              </span>
-            </div>
-            <span class="error-text" id="login-password-error"></span>
-          </div>
-
-          <span class="error-text" id="login-general-error"></span>
-
-          <button
-            type="submit"
-            class="bg-[#2e7d32] text-white py-3 rounded-lg">
-            Login
-          </button>
-
-          <p class="text-center text-sm">
-            Don’t have an account?
-            <span
-              class="text-[#2e7d32] cursor-pointer"
-              onclick="showForm('signup')">
-              Sign Up
-            </span>
-          </p>
-        </form>
-
-      </div>
-    </section>
-
-  </main>
-
-  <script src="notifications.js"></script>
-  <script src="signup.js"></script>
 </body>
 </html>
+

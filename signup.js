@@ -18,19 +18,28 @@ function displayError(formPrefix, field, message) {
 
 function showForm(form) {
   clearErrors();
+
   // hide welcome
   document.getElementById("welcome").classList.add("hidden");
-  // show the holder
+
+  // SHOW HOLDER (the parent of the forms)
   const holder = document.getElementById("holder");
   holder.classList.remove("hidden");
+
   // hide all forms
   document.getElementById("signupForm").classList.add("hidden");
   document.getElementById("loginForm").classList.add("hidden");
-  // show the requested form
-  if (form === "signup") document.getElementById("signupForm").classList.remove("hidden");
-  if (form === "login") document.getElementById("loginForm").classList.remove("hidden");
-}
+  document.getElementById("forgotForm").classList.add("hidden");
 
+  // show the requested form
+  if (form === "signup") {
+    document.getElementById("signupForm").classList.remove("hidden");
+  } else if (form === "login") {
+    document.getElementById("loginForm").classList.remove("hidden");
+  } else if (form === "forgot") {
+    document.getElementById("forgotForm").classList.remove("hidden");
+  }
+}
 
 
 
