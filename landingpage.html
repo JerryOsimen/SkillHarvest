@@ -11,58 +11,41 @@
     rel="stylesheet"
   />
 </head>
-
-<body class="min-h-screen flex flex-col items-center justify-center bg-gray-100 font-[Poppins] px-4">
-
-  <!-- SLIDER WRAPPER -->
-  <div
-    class="relative w-full max-w-md md:max-w-xl bg-white rounded-xl overflow-hidden
-    shadow-[0_-6px_14px_rgba(0,0,0,0.25),_0_4px_10px_rgba(0,0,0,0.15)]"
-  >
-    <!-- SLIDES -->
-    <div
-      id="slides"
-      class="flex w-full transition-transform duration-500 ease-in-out"
-    >
-
-      <!-- SLIDE 1 -->
-      <div class="w-full flex-shrink-0 p-10 flex flex-col items-center text-center">
-        <h2 class="font-semibold text-gray-800 text-lg md:text-2xl mb-3">
-          Welcome To SkillHarvest
+<body class="flex flex-col items-center justify-center min-h-screen font-poppins">
+   <!-- slider container div--> 
+   <div class="flex justify-center items-center text-[20px] max-w-[400px] max-h-[500px] max-sm:w-[350px]  max-sm:h-[400px]  max-md:w-[400px] max-md:h-[500px] overflow-hidden bg-white rounded-xl shadow-lg px-5">
+    <!--image card divs-->
+    <div id="slides"
+    class="flex transition-transform justify-between items-center duration-500 ease-in-out py-5">
+    <!--card1-->
+    <div class="flex flex-col justify-between min-w-full max-sm:px-5 items-center p-10 text-center">
+        <h2 class=" font-semibold w-full text-gray-800  text-[13px] py-2">Welcome To SkillHarvest</h2>
+        <!--image1 div-->
+     <div class="flex justify-center items-center">
+      <img src="images/image 10.png" alt="picture of a grain field" 
+      class="rounded-lg mb-3 w-full max-sm:w-[300px]  object-cover"> 
+     </div> 
+    </div>
+    <!--card2-->
+    <div class="flex flex-col justify-between min-w-full max-sm:px-6 items-center p-10 text-center">
+        <h2 class=" font-semibold py-2 w-full max-sm:px-5 text-gray-800 text-[13px]"> Where knowledge from years of experience is passed down from generation 
+            to generation 
         </h2>
-
-        <img
-          src="images/image 10.png"
-          alt="Grain field"
-          class="w-full h-64 md:h-72 lg:h-80 object-cover rounded-lg"
-        />
-      </div>
-
-      <!-- SLIDE 2 -->
-      <div class="w-full flex-shrink-0 p-10 flex flex-col items-center text-center">
-        <h2 class="font-semibold text-gray-800 text-lg md:text-2xl mb-3 max-w-[90%]">
-          Where knowledge from years of experience is passed down from generation to generation
-        </h2>
-
-        <img
-          src="images/unsplash_acwQfNie9TA.png"
-          alt="Farmer picking tomatoes"
-          class="w-full h-64 md:h-72 lg:h-80 object-cover rounded-lg"
-        />
-      </div>
-
-      <!-- SLIDE 3 -->
-      <div class="w-full flex-shrink-0 p-10 flex flex-col items-center text-center">
-        <h2 class="font-semibold text-gray-800 text-lg md:text-2xl mb-3 max-w-[90%]">
-          Ask questions, get answers and connect with experienced farmers.
-        </h2>
-
-        <img
-          src="images/image 19.png"
-          alt="Farmer interview"
-          class="w-full h-64 md:h-72 lg:h-80 object-cover rounded-lg"
-        />
-      </div>
+        <!--image2 div-->
+       <div class="flex justify-center items-center">
+            <img src="images/unsplash_acwQfNie9TA.png" alt=" picture of an old white farmer
+       picking tomatoes from the garden" class="rounded-lg mb-3 max-sm:w-[300px] w-full object-cover">
+       </div>  
+    </div>
+    <!--card3-->
+    <div class="flex flex-col justify-between min-w-full max-sm:px-5 p-10 text-center">
+        <h3  class=" font-semibold w-full text-gray-800 max-sm:px-5  text-[13px] py-2">Ask questions, get answers and connect with experienced farmers.</h3>
+        <!--image3 div-->
+        <div class="flex justify-center items-center">
+         <img src="images/image 19.png" alt="picture of an old farmer having an interview
+         with young students" class="rounded-lg mb-3 max-sm:w-[300px] w-full object-cover">
+        </div>
+    </div>
 
     </div>
   </div>
