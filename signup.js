@@ -1,3 +1,50 @@
+function clearErrors() {
+  const errorSpans = document.querySelectorAll(".error-text");
+  errorSpans.forEach((span) => {
+    span.textContent = "";
+  });
+}
+
+function displayError(formPrefix, field, message) {
+  const errorSpan = document.getElementById(`${formPrefix}-${field}-error`);
+  if (errorSpan) {
+    errorSpan.textContent = message;
+  } else {
+    // Fallback to general error if specific field span not found
+    const generalSpan = document.getElementById(`${formPrefix}-general-error`);
+    if (generalSpan) generalSpan.textContent = message;
+  }
+}
+
+function showForm(form) {
+  clearErrors();
+  document.getElementById("signupForm").classList.add("hidden");
+  document.getElementById("loginForm").classList.add("hidden");
+  document.getElementById("forgotForm").classList.add("hidden");
+  document.getElementById("welcome").classList.add("hidden")
+  document.getElementById("holder").classList.remove("hidden")
+ if (form === "signup") {
+     document.getElementById("signupForm").classList.remove("hidden");
+  } else if (form === "login") {
+    document.getElementById("loginForm").classList.remove("hidden");
+  } else {
+    document.getElementById("forgotForm").classList.remove("hidden");
+  }
+}
+
+
+const toggleElement = document.querySelector(".toggleElement");
+//show password toggle
+function togglePassword(inputId, toggleElement) {
+  const input = document.getElementById(inputId);
+  if (input.type === "password") {
+    input.type = "text";
+    toggleElement.textContent = "👁️ Hide Password";
+  } else {
+    input.type = "password";
+    toggleElement.textContent = "👁️ Show Password";
+  }
+}
 const API_BASE_URL = "https://skillharvest-backend.onrender.com/api";
 
 /* ======== ELEMENTS ======== */
