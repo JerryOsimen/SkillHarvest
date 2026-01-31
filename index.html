@@ -19,7 +19,7 @@ tailwind.config = {
 </script>
   </head>
   <body class="bg-[#2e7d32] text-white flex flex-col gap-3  justify-center 
-  items-center min-h-[800px] font-poppins" id="body" >
+  items-center min-h-[800px] overflow-hidden font-poppins" id="body" >
 <!--1st div-->
 <div class="flex flex-col justify-center items-center ">
   <img class="" src="images/image1.png" alt="a flower icon">
@@ -33,7 +33,7 @@ tailwind.config = {
  
   window.addEventListener("load", function () {
         setTimeout(() => {
-          window.location.href = "landingpage.html";
+          window.location.href = "index.html";
           document.getElementById(body).classList.add("duration-200", "ease-in-out")
     },2000);
   });
