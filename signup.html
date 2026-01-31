@@ -2,58 +2,46 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SkillHarvest</title>
 
   <!-- Notification styles -->
   <link rel="stylesheet" href="notifications.css" />
-
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
 <body class="min-h-screen w-full bg-white md:bg-[#1b5e20] flex items-center justify-center">
 
   <!-- WRAPPER -->
-  <main
-    class="w-full min-h-screen md:min-h-0 md:max-w-2xl
-           px-6 py-10 md:px-10 md:py-12 flex flex-col items-center">
+  <main class="w-full min-h-screen md:min-h-0 px-4 md:px-10 py-10 md:py-12 flex flex-col items-center">
 
     <!-- WELCOME PAGE -->
-    <section
-  id="welcome"
-  class="flex flex-col items-center justify-center gap-12 min-h-screen md:min-h-0 w-full">
+    <section id="welcome" class="flex flex-col items-center justify-center gap-12 w-full min-h-screen">
 
-  <!-- Container for tablet/desktop -->
-  <div class="w-full md:max-w-2xl md:bg-white md:rounded-2xl md:shadow-2xl md:p-10 flex flex-col items-center">
-    
-    <h1 class="font-bold text-3xl md:text-4xl text-center md:text-[#1b5e20]">
-      Welcome to SkillHarvest
-    </h1>
+      <!-- Container only on md+ screens -->
+      <div class="w-full flex flex-col items-center md:max-w-2xl md:bg-white md:rounded-2xl md:shadow-2xl md:p-10">
 
-    <div class="flex w-full gap-4 mt-6">
-      <button
-        type="button"
-        class="w-1/2 py-3 rounded-lg bg-[#2e7d32] text-white font-medium"
-        onclick="showForm('signup')">
-        Sign Up
-      </button>
+        <h1 class="font-bold text-3xl md:text-4xl text-center md:text-[#1b5e20]">
+          Welcome to SkillHarvest
+        </h1>
 
-      <button
-        type="button"
-        class="w-1/2 py-3 rounded-lg bg-[#2e7d32] text-white font-medium"
-        onclick="showForm('login')">
-        Sign In
-      </button>
-    </div>
+        <div class="flex w-full gap-4 mt-6">
+          <button type="button" class="w-1/2 py-3 rounded-lg bg-[#2e7d32] text-white font-medium" onclick="showForm('signup')">
+            Sign Up
+          </button>
+          <button type="button" class="w-1/2 py-3 rounded-lg bg-[#2e7d32] text-white font-medium" onclick="showForm('login')">
+            Sign In
+          </button>
+        </div>
 
-  </div>
-</section>
-
+      </div>
+    </section>
 
     <!-- FORM HOLDER -->
     <section id="holder" class="hidden w-full flex justify-center mt-6">
 
-      <!-- Container for tablet/desktop, full width for mobile -->
-      <div class="w-full md:max-w-lg md:bg-white md:shadow-lg md:rounded-2xl md:p-10">
+      <!-- Container only on md+ screens -->
+      <div class="w-full flex flex-col md:max-w-lg md:bg-white md:shadow-lg md:rounded-2xl md:p-10 gap-4">
 
         <!-- SIGN UP FORM -->
         <form id="signupForm" class="hidden flex flex-col gap-4">
