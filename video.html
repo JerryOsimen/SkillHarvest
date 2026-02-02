@@ -48,11 +48,11 @@
                 class="video-card upload nav-link text-[12px] max-md:text-[10px] 
                 rounded-3xl hover:bg-[#1b5e20]
                 bg-[#1b5e20] px-4 py-2">
-                <i class="fa-solid fa-plus px-2"></i>Create
+                <i class="fa-solid fa-plus pr-2"></i>Create
             </a>
-
-            <a href=""
-                class="nav-link size-9 logout flex justify-center items-center hover:bg-[#1b5e20] bg-[#1b5e20] rounded-full">
+            <a href="" class="hidden logout"></a>
+            <a href="profile.html"
+                class="nav-link size-9 flex justify-center items-center hover:bg-[#1b5e20] bg-[#1b5e20] rounded-full">
                 <img class="size-6"
                     src="https://res.cloudinary.com/dbgowpxtw/image/upload/v1767883781/SkillHarvest/noto-v1_man-office-worker_wbwj0f.png"   
                     alt="">
@@ -110,44 +110,48 @@
             </div>
 
             <!-- VIDEO INFORMATION -->
-            <div class="video-info w-full rounded-b-2xl bg-white flex flex-col px-6 py-5">
+            <div class="video-info w-full rounded-b-2xl bg-white flex flex-col px-6 max-md:px-5 py-5">
 
-                <h2 id="video-title" class="text-gray-900 font-bold py-5 tracking-wider">
+                <h2 id="video-title" class="text-gray-900 font-bold py-5">
                 </h2>
 
                 <!-- Buttons Row -->
                 <div class="flex justify-between items-center max-md:text-[10px] pb-3">
-                    <button id="likes" class="tags flex px-3 py-2 font-bold border-2 border-gray-500 items-center rounded-2xl"><i
-                            class="fa-regular fa-thumbs-up px-2"></i></button>
+                    <button id="likes" class="tags max-md:px-2 flex px-3 py-2 font-bold border-2 border-gray-500 items-center rounded-xl"><i
+                            class="fa-regular fa-thumbs-up px-2 max-md:px-0"></i></button>
 
                     <label for="comment-input"
-                        class="flex tags px-3 py-2 font-bold border-2 border-gray-500 items-center rounded-2xl comments"><i
-                            class="fa-regular fa-comment px-2"></i>45</label>
+                        class="flex tags px-3 py-2 max-md:px-2 font-bold border-2 border-gray-500 items-center rounded-xl comments"><i
+                            class="fa-regular max-md:px-0 fa-comment px-2"></i></label>
 
-                    <button class="tags flex justify-center px-3 py-3 font-bold border-2 border-gray-500 items-center rounded-2xl"
+                    <button class="tags flex justify-center  px-3 py-3 font-bold border-2 border-gray-500 items-center rounded-xl"
                     id="bookmarkBtn"><i
                             class=" fa-regular fa-bookmark"></i></button>
 
-                    <button class="tags flex px-3 py-2 font-bold border-2 border-gray-500 items-center rounded-2xl" id="shareBtn"><i
-                            class="fa-solid fa-share-nodes px-2"></i>...</button>
+                     <button class="tags flex justify-center px-3 py-3 font-bold border-2 border-gray-500 items-center rounded-xl"
+                    id="downloadVideo">
+                    <i class="fa-solid fa-download"></i></button>
+
+                    <button class="tags flex  px-3 py-3 max-md:py-3 font-bold border-2 border-gray-500 items-center rounded-xl" id="shareBtn"><i
+                            class="fa-solid fa-share-nodes max-md:px-0 px-2"></i></button>
                 </div>
 
                 <!-- Author Section -->
                 <div class="flex items-center bg-[#eab76a2f] p-3 rounded-2xl">
 
                     <a href="profile.html"
-                        class="size-10 flex justify-center items-center bg-[#2e7d32] rounded-full px-2 mr-4">
+                        class="w-12 h-10 max-md:h-9 flex justify-center items-center bg-[#2e7d32] rounded-full px-2 py-2 mr-4 max-md:mr-0">
                         <img class="size-6"
                             src="https://res.cloudinary.com/dbgowpxtw/image/upload/v1767883781/SkillHarvest/noto-v1_man-office-worker_wbwj0f.png"
                             alt="">
                     </a>
 
-                    <div class="flex flex-col w-full">
+                    <div class="flex flex-col w-full max-md:px-2 ">
                         <h2 id="authorsName" class="authorsName font-semibold"></h2>
 
-                        <div class="flex justify-between text-gray-800 px-2">
+                        <div class="flex max-md:w-full items-center justify-between text-gray-800">
                             <span id="location" class=""><i class="fa-regular fa-comment px-2"></i></span>
-                            <span id="views" class="mr-10"><i class="fa-regular fa-eye px-2"></i>views</span>
+                            <span id="views" class="mr-10 max-md:mr-2"><i class="fa-regular fa-eye px-2"></i>views</span>
                         </div>
                     </div>
 
@@ -168,22 +172,22 @@
                             
                         </p>
 
-                        <div class="download-btn bg-white font-bold w-full flex justify-center px-3 py-3 rounded-xl">
+                        <!-- <div class="download-btn bg-white font-bold w-full flex justify-center px-3 py-3 rounded-xl">
                             <button id="downloadVideo" type="button">Download for Offline Viewing</button>
-                        </div>
+                        </div> -->
                     </div>
                     <button class="items-flex-start py-2 hidden text-[10px]" id="showless">showless</button>
 
                 </div>
 
                 <!-- COMMENTS -->
-                <div id="comment" class="w-full bg-[#2e7d32] rounded-xl py-4 px-4">
+                <div id="comment" class="w-full rounded-xl py-4">
 
                     <ul id="commentBox" class="w-full max-w-full"></ul>
 
-                    <div class="w-full bg-white rounded-xl py-2 px-2 flex">
+                    <div class="w-full bg-white border-2 border-[#2e7d32] rounded-xl py-2 px-2 flex">
                         <input type="text" id="comment-input" class="w-full outline-none" placeholder="comment">
-                        <button id="submit-comment" class="text-green-700"><i class="fa-solid fa-paper-plane"></i></button>
+                        <button id="submit-comment" class="text-green-700 hover:cursor-pointer" type="button"><i class="fa-solid fa-paper-plane"></i></button>
                     </div>
                 </div>
 
@@ -195,9 +199,9 @@
 
             <!-- Filter Buttons -->
             <div class="grid grid-cols-[120px_1fr_100px] max-md:grid-cols-[1fr_2fr_1fr]  h-12 rounded-3xl p-2 gap-2 text-white">
-                <div class="flex rounded-xl justify-center bg-[#2e7d32] hover:bg-[#1b5e20]" id="totalVideos"><button>All</button></div>
-                <div class="flex rounded-xl justify-center bg-[#2e7d32] hover:bg-[#1b5e20]" id="similarVideos"><button>Similar videos</button></div>
-                <div class="flex rounded-xl justify-center bg-[#2e7d32] hover:bg-[#1b5e20]" id="trendingVideos"><button>Trending</button></div>
+                <div class="flex rounded-md justify-center bg-[#2e7d32] hover:bg-[#1b5e20]" id="totalVideos"><button>All</button></div>
+                <div class="flex rounded-md justify-center bg-[#2e7d32] hover:bg-[#1b5e20]" id="similarVideos"><button>Similar videos</button></div>
+                <div class="flex rounded-md justify-center bg-[#2e7d32] hover:bg-[#1b5e20]" id="trendingVideos"><button>Trending</button></div>
             </div>
 
             <!-- Grid of Video Cards -->

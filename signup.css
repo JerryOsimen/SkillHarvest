@@ -4,11 +4,6 @@
 }
 
 body {
-  min-height: 100vh;
-  display: flex;
-  padding: 40px;
-  justify-content: center;
-  align-items: center;
   background: #f4f4f4; /* light neutral background */
 }
 
@@ -26,9 +21,9 @@ body {
 
 /* MAIN WHITE BOX */
 .container {
+  display: flex;
+  width: 50%;;
   background: white;
-  width: 90%;
-  max-width: 500px;
   padding: 40px;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);

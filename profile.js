@@ -7,13 +7,50 @@ const welcomeUser = document.getElementById("welcomeUser");
 const followersCount = document.getElementById("followersCount");
 const followingCount = document.getElementById("followingCount");
 const myVideosGrid = document.getElementById("myVideosGrid");
+const signupLink = document.getElementById("signup");
 const bookmarksGrid = document.getElementById("bookmarksGrid");
 const historyGrid = document.getElementById("historyGrid");
 const likesGrid = document.getElementById("likesGrid");
+const sideMenu = document.getElementById("sidebar");
+const closeSidebar = document.getElementById("closeBtn")
+const hamburger = document.getElementById("hamburger")
+ //SIDEBAR
+    closeSidebar.addEventListener('click', () => {
+        sideMenu.classList.add('max-md:hidden');
+        hamburger.classList.remove('hidden');
+    });
 
+    hamburger.addEventListener('click', () => { 
+      hamburger.classList.add('hidden');
+      sideMenu.classList.toggle('max-md:hidden');
+    })
 /**
  * Renders a single video card with profile-specific styling
  */
+  const logout = document.querySelector('.logout')
+
+ if(token && user){
+    logout.classList.remove('hidden')
+    logout.addEventListener('click', (e) => {
+        e.preventDefault();
+        showNotification('Logging out...', 'info');
+        localStorage.removeItem("token");
+        localStorage.removeItem("skillHarvestUser")
+        setTimeout(() => window.location.replace('signup.html'), 1000);
+    })
+ }
+
+ if(token && user){
+    signupLink.classList.add('hidden')
+ }else{
+    signupLink.classList.remove('hidden')
+ }
+
+ if(!token || !user){
+    logout.classList.add('hidden')
+ }
+ 
+
 function renderVideoCard(video) {
   const card = document.createElement("a");
 
