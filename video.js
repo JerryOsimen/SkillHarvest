@@ -14,7 +14,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const authorName = params.get("authorName");
     const author = document.querySelector('.authorsName');
     const location = document.getElementById('location');
-    const logout = document.querySelector('.logout')
+
+    const mainVideo = document.getElementById('play-screen');
+    const menuBtn = document.getElementById('menuBtn');
+    const sideMenu = document.getElementById('sidebar');
+    let isSubmitting = false;
+    let bookmarkTimeout;
+    const closeSidebar = document.getElementById('closeBtn');
+    const playBtn = document.getElementById('playBtn');
+    const authorsDetails = document.getElementById('authorsDetails');
+    const commentInput = document.getElementById('comment-input');
+    const commentBox = document.getElementById('commentBox');
+    const commentBtn = document.getElementById('submit-comment');
+    const mainVideoSrc = document.getElementById('main-screen-src');
+    const videoList = document.getElementById("videoList");
+    // Modal Elements
+    const customModal = document.getElementById('customModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    const modalCancel = document.getElementById('modalCancel');
+    const modalConfirm = document.getElementById('modalConfirm');
+    const closeModal = document.getElementById('closeModal');
+     let bookmarksFetched = false;
+
 
     if (videoURL) {
         const videoPlayer = document.getElementById("play-screen");
@@ -34,36 +56,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         videoPlayer.load();
         incrementVideoViews(videoId);
-
         // Initial sync of follow status
         if (authorId) syncFollowStatus(authorId);
     }
 
 
 
-    const mainVideo = document.getElementById('play-screen');
-    const menuBtn = document.getElementById('menuBtn');
-    const sideMenu = document.getElementById('sidebar');
-
-    const closeSidebar = document.getElementById('closeBtn');
-    const menuItems = document.getElementById('menuItems');
-    const playBtn = document.getElementById('playBtn');
-    const playOverlay = document.getElementById('playOverlay');
-    const authorsDetails = document.getElementById('authorsDetails');
-    const commentInput = document.getElementById('comment-input');
-    const commentBox = document.getElementById('commentBox');
-    const commentBtn = document.getElementById('submit-comment');
-    const mainVideoSrc = document.getElementById('main-screen-src');
-    const videoList = document.getElementById("videoList");
-
-    // Modal Elements
-    const customModal = document.getElementById('customModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalBody = document.getElementById('modalBody');
-    const modalCancel = document.getElementById('modalCancel');
-    const modalConfirm = document.getElementById('modalConfirm');
-    const closeModal = document.getElementById('closeModal');
-
+    
 
     // SHOW / HIDE VIDEO DESCRIPTION
     authorsDetails.addEventListener("click", () => {
@@ -76,19 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('showless').classList.add("hidden");
     });
 
-
-    // PLAY / PAUSE BUTTON OVERLAY
-    playBtn.addEventListener('click', () => {
-        if (mainVideo.paused) {
-            mainVideo.play();
-            playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
-            // Increment views when user starts playing
-            if (videoId) incrementVideoViews(videoId);
-        } else {
-            mainVideo.pause();
-            playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
-        }
-    });
+  
 
     async function incrementVideoViews(id) {
         try {
@@ -124,13 +111,13 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'upload.html';
         }
     });
-    logout.addEventListener('click', (e) => {
-        e.preventDefault();
-        showNotification('Logging out...', 'info');
-        localStorage.removeItem("token");
-        localStorage.removeItem("skillHarvestUser")
-        setTimeout(() => window.location.replace('signup.html'), 1000);
-    })
+    // logout.addEventListener('click', (e) => {
+    //     e.preventDefault();
+    //     showNotification('Logging out...', 'info');
+    //     localStorage.removeItem("token");
+    //     localStorage.removeItem("skillHarvestUser")
+    //     setTimeout(() => window.location.replace('signup.html'), 1000);
+    // })
 
 
 
@@ -141,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
         item.classList.add(
             "w-full", "py-3", "px-4", "max-w-full",
             "break-words", "whitespace-normal",
-            "overflow-hidden", "bg-green-800",
+            "overflow-hidden", "bg-[#2e7d32]",
             "rounded-lg", "mb-3", "text-white",
             "relative", "group"
         );
@@ -216,18 +203,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+
+
+
     async function handleAddComment() {
+        
+        if (isSubmitting) return;
+        isSubmitting = true;
+    
         if (!token) {
             showNotification("Please login to comment", "error");
+            isSubmitting = false;
             return;
         }
-
+    
         const activeVideo = videoData.find(v => v.isPlaying);
-        if (!activeVideo) return;
-
+        if (!activeVideo) {
+            isSubmitting = false;
+            return;
+        }
+    
         const content = commentInput.value.trim();
-        if (!content) return;
-
+        if (!content) {
+            isSubmitting = false;
+            return;
+        }
+    
         try {
             const res = await fetch(`${API_BASE_URL}/comments/${activeVideo.id}`, {
                 method: "POST",
@@ -237,20 +238,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: JSON.stringify({ content })
             });
-
+        
             const data = await res.json();
+        
             if (res.ok) {
-                commentBox.prepend(createCommentElement(data.comment));
+                commentBox.append(createCommentElement(data.comment));
                 commentInput.value = "";
-                // Refresh count
-                const currentCount = parseInt(document.querySelector(".comments").innerText.trim()) || 0;
+            
+                const currentCount =
+                    parseInt(document.querySelector(".comments").innerText) || 0;
                 updateCommentCount(currentCount + 1);
+            
                 showNotification("Comment posted", "success");
             } else {
                 showNotification(data.message || "Failed to post comment", "error");
             }
         } catch (err) {
             console.error("Error posting comment:", err);
+        } finally {
+            isSubmitting = false;
         }
     }
 
@@ -362,7 +368,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ENTER KEY SUBMIT
-    commentInput.addEventListener('keydown', (event) => {
+    commentInput.addEventListener('keyup', (event) => {
         if (event.key === 'Enter' && commentInput.value.trim() !== '') {
             handleAddComment();
         }
@@ -370,7 +376,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // BUTTON SUBMIT
     commentBtn.addEventListener('click', () => {
+        if ( commentInput.value.trim() !== '') {
         handleAddComment();
+        }
+         return; 
+    });
+
+    // PLAY / PAUSE BUTTON OVERLAY
+    playBtn.addEventListener('click', () => {
+        if (mainVideo.paused) {
+            mainVideo.play();
+            playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            // Increment views when user starts playing
+            if (videoId) incrementVideoViews(videoId);
+        } else {
+            mainVideo.pause();
+            playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+        }
     });
 
 
@@ -401,17 +423,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         document.getElementById('views').innerHTML = `
-    <i class="fa-regular fa-eye px-2"></i>
-        ${video.views}
-`;
+            <i class="fa-regular fa-eye px-2"></i>
+                ${video.views}
+        `;
 
         document.getElementById('video-title').innerText = video.title;
 
         document.getElementById('likes').innerHTML = `
-    <i class="fa-regular fa-thumbs-up px-2"></i>
-        ${video.likes}
-`;
-
+            <i class="fa-regular fa-thumbs-up px-2"></i>
+                ${video.likes}
+        `;
+        document.getElementById("shareBtn").onclick = () => shareVideo(video);
         currentAuthorId = video.authorId;
         updateFollowBtnState(video.isFollowing);
 
@@ -420,11 +442,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Sync follow status for the current author
         syncFollowStatus(video.authorId);
-
-        document.getElementById("bookmarkBtn").onclick = () => {
-            const status = toggleBookmark(video);
-            updateBookmarkBtn(status);
-        };
 
     };
 
@@ -547,31 +564,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const allVideos = (videoData) => {
         videoData.forEach(video => {
             const card = document.createElement("div");
-            card.className = "video-card text-white grid h-32 max-lg:h-full grid-cols-[1fr_2fr] max-lg:grid-cols-[1fr] bg-[#2e7d32] hover:bg-[#1b5e20] rounded-3xl max-lg:p-0 gap-2 p-3";
+
+            card.className = "block bg-white rounded-xl shadow overflow-hidden lg:h-[10em] transform transition-transform hover:scale-[1.02]";
 
             card.innerHTML = `
-                <video muted class="object-cover max-w-full h-full rounded-xl max-lg:rounded-b-none max-lg:rounded-t-xl">
-                        <source src="${video.src}">
-                </video>
-                <div class="flex flex-col justify-center max-lg:items-center px-10 max-lg:p-2 max-lg:text-center">
-                    <h3 class="font-bold">${video.title}</h3>
-                    <p class="text-sm">${video.author}</p>
-                    <p class="text-sm">${video.views} views</p>
-                    <p class="text-sm">${video.date}</p>
+                <div class = "lg:flex lg:flex-row lg:gap-4 lg:h-[10em]">
+                <div class="relative lg:w-[17em] lg:h-full pb-[56.25%]">
+                <video 
+                 src="${video.src}" 
+                    class="absolute top-0 left-0 w-full h-full lg:h-[10em] object-cover"
+                     muted
+                    onmouseover="this.play()"
+                     onmouseout="this.pause(); this.currentTime = 0;"
+                 ></video>
+                 <div class="absolute bottom-2 lg:h-5 right-2 lg:right-1 lg:top-32 flex gap-2">
+                    <div class="bg-black/60 text-white text-[10px] px-2 py-1 rounded flex items-center gap-1">
+                         <svg class="w-3 h-3 fill-white" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                         ${video?.likes || 0}
+                    </div>
+                    <div class="bg-black/60 text-white text-[10px] px-2 py-1 rounded">
+                         ${video.views || 0} views
+                    </div>
+                 </div>
                 </div>
-            `;
-            if(video.id==="7d3154d3-9774-463e-bd98-aa5e1370ab6a"){
-                card.innerHTML=""
-                card.classList.add("hidden")
 
-            }
-            document.getElementById("shareBtn").onclick = () => shareVideo(video);
+                <div class="p-4 lg:pl-0 lg:w-full">
+                  <h3 class="font-semibold text-lg line-clamp-1">${video.title}</h3>
+                  <p class="text-sm text-gray-600 line-clamp-2 mt-1">${video.description}</p>
+                  <div class="flex items-center justify-between mt-3 text-xs text-gray-500">
+                    <span>By ${video?.author || "Farmer"}</span>
+                    <span>${new Date(video.date).toLocaleDateString()}</span>
+                  </div>
+                </div> 
+                </div>`;
 
             card.onclick = () => {
                 mainScreenUpdate(video);
             };
 
             videoList.appendChild(card);
+
+            document.getElementById("bookmarkBtn").onclick = () => {
+            const status = toggleBookmark(video);
+            fetchBookmarksDebounced();
+            updateBookmarkBtn(status);           
+        };
         });
     }
 
@@ -601,23 +638,52 @@ document.addEventListener('DOMContentLoaded', () => {
         const activeVideo = videoData.find(v => v.isPlaying);
         if (activeVideo) {
             fetchSimilarVideos(activeVideo.id);
+            searchSimilar(videoData, activeVideo.authorId)
         }
     });
 
     document.getElementById("trendingVideos").addEventListener("click", () => {
         videoList.innerHTML = "";
         fetchTrendingVideos();
+        trendingSearch(videoData)
     });
 
     // DOWNLOAD BUTTON
-    document.getElementById('downloadVideo').addEventListener('click', () => {
-        const videoUrl = mainVideoSrc.src;
+ async function downloadVideoFile(url, filename) {
+    try {
+        const response = await fetch(url, {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error("Video download failed");
+        }
+
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
 
         const a = document.createElement("a");
-        a.href = videoUrl;
-        a.download = "video.mp4";
+        a.href = blobUrl;
+        a.download = filename;
+        document.body.appendChild(a);
         a.click();
-    });
+
+        a.remove();
+        URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+        console.error(error);
+        showNotification("Unable to download video", "error");
+    }
+}
+
+document.getElementById('downloadVideo').addEventListener('click', () => {
+    const videoUrl = mainVideoSrc.src;
+    const title = document.getElementById("video-title").innerText || "video";
+
+    downloadVideoFile(videoUrl, `${title}.mp4`);
+});
 
     /** ===========================
      *  SHOW / HIDE PLAY BUTTON
@@ -659,7 +725,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     views: v.views,
                     date: new Date(v.createdAt).toLocaleDateString(),
                     src: v.videoUrl,
-                    location: user?.farmLocation || "N/A",
+                    description: v.description,
+                    location: v.user?.farmLocation || "N/A",
                     commentCount: v._count?.comments || 0,
                     likes: v._count?.likes || 0,
                     isPlaying: false,
@@ -707,6 +774,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const similarData = data.videos.map(v => ({
                     id: v.id,
                     title: v.title,
+                    description: v.description,
                     author: v.user?.name || "Unknown Author",
                     authorId: v.userId,
                     views: v.views,
@@ -746,6 +814,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /** ===========================
      *  SEARCH FUNCTION
      * =========================== */
+
     function handleSearch(query) {
         // 🔎 LOCAL SEARCH WITHIN videoData
         const found = videoData.filter(v =>
@@ -777,17 +846,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Clear current list
         videoList.innerHTML = "";
-
-        if (found.length === 0) {
+       
+        if (found.length===0) {
             videoList.innerHTML = `
-                <p class="text-gray-300 text-center p-4">No videos found.</p>
+                <p class="text-gray-300 text-center hidden p-4">No videos found.</p>
             `;
             return;
         }
-        allVideos(found)
+         allVideos(found)
     }
 
-    document.getElementById("similarVideos").addEventListener ("click",()=>{trendingSearch(videoData)})
+     function searchSimilar(videoData, currentAuthorId) {
+    
+        // 🔎 LOCAL SEARCH WITHIN videoData
+        const found = videoData.filter(v => v.authorId === currentAuthorId
+        );
+
+        // Clear current list
+        videoList.innerHTML = "";
+       
+        if (found.length===0) {
+            videoList.innerHTML = `
+                <p class="text-gray-300 text-center hidden p-4">No videos found.</p>
+            `;
+            return;
+        }
+         allVideos(found)
+    }
+
+
+
     const searchInput = document.getElementById("search-bar")
 
     searchInput.addEventListener('keydown', (e) => {
@@ -804,13 +892,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---------- BOOKMARK SYSTEM ----------
     let bookmarkedVideos = [];
 
+    function fetchBookmarksDebounced() {
+    bookmarkTimeout = setTimeout(fetchBookmarks, 500);
+    clearTimeout(bookmarkTimeout);
+    }
+
     // Get all bookmarks from API
     async function fetchBookmarks() {
-        if (!token) return;
+        if (!token || bookmarksFetched) return;
+         bookmarksFetched = true;
         try {
             const res = await fetch(`${API_BASE_URL}/bookmarks`, {
                 headers: { "Authorization": `Bearer ${token}` }
             });
+         if (!res.ok) {
+            const text = await res.text();
+            console.error("Server error:", text);
+            return;
+            }
             const data = await res.json();
             if (data.success) {
                 bookmarkedVideos = data.bookmarks;
@@ -858,6 +957,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // fetchBookmarks() called at the end of the file in chain
 
     function getBookmarks() { // Helper to keep compatibility with existing calls
+        fetchBookmarksDebounced()
         return bookmarkedVideos;
     }
 
@@ -867,7 +967,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!btn) return;
 
         const bookMarkbtnhtmlExist = "<i class= 'fa-solid text-red-700 fa-bookmark'></i>";
-        const bookMarkbtnhtml = "<i class= 'fa-regular fa-bookmark'></i>";
+        const bookMarkbtnhtml = "<i class='fa-regular fa-bookmark'></i>";
         btn.innerHTML = isBookmarked ? bookMarkbtnhtmlExist : bookMarkbtnhtml;
     }
 
@@ -876,7 +976,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ---------- SHARE SYSTEM ----------
     function shareVideo(video) {
-        const shareUrl = `${window.location.origin}/watch?video=${video.id}`;
+        const shareUrl = `${window.location.origin}/video.html?id=${video.id}&title=${encodeURIComponent(video.title)}&desc=${encodeURIComponent(video.description)}&videoURL=${encodeURIComponent(video.src)}&authorId=${encodeURIComponent(video.authorId)}&authorName=${encodeURIComponent(video.author)}`;
         const shareText = `Watch this: ${video.title}`;
 
         if (navigator.share) {
@@ -894,16 +994,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    function getSocialShareLinks(videoId, title) {
-        const url = encodeURIComponent(`${location.origin}/watch?video=${videoId}`);
-        const text = encodeURIComponent(title);
+    // function getSocialShareLinks(videoId, title) {
+    //     const url = encodeURIComponent(`${location.origin}/watch?video=${videoId}`);
+    //     const text = encodeURIComponent(title);
 
-        return {
-            whatsapp: `https://wa.me/?text=${text}%20${url}`,
-            facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
-            twitter: `https://twitter.com/intent/tweet?text=${text}&url=${url}`
-        };
-    }
+    //     return {
+    //         whatsapp: `https://wa.me/?text=${text}%20${url}`,
+    //         facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+    //         twitter: `https://twitter.com/intent/tweet?text=${text}&url=${url}`
+    //     };
+    // }
 
 
 })

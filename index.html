@@ -4,38 +4,39 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      fontFamily: {
-        poppins: ['Poppins', 'ui-sans-serif', 'system-ui'],
-      }
-    }
-  }
-}
-</script>
-  </head>
-  <body class="bg-[#2e7d32] text-white flex flex-col gap-3  justify-center 
-  items-center min-h-screen font-poppins" id="body" >
-<!--1st div-->
-<div class="flex flex-col justify-center items-center">
-  <img class="" src="images/image1.png" alt="a flower icon">
-  <h2 class="font-bold text-[28px]">Skill Harvest</h2>
-  <p class="font-normal text-base">Growing Knowledge. Growing Future.</p>
-</div>
 
-  
-</div>
+  </head>
+
+ <body
+  class="bg-[#2e7d32] min-h-screen flex items-center justify-center text-white font-poppins px-4 sm:px-10"
+  id="body"
+>
+  <div class="flex flex-col items-center text-center">
+    <img
+      src="images/image1.png"
+      alt="a flower icon"
+      class="w-30 h-30 "
+    />
+
+    <h2 class="font-bold text-[24px] sm:text-[28px]">
+      Skill Harvest
+    </h2>
+
+    <p class="font-normal text-sm sm:text-base max-sm:mb-6">
+      Growing Knowledge. Growing Future.
+    </p>
+  </div>
 <script>
  
   window.addEventListener("load", function () {
         setTimeout(() => {
+           document.getElementById('body').classList.add("duration-200", "ease-in-out")
           window.location.href = "landingpage.html";
-          document.getElementById(body).classList.add("duration-200", "ease-in-out")
-    },2000);
+          
+         
+    },3000);
   });
 </script>
   </body>

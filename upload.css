@@ -176,14 +176,13 @@ textarea {
 /* Desktop view */
 @media (min-width: 1024px) {
   .upload-screen {
-    max-width: 1200px;
     margin: auto;
     padding: 5rem;
   }
 }
 
-@media(max-width:600px){
+@media(max-width:650px){
   .upload-screen {
-    width:80%;
+    width:100%;
   }
 }

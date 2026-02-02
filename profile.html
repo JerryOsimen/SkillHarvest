@@ -12,30 +12,36 @@
 <body>
 
 <!-- Hamburger icon -->
-<div class="hamburger" id="hamburger">&#9776;</div>
+<div class="hamburger hidden" id="hamburger">&#9776;</div>
 
 <!-- Sidebar -->
 <aside id="sidebar"
-        class="w-64 h-full bg-[#2e7d32] text-white fixed top-0 left-0 z-40 transition-transform duration-300 ease-in-out max-md:w-full max-md:h-auto">
+        class="w-64 h-full max-md:relative max-md:top-0 max-md:left-0 bg-[#2e7d32] text-white fixed top-0 left-0 z-40 transition-transform duration-300 ease-in-out max-md:w-full max-md:h-auto">
 
-        <div class="flex justify-between items-center mt-8 px-4">
+        <div class="flex justify-between items-center pt-8 px-4">
             <h2 class="font-bold text-white pl-4">Menu</h2>
+             <button id="closeBtn" class="w-8 h-8 hidden max-md:block hover:bg-[#1b5e20]">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
         </div>
 
         <ul class="flex flex-col gap-4 px-5 py-4" id="menuItems">
             <li><a href="Homepage.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
                         class="fa-solid fa-house"></i> Home</a></li>
-            <li><a href="signup.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
+            <li id="signup"><a href="signup.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
                         class="fa-solid fa-compass"></i>Sign In</a></li>
             <li><a href="profile.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i
                         class="fa-solid fa-user"></i> Profile</a></li>
             <li><a href="landingpage.html" class="hover:bg-[#1b5e20] rounded-xl px-3 py-2 flex items-center gap-3"><i class="fa-solid fa-plane-arrival"></i> Landing page </a>
                 </li>
+            <button class="hover:bg-[#1b5e20] logout rounded-xl hover:cursor-pointer px-3 py-2 flex items-center gap-3"><i class="fa-solid fa-arrow-right-from-bracket"></i>
+               logout 
+            </button>
         </ul>
     </aside>
 
 <!-- Main content -->
-<div class="main-content px-5">
+<div class="main-content  max-md:px-5">
 
   <div class="profile-header mb-5">
     <h1 id="welcomeUser" class="text-xl font-bold">WELCOME</h1>

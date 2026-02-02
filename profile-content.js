@@ -22,3 +22,14 @@ if (user) {
   const info = document.querySelector(".identity-card-container");
   if (info) info.innerHTML = "<p>No profile info available.</p>";
 }
+
+// const closeSidebar = document.getElementById("closeSidebar")
+// const menuBtn = document.getElementById("menuBut")
+ // SIDEBAR
+    // closeSidebar.addEventListener('click', () => {
+    //     sideMenu.classList.add('hidden');
+    // });
+
+    // menuBtn.addEventListener('click', () => {
+    //     sideMenu.classList.toggle('hidden');
+    // });
