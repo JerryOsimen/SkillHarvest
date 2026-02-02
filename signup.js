@@ -55,12 +55,6 @@ const loginForm = document.getElementById("loginForm");
 const forgotForm = document.getElementById("forgotForm");
 
 /* Buttons / links */
-document.getElementById("welcomeSignup").addEventListener("click", () => showForm("signup"));
-document.getElementById("welcomeLogin").addEventListener("click", () => showForm("login"));
-document.getElementById("signupToLogin").addEventListener("click", () => showForm("login"));
-document.getElementById("loginToSignup").addEventListener("click", () => showForm("signup"));
-document.getElementById("forgotPasswordBtn").addEventListener("click", () => showForm("forgot"));
-document.getElementById("forgotToLogin").addEventListener("click", () => showForm("login"));
 
 /* Form fields */
 const signupName = document.querySelector(".signupName");
