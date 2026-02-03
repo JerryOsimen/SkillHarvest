@@ -10,11 +10,30 @@
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   />
+  <style>
+  /* Extra strong top shadow for small screens */
+  .slider-card {
+    box-shadow: 0 -25px 50px rgba(0,0,0,0.4), 0 5px 15px rgba(0,0,0,0.1);
+  }
+
+  @media (min-width: 640px) { /* sm and up: tablet */
+    .slider-card {
+      box-shadow: 0 -10px 30px rgba(0,0,0,0.25), 0 5px 15px rgba(0,0,0,0.1);
+    }
+  }
+
+  @media (min-width: 1024px) { /* lg and up: PC */
+    .slider-card {
+      box-shadow: 0 -8px 25px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.08);
+    }
+  }
+</style>
+
 </head>
 <body class="flex flex-col items-center justify-center min-h-screen font-poppins bg-gray-50 px-6 sm:px-8 md:px-12">
 
   <!-- Slider container -->
- <div class="w-full max-w-[380px] sm:max-w-[450px] md:max-w-[500px] lg:max-w-[550px] bg-white rounded-xl overflow-hidden"
+ <div class="w-full max-w-[380px] sm:max-w-[450px] md:max-w-[500px] lg:max-w-[550px] bg-white rounded-xl overflow-hidden slider-card"
      style="box-shadow: 0 -10px 30px rgba(0,0,0,0.25), 0 5px 15px rgba(0,0,0,0.1);">
   <div id="slides" class="flex transition-transform duration-500 ease-in-out">
     
