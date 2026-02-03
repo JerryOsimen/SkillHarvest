@@ -11,64 +11,60 @@
     rel="stylesheet"
   />
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen font-poppins">
-   <!-- slider container div--> 
-   <div class="flex justify-center items-center text-[20px] max-w-[400px] max-h-[500px] max-sm:w-[350px]  max-sm:h-[400px]  max-md:w-[400px] max-md:h-[500px] overflow-hidden bg-white rounded-xl shadow-lg px-5">
-    <!--image card divs-->
-    <div id="slides"
-    class="flex transition-transform justify-between items-center duration-500 ease-in-out py-5">
-    <!--card1-->
-    <div class="flex flex-col justify-between min-w-full max-sm:px-5 items-center p-10 text-center">
-        <h2 class=" font-semibold w-full text-gray-800  text-[13px] py-2">Welcome To SkillHarvest</h2>
-        <!--image1 div-->
-     <div class="flex justify-center items-center">
-      <img src="images/image 10.png" alt="picture of a grain field" 
-      class="rounded-lg mb-3 w-full max-sm:w-[300px]  object-cover"> 
-     </div> 
-    </div>
-    <!--card2-->
-    <div class="flex flex-col justify-between min-w-full max-sm:px-6 items-center p-10 text-center">
-        <h2 class=" font-semibold py-2 w-full max-sm:px-5 text-gray-800 text-[13px]"> Where knowledge from years of experience is passed down from generation 
-            to generation 
+<body class="flex flex-col items-center justify-center min-h-screen font-poppins bg-gray-50 px-6 sm:px-8 md:px-12">
+
+  <!-- Slider container -->
+ <div class="w-full max-w-[380px] sm:max-w-[450px] md:max-w-[500px] lg:max-w-[550px] bg-white rounded-xl overflow-hidden"
+     style="box-shadow: 0 -10px 30px rgba(0,0,0,0.25), 0 5px 15px rgba(0,0,0,0.1);">
+  <div id="slides" class="flex transition-transform duration-500 ease-in-out">
+    
+      <!-- Card 1 -->
+      <div class="flex flex-col items-center justify-between min-w-full p-6 sm:p-8 md:p-10 text-center">
+        <h2 class="font-semibold text-gray-800 text-xl sm:text-lg md:text-[30px] mb-3">
+          Welcome To SkillHarvest
         </h2>
-        <!--image2 div-->
-       <div class="flex justify-center items-center">
-            <img src="images/unsplash_acwQfNie9TA.png" alt=" picture of an old white farmer
-       picking tomatoes from the garden" class="rounded-lg mb-3 max-sm:w-[300px] w-full object-cover">
-       </div>  
-    </div>
-    <!--card3-->
-    <div class="flex flex-col justify-between min-w-full max-sm:px-5 p-10 text-center">
-        <h3  class=" font-semibold w-full text-gray-800 max-sm:px-5  text-[13px] py-2">Ask questions, get answers and connect with experienced farmers.</h3>
-        <!--image3 div-->
-        <div class="flex justify-center items-center">
-         <img src="images/image 19.png" alt="picture of an old farmer having an interview
-         with young students" class="rounded-lg mb-3 max-sm:w-[300px] w-full object-cover">
-        </div>
-    </div>
+        <img src="images/image 10.png" alt="picture of a grain field" 
+             class="rounded-lg w-full max-w-[300px] sm:max-w-[350px] md:max-w-[400px] lg:max-w-[450px] object-cover">
+      </div>
+
+      <!-- Card 2 -->
+      <div class="flex flex-col items-center justify-between min-w-full p-6 sm:p-8 md:p-10 text-center">
+        <h2 class="font-semibold text-gray-800 text-sm sm:text-base md:text-2xl mb-3">
+          Where knowledge from years of experience is passed down from generation to generation
+        </h2>
+        <img src="images/unsplash_acwQfNie9TA.png" alt="picture of an old white farmer picking tomatoes from the garden"
+             class="rounded-lg w-full max-w-[300px] sm:max-w-[350px] md:max-w-[400px] lg:max-w-[450px] object-cover">
+      </div>
+
+      <!-- Card 3 -->
+      <div class="flex flex-col items-center justify-between min-w-full p-6 sm:p-8 md:p-10 text-center">
+        <h2 class="font-semibold text-gray-800 text-sm sm:text-base md:text-2xl mb-3">
+          Ask questions, get answers and connect with experienced farmers.
+        </h2>
+        <img src="images/image 19.png" alt="picture of an old farmer having an interview with young students"
+             class="rounded-lg w-full max-w-[300px] sm:max-w-[350px] md:max-w-[400px] lg:max-w-[450px] object-cover">
+      </div>
 
     </div>
   </div>
 
   <!-- DOTS -->
-  <div class="flex gap-2 mt-4">
-    <span class="dot w-2 h-2 rounded-full bg-green-600 cursor-pointer" data-index="0"></span>
-    <span class="dot w-2 h-2 rounded-full bg-gray-400 cursor-pointer" data-index="1"></span>
-    <span class="dot w-2 h-2 rounded-full bg-gray-400 cursor-pointer" data-index="2"></span>
+  <div class="flex gap-2 mt-6">
+    <span class="dot w-3 h-3 rounded-full bg-green-600 cursor-pointer" data-index="0"></span>
+    <span class="dot w-3 h-3 rounded-full bg-gray-400 cursor-pointer" data-index="1"></span>
+    <span class="dot w-3 h-3 rounded-full bg-gray-400 cursor-pointer" data-index="2"></span>
   </div>
 
   <!-- BUTTONS -->
-  <div class="flex gap-3 mt-4">
-    <button id="prevBtn" class="px-4 py-2 bg-green-600 text-xs text-white rounded">
+  <div class="flex gap-3 mt-6 flex-wrap justify-center">
+    <button id="prevBtn" class="px-5 py-2 bg-green-600 text-white rounded text-sm sm:text-base shadow-lg">
       Previous
     </button>
-
-    <button id="nextBtn" class="px-4 py-2 bg-green-600 text-xs text-white rounded">
+    <button id="nextBtn" class="px-5 py-2 bg-green-600 text-white rounded text-sm sm:text-base shadow-lg">
       Next
     </button>
-
     <a href="Homepage.html" target="_blank" rel="noopener noreferrer">
-      <button class="px-4 py-2 bg-green-600 text-xs text-white rounded">
+      <button class="px-5 py-2 bg-green-600 text-white rounded text-sm sm:text-base shadow-lg">
         Skip
       </button>
     </a>
