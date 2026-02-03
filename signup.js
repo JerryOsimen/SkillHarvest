@@ -1,88 +1,45 @@
-function clearErrors() {
-  const errorSpans = document.querySelectorAll(".error-text");
-  errorSpans.forEach((span) => {
-    span.textContent = "";
-  });
-}
-
-function displayError(formPrefix, field, message) {
-  const errorSpan = document.getElementById(`${formPrefix}-${field}-error`);
-  if (errorSpan) {
-    errorSpan.textContent = message;
-  } else {
-    // Fallback to general error if specific field span not found
-    const generalSpan = document.getElementById(`${formPrefix}-general-error`);
-    if (generalSpan) generalSpan.textContent = message;
-  }
-}
-
-function showForm(form) {
-  clearErrors();
-  document.getElementById("signupForm").classList.add("hidden");
-  document.getElementById("loginForm").classList.add("hidden");
-  document.getElementById("forgotForm").classList.add("hidden");
-  document.getElementById("welcome").classList.add("hidden")
-  document.getElementById("holder").classList.remove("hidden")
- if (form === "signup") {
-     document.getElementById("signupForm").classList.remove("hidden");
-  } else if (form === "login") {
-    document.getElementById("loginForm").classList.remove("hidden");
-  } else {
-    document.getElementById("forgotForm").classList.remove("hidden");
-  }
-}
-
-
-const toggleElement = document.querySelector(".toggleElement");
-//show password toggle
-function togglePassword(inputId, toggleElement) {
-  const input = document.getElementById(inputId);
-  if (input.type === "password") {
-    input.type = "text";
-    toggleElement.textContent = "👁️ Hide Password";
-  } else {
-    input.type = "password";
-    toggleElement.textContent = "👁️ Show Password";
-  }
-}
 const API_BASE_URL = "https://skillharvest-backend.onrender.com/api";
 
-/* ======== ELEMENTS ======== */
+/* ===== ELEMENTS ===== */
 const welcome = document.getElementById("welcome");
 const holder = document.getElementById("holder");
 const signupForm = document.getElementById("signupForm");
 const loginForm = document.getElementById("loginForm");
 const forgotForm = document.getElementById("forgotForm");
 
-/* Buttons / links */
-
-/* Form fields */
+/* ===== INPUTS ===== */
+// Signup
 const signupName = document.querySelector(".signupName");
 const signupEmail = document.querySelector(".signupEmail");
 const signupDob = document.querySelector(".dob");
 const signupGender = document.querySelector(".gender");
 const signupPhone = document.querySelector(".phone");
-const signupPassword = document.querySelector(".password");
+const signupPassword = document.getElementById("signupPassword");
 const signupExperience = document.querySelector(".experience");
 const signupLocation = document.querySelector(".farmLocation");
 const signupFarmType = document.querySelector(".farmType");
 
+// Login
 const loginEmail = document.querySelector(".loginEmail");
-const loginPassword = document.querySelector(".loginPassword");
+const loginPassword = document.getElementById("loginPassword");
+const loginName = document.querySelector(".loginName");
+const loginPhone = document.querySelector(".loginPhone");
 
+
+// Forgot
 const forgotEmail = document.querySelector(".forgotName");
 const forgotNewPassword = document.getElementById("resetPassword");
 
-/* ======== FUNCTIONS ======== */
+/* ===== HELPERS ===== */
 function clearErrors() {
-  const errorSpans = document.querySelectorAll(".error-text");
-  errorSpans.forEach((span) => span.textContent = "");
+  document.querySelectorAll(".error-text").forEach(span => span.textContent = "");
 }
 
 function showForm(form) {
   clearErrors();
   welcome.classList.add("hidden");
   holder.classList.remove("hidden");
+
   signupForm.classList.add("hidden");
   loginForm.classList.add("hidden");
   forgotForm.classList.add("hidden");
@@ -92,12 +49,38 @@ function showForm(form) {
   if (form === "forgot") forgotForm.classList.remove("hidden");
 }
 
-/* ======== SIGNUP ======== */
+function togglePassword(inputId, el) {
+  const input = document.getElementById(inputId);
+  input.type = input.type === "password" ? "text" : "password";
+  el.textContent =
+    input.type === "password" ? "👁️ Show Password" : "👁️ Hide Password";
+}
+
+function setLoading(btn, isLoading, text = "Loading...") {
+  btn.disabled = isLoading;
+  btn.textContent = isLoading ? text : btn.dataset.originalText;
+}
+
+/* ===== VALIDATION ===== */
+function isValidEmail(email) {
+  return /^\S+@\S+\.\S+$/.test(email);
+}
+
+/* ===== SIGNUP ===== */
 signupForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   clearErrors();
 
-  const user = {
+  if (signupPassword.value.length < 6) {
+    showNotification("Password must be at least 6 characters", "error");
+    return;
+  }
+
+  const btn = signupForm.querySelector("button");
+  btn.dataset.originalText = btn.textContent;
+  setLoading(btn, true);
+
+  const payload = {
     name: signupName.value,
     email: signupEmail.value,
     DateOfBirth: signupDob.value,
@@ -113,62 +96,111 @@ signupForm.addEventListener("submit", async (e) => {
     const res = await fetch(`${API_BASE_URL}/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(user)
+      body: JSON.stringify(payload)
     });
 
     const data = await res.json();
+    console.log("SIGNUP RESPONSE:", data);
 
-    if (res.ok) {
-      showNotification("User registered successfully!", "success");
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("skillHarvestUser", JSON.stringify(data.user));
-      window.location.href = "Homepage.html";
-    } else {
-      showNotification(data.message || "Signup failed.", "error");
+    if (!res.ok) {
+      showNotification(data.message || "Signup failed", "error");
+      return;
     }
+
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("skillHarvestUser", JSON.stringify(data.user));
+    window.location.href = "Homepage.html";
   } catch (err) {
-    console.error(err);
-    showNotification("An error occurred during signup.", "error");
+    console.error("SIGNUP ERROR:", err);
+    showNotification("Network error. Try again.", "error");
+  } finally {
+    setLoading(btn, false);
   }
 });
 
-/* ======== LOGIN ======== */
+/* ===== LOGIN ===== */
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   clearErrors();
 
-  const credentials = {
-    email: loginEmail.value,
-    password: loginPassword.value
-  };
+  if (!isValidEmail(loginEmail.value)) {
+    showNotification("Enter a valid email", "error");
+    return;
+  }
+
+  if (loginPassword.value.length < 6) {
+    showNotification("Invalid password", "error");
+    return;
+  }
+
+  const btn = loginForm.querySelector("button");
+  btn.dataset.originalText = btn.textContent;
+  setLoading(btn, true);
+   // Validate name and phone
+  if (loginName.value.trim() === "") {
+    showNotification("Enter your name", "error");
+    setLoading(btn, false);
+    return;
+  }
+
+  if (loginPhone.value.trim() === "") {
+    showNotification("Enter your phone number", "error");
+    setLoading(btn, false);
+    return;
+  }
+
+  const payload = {
+  name: loginName.value,
+  phoneNumber: loginPhone.value,
+  email: loginEmail.value,
+  password: loginPassword.value
+};
+
+
 
   try {
     const res = await fetch(`${API_BASE_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(credentials)
+      body: JSON.stringify(payload)
     });
 
     const data = await res.json();
+    console.log("LOGIN RESPONSE:", data);
 
-    if (res.ok) {
-      showNotification("Login successful!", "success");
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("skillHarvestUser", JSON.stringify(data.user));
-      window.location.href = "Homepage.html";
-    } else {
-      showNotification(data.message || "Login failed.", "error");
+    if (!res.ok) {
+      showNotification(
+        data.message || data.errors?.[0] || "Login failed",
+        "error"
+      );
+      return;
     }
+
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("skillHarvestUser", JSON.stringify(data.user));
+    window.location.href = "Homepage.html";
   } catch (err) {
-    console.error(err);
-    showNotification("An error occurred during login.", "error");
+    console.error("LOGIN ERROR:", err);
+    showNotification("Network error. Try again.", "error");
+  } finally {
+    setLoading(btn, false);
   }
 });
 
-/* ======== FORGOT PASSWORD ======== */
+
+/* ===== FORGOT PASSWORD ===== */
 forgotForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   clearErrors();
+
+  if (forgotNewPassword.value.length < 6) {
+    showNotification("Password must be at least 6 characters", "error");
+    return;
+  }
+
+  const btn = forgotForm.querySelector("button");
+  btn.dataset.originalText = btn.textContent;
+  setLoading(btn, true);
 
   const payload = {
     email: forgotEmail.value,
@@ -183,15 +215,19 @@ forgotForm.addEventListener("submit", async (e) => {
     });
 
     const data = await res.json();
+    console.log("RESET RESPONSE:", data);
 
-    if (res.ok) {
-      showNotification("Password reset successfully!", "success");
-      showForm("login");
-    } else {
-      showNotification(data.message || "Password reset failed.", "error");
+    if (!res.ok) {
+      showNotification(data.message || "Reset failed", "error");
+      return;
     }
+
+    showNotification("Password reset successful", "success");
+    showForm("login");
   } catch (err) {
-    console.error(err);
-    showNotification("An error occurred during password reset.", "error");
+    console.error("RESET ERROR:", err);
+    showNotification("Network error. Try again.", "error");
+  } finally {
+    setLoading(btn, false);
   }
 });
