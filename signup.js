@@ -181,7 +181,12 @@ document.getElementById("forgotForm").addEventListener("submit", async function 
   clearErrors();
 
   const email = document.querySelector(".forgotName").value;
-  const newPassword = document.getElementById("resetPassword").value;
+
+  if(signupEmail.value !== email){
+    return
+  }
+    const newPassword = document.getElementById("resetPassword").value;
+
 
   showNotification("Password reset functionality is being processed. Please check console for errors if any occur.", "info");
 });
