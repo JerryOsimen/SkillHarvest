@@ -1,5 +1,6 @@
 .error-text{
-  display: block;
+  display: hidden;
   color: red;
   font-size: 14px;
-  margin-top: 5px;}
+  margin-top: 5px;
+}

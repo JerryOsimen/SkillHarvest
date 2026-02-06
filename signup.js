@@ -32,7 +32,10 @@ const forgotNewPassword = document.getElementById("resetPassword");
 
 /* ===== HELPERS ===== */
 function clearErrors() {
-  document.querySelectorAll(".error-text").forEach(span => span.textContent = "");
+  document.querySelectorAll(".error-text").forEach(span => {
+    span.textContent = ""
+    span.classList.toggle("hidden")}
+  );
 }
 
 function showForm(form) {
