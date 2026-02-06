@@ -71,7 +71,8 @@ async function fetchTrendingVideos() {
     if (response.ok && data.success && data.count > 0) {
       trendingSection.classList.remove("hidden");
       trendingGrid.innerHTML = "";
-      data.videos.forEach(video => {
+      const newVideos=  data.videos.slice(8,-1).map(video => video)
+      newVideos.forEach(video => {
         trendingGrid.appendChild(renderVideoCard(video));
       });
     } else if (!response.ok) {
@@ -101,14 +102,15 @@ async function fetchGlobalVideos(page = 1) {
           </p>
         `;
       } else {
-        data.videos.forEach(video => {
+        const newVideos=  data.videos.slice(0,-7).map(video => video)
+        newVideos.forEach(video => {
           videoGrid.appendChild(renderVideoCard(video));
         });
       }
 
       // Update pagination state
       currentPage = data.page;
-      pageInfo.textContent = `Page ${currentPage} of ${data.totalPages || 1}`;
+      pageInfo.textContent = `Page ${currentPage} of ${data.totalPages-1 || 1}`;
       prevPageBtn.disabled = currentPage <= 1;
       nextPageBtn.disabled = currentPage >= (data.totalPages || 1);
     } else {

@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SkillHarvest</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script defer src="https://kit.fontawesome.com/79e3c5887d.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="notifications.css" />
 </head>
 
 <body class="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-10">
@@ -12,7 +14,7 @@
   <!-- WELCOME PAGE -->
   <div
     id="welcome"
-    class="w-full max-w-md md:max-w-lg lg:max-w-xl bg-white rounded-xl shadow-xl p-8 text-center"
+    class="w-full max-w-md md:max-w-lg lg:max-w-xl bg-white rounded-xl shadow-[0px_3px_6px_#00000029] p-8 text-center"
   >
     <h1 class="font-bold text-2xl mb-6">Welcome to SkillHarvest</h1>
 
@@ -36,7 +38,7 @@
   <!-- FORM HOLDER -->
   <div
     id="holder"
-    class="hidden w-full max-w-md md:max-w-lg lg:max-w-xl bg-white rounded-xl shadow-xl p-6 md:p-8"
+    class="hidden w-full max-w-md md:max-w-lg lg:max-w-xl bg-white rounded-xl shadow-[0px_3px_6px_#00000029] p-6 md:p-8"
   >
 
     <!-- SIGN UP FORM -->
@@ -48,40 +50,41 @@
       <!-- INPUT -->
       <div>
         <label class="block text-sm mb-1">Full Name</label>
-        <input id="fullName" class="signupName w-full border rounded-lg px-3 py-2" placeholder="John Doe" />
+        <input id="fullName" class="signupName w-full border border-gray-300  rounded-lg px-3 py-2" placeholder="John Doe" />
         <span class="error-text"></span>
       </div>
 
       <div>
         <label class="block text-sm mb-1">Email</label>
-        <input type="email" id="email" class="signupEmail w-full border rounded-lg px-3 py-2" placeholder="example@gmail.com" />
+        <input type="email" id="email" class="signupEmail w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="example@gmail.com" />
         <span class="error-text"></span>
       </div>
 
       <div>
         <label class="block text-sm mb-1">Date of Birth</label>
-        <input type="date" id="dob" class="dob w-full border rounded-lg px-3 py-2" />
+        <input type="date" id="dob" class="dob w-full border border-gray-300 rounded-lg px-3 py-2" />
         <span class="error-text"></span>
       </div>
 
       <div>
         <label class="block text-sm mb-1">Gender</label>
-        <input id="gender" class="gender w-full border rounded-lg px-3 py-2" />
+        <input id="gender" placeholder="Gender" class="gender w-full border border-gray-300 rounded-lg px-3 py-2" />
         <span class="error-text"></span>
       </div>
 
       <div>
         <label class="block text-sm mb-1">Phone Number</label>
-        <input id="phoneNumber" class="phone w-full border rounded-lg px-3 py-2" />
+        <input id="phoneNumber" placeholder="Phone Number" class="phone w-full border border-gray-300 rounded-lg px-3 py-2" />
         <span class="error-text"></span>
       </div>
 
       <div>
         <label class="block text-sm mb-1">Password</label>
-        <div class="flex items-center border rounded-lg px-3">
+        <div class="flex items-center border border-gray-300 rounded-lg px-3">
           <input
             type="password"
             id="signupPassword"
+            placeholder="Password"
             class="password w-full py-2 outline-none"
           />
           <span
@@ -94,19 +97,19 @@
 
       <div>
         <label class="block text-sm mb-1">Years of Experience</label>
-        <input id="experience" class="experience w-full border rounded-lg px-3 py-2" />
+        <input id="experience" placeholder="Years of Experience" class="experience w-full border border-gray-300 rounded-lg px-3 py-2" />
         <span class="error-text"></span>
       </div>
 
       <div>
         <label class="block text-sm mb-1">Farm Location</label>
-        <input id="farmLocation" class="farmLocation w-full border rounded-lg px-3 py-2"  placeholder="Benin-city, Lagoss, etc"/>
+        <input id="farmLocation" placeholder="Farm Location" class="farmLocation w-full border border-gray-300 rounded-lg px-3 py-2"  placeholder="Benin-city, Lagoss, etc"/>
         <span class="error-text"></span>
       </div>
 
       <div>
         <label class="block text-sm mb-1">Farm Type</label>
-        <input id="farmType" class="farmType w-full border rounded-lg px-3 py-2"  placeholder="Poultry, fishery maize farm"/>
+        <input id="farmType" placeholder="Farm Type" class="farmType w-full border border-gray-300 rounded-lg px-3 py-2"  placeholder="Poultry, fishery maize farm"/>
         <span class="error-text"></span>
       </div>
 
@@ -128,12 +131,12 @@
         Sign In
       </h2>
 
-      <input id="loginName" class="loginName w-full border rounded-lg px-3 py-2" placeholder="Full Name" />
-      <input id="loginPhone" class="loginPhone w-full border rounded-lg px-3 py-2" placeholder="Phone Number" />
-      <input id="loginEmail" class="loginEmail w-full border rounded-lg px-3 py-2" placeholder="Email" />
+      <input id="loginName" class="loginName w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Full Name" />
+      <input id="loginPhone" class="loginPhone w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Phone Number" />
+      <input id="loginEmail" class="loginEmail w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Email" />
 
-      <div class="flex items-center border rounded-lg px-3">
-        <input id="loginPassword" type="password" class="w-full py-2 outline-none" />
+      <div class="flex items-center border border-gray-300 rounded-lg px-3">
+        <input id="loginPassword" placeholder="Password" type="password" class="w-full py-2 outline-none" />
         <span
           class="text-blue-500 text-sm cursor-pointer"
           onclick="togglePassword('loginPassword', this)"
@@ -148,9 +151,6 @@
         <span class="text-blue-500 cursor-pointer" onclick="showForm('forgot')">
           Forgot Password?
         </span>
-        <span class="text-[#EAB76A] cursor-pointer" onclick="showForm('signup')">
-          Sign Up
-        </span>
       </div>
     </form>
 
@@ -160,10 +160,10 @@
         Reset Password
       </h2>
 
-      <input id="forgotName" class="forgotName w-full border rounded-lg px-3 py-2" placeholder="Email" />
+      <input id="forgotName" class="forgotName w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Email" />
 
-      <div class="flex items-center border rounded-lg px-3">
-        <input id="resetPassword" type="password" class="w-full py-2 outline-none" />
+      <div class="flex items-center border border-gray-300 rounded-lg px-3">
+        <input id="resetPassword" placeholder="New password" type="password" class="w-full py-2 outline-none" />
         <span
           class="text-blue-500 text-sm cursor-pointer"
           onclick="togglePassword('resetPassword', this)"
