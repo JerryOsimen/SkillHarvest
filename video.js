@@ -111,13 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'upload.html';
         }
     });
-    // logout.addEventListener('click', (e) => {
-    //     e.preventDefault();
-    //     showNotification('Logging out...', 'info');
-    //     localStorage.removeItem("token");
-    //     localStorage.removeItem("skillHarvestUser")
-    //     setTimeout(() => window.location.replace('signup.html'), 1000);
-    // })
+   
 
 
 
@@ -385,13 +379,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // PLAY / PAUSE BUTTON OVERLAY
     playBtn.addEventListener('click', () => {
         if (mainVideo.paused) {
+            playBtn.classList.remove("max-md:hidden")
             mainVideo.play();
             playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
             // Increment views when user starts playing
-            if (videoId) incrementVideoViews(videoId);
+            // if (videoId) incrementVideoViews(videoId);
         } else {
             mainVideo.pause();
             playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            setTimeout(() => { playBtn.classList.add("max-md:hidden")}, 400); // Small delay to prevent rapid toggling
         }
     });
 
@@ -562,7 +558,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     const allVideos = (videoData) => {
-        videoData.forEach(video => {
+        const newVideos=  videoData.slice(0,-9).map(video => video)
+        newVideos.forEach(video => {
             const card = document.createElement("div");
 
             card.className = "block bg-white rounded-xl shadow overflow-hidden lg:h-[10em] transform transition-transform hover:scale-[1.02]";

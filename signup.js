@@ -30,9 +30,31 @@ const loginPhone = document.querySelector(".loginPhone");
 const forgotEmail = document.querySelector(".forgotName");
 const forgotNewPassword = document.getElementById("resetPassword");
 
+
+
+/// ===== NOTIFICATIONS ===== */
+function displayError(formPrefix, field, message) {
+  const errorSpan = document.getElementById(`${formPrefix}-${field}-error`);
+
+  if (!errorSpan) {
+    console.warn(`Missing error span: ${formPrefix}-${field}-error`);
+    return;
+  }
+
+  errorSpan.textContent = message;
+  errorSpan.classList.remove("hidden");
+  errorSpan.classList.add("block");
+}
+
+
 /* ===== HELPERS ===== */
 function clearErrors() {
-  document.querySelectorAll(".error-text").forEach(span => span.textContent = "");
+  document.querySelectorAll(".error-text").forEach(span => {
+    span.textContent = ""
+    span.classList.add("hidden")
+     span.classList.remove("block");
+  }
+  );
 }
 
 function showForm(form) {
@@ -104,8 +126,24 @@ signupForm.addEventListener("submit", async (e) => {
 
     if (!res.ok) {
       showNotification(data.message || "Signup failed", "error");
+      // Express-validator errors
+        data.errors.forEach(msg => {
+          if (msg.toLowerCase().includes("name")) displayError("signup", "name", msg);
+          else if (msg.toLowerCase().includes("email")) displayError("signup", "email", msg);
+          else if (msg.toLowerCase().includes("password")) displayError("signup", "password", msg);
+          else if (msg.toLowerCase().includes("birth") || msg.toLowerCase().includes("dob")) displayError("signup", "DateOfBirth", msg);
+          else if (msg.toLowerCase().includes("gender")) displayError("signup", "gender", msg);
+          else if (msg.toLowerCase().includes("phone")) displayError("signup", "phoneNumber", msg);
+          else if (msg.toLowerCase().includes("experience")) displayError("signup", "experience", msg);
+          else if (msg.toLowerCase().includes("location")) displayError("signup", "farmLocation", msg);
+          else if (msg.toLowerCase().includes("farm type")) displayError("signup", "farmType", msg);
+        });
       return;
-    }
+    }else if (response.status === 409) {
+        displayError("signup", "email", data.message);
+      } else {
+        showNotification(data.message || "Registration failed.", "error");
+      }
 
     localStorage.setItem("token", data.token);
     localStorage.setItem("skillHarvestUser", JSON.stringify(data.user));
@@ -122,6 +160,45 @@ signupForm.addEventListener("submit", async (e) => {
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   clearErrors();
+   const payload = {
+  name: loginName.value,
+  phoneNumber: loginPhone.value,
+  email: loginEmail.value,
+  password: loginPassword.value
+};
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+    console.log("LOGIN RESPONSE:");
+    if (!res.ok) {
+       data.errors.forEach(msg => {
+          if (msg.toLowerCase().includes("email")) displayError("login", "email", msg);
+          else if (msg.toLowerCase().includes("password")) displayError("login", "password", msg);
+          else if (msg.toLowerCase().includes("name")) displayError("login", "name", msg);
+          else if (msg.toLowerCase().includes("phone")) displayError("login", "phone", msg);
+        });
+      showNotification(
+        data.message || data.errors?.[0] || "Login failed",
+        "error"
+      );
+      return;
+    }
+
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("skillHarvestUser", JSON.stringify(data.user));
+    window.location.href = "Homepage.html";
+  } catch (err) {
+    console.error("LOGIN ERROR:", err);
+    showNotification("Network error. Try again.", "error");
+  } finally {
+    setLoading(btn, false);
+  }
 
   if (!isValidEmail(loginEmail.value)) {
     showNotification("Enter a valid email", "error");
@@ -149,42 +226,10 @@ loginForm.addEventListener("submit", async (e) => {
     return;
   }
 
-  const payload = {
-  name: loginName.value,
-  phoneNumber: loginPhone.value,
-  email: loginEmail.value,
-  password: loginPassword.value
-};
+ 
 
 
-
-  try {
-    const res = await fetch(`${API_BASE_URL}/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-
-    const data = await res.json();
-    console.log("LOGIN RESPONSE:", data);
-
-    if (!res.ok) {
-      showNotification(
-        data.message || data.errors?.[0] || "Login failed",
-        "error"
-      );
-      return;
-    }
-
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("skillHarvestUser", JSON.stringify(data.user));
-    window.location.href = "Homepage.html";
-  } catch (err) {
-    console.error("LOGIN ERROR:", err);
-    showNotification("Network error. Try again.", "error");
-  } finally {
-    setLoading(btn, false);
-  }
+  
 });
 
 
@@ -231,3 +276,6 @@ forgotForm.addEventListener("submit", async (e) => {
     setLoading(btn, false);
   }
 });
+
+
+
