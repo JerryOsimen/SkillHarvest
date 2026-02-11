@@ -31,11 +31,12 @@ function renderVideoCard(video) {
   card.innerHTML = `
     <div class="relative pb-[56.25%]">
       <video 
-        src="${video.videoUrl}" 
-        class="absolute top-0 left-0 w-full h-full object-cover"
-        muted
+      src="${video.videoUrl}" 
+      class="absolute top-0 left-0 w-full h-full object-cover"
+       muted
+       preload="metadata"
         onmouseover="this.play()"
-        onmouseout="this.pause(); this.currentTime = 0;"
+       onmouseout="this.pause(); this.currentTime = 0;"
       ></video>
       <div class="absolute bottom-2 right-2 flex gap-2">
         <div class="bg-black/60 text-white text-[10px] px-2 py-1 rounded flex items-center gap-1">
@@ -67,11 +68,11 @@ async function fetchTrendingVideos() {
   try {
     const response = await fetch(`${API_BASE_URL}/video/trending`);
     const data = await response.json();
-
+    trendingGrid.innerHTML = "Loading trending videos...";
     if (response.ok && data.success && data.count > 0) {
       trendingSection.classList.remove("hidden");
       trendingGrid.innerHTML = "";
-      const newVideos=  data.videos.slice(8,-1).map(video => video)
+      const newVideos=  data.videos.slice(10).map(video => video)
       newVideos.forEach(video => {
         trendingGrid.appendChild(renderVideoCard(video));
       });
@@ -91,6 +92,7 @@ async function fetchGlobalVideos(page = 1) {
   try {
     const response = await fetch(`${API_BASE_URL}/video?page=${page}&limit=${limit}`);
     const data = await response.json();
+    videoGrid.innerHTML = `<p> Loading Videos...</p>`;
 
     if (response.ok && data.success) {
       videoGrid.innerHTML = "";
@@ -102,10 +104,13 @@ async function fetchGlobalVideos(page = 1) {
           </p>
         `;
       } else {
+        videoGrid.innerHTML = '';
+        const fragment = document.createDocumentFragment();
         const newVideos=  data.videos.slice(0,-7).map(video => video)
         newVideos.forEach(video => {
-          videoGrid.appendChild(renderVideoCard(video));
+          fragment.appendChild(renderVideoCard(video));
         });
+        videoGrid.appendChild(fragment);
       }
 
       // Update pagination state
