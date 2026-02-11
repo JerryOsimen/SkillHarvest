@@ -405,7 +405,6 @@ document.addEventListener('DOMContentLoaded', () => {
         mainVideoSrc.src = video.src;
         mainVideo.load();
         mainVideo.play();
-        incrementVideoViews(video.id);
 
         // Update UI text
         document.getElementById("location").innerText = video.location;
@@ -432,6 +431,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("shareBtn").onclick = () => shareVideo(video);
         currentAuthorId = video.authorId;
         updateFollowBtnState(video.isFollowing);
+
+        document.getElementById('video-description').innerHTML = `${video.description || "No description provided." }`
 
         const isMarked = getBookmarks().some(v => v.id === video.id);
         updateBookmarkBtn(isMarked);
@@ -837,7 +838,7 @@ document.getElementById('downloadVideo').addEventListener('click', () => {
 
     function trendingSearch(videoData) {
         // 🔎 LOCAL SEARCH WITHIN videoData
-        const found = videoData.filter(v =>
+        const found = videoData.slice(0,-10).filter(v =>
             v.isTrending === true
         );
 
