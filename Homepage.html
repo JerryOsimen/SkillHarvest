@@ -78,7 +78,7 @@
         </ul>
     </aside>
   <!--main content-->
-  <main class="max-w-7xl  mx-auto px-10 py-10">
+  <main id="main" class="max-w-7xl  mx-auto px-10 py-10">
     
     <!-- TRENDING VIDEOS SECTION -->
     <div id="trendingSection" class="mb-12 hidden">
@@ -91,11 +91,9 @@
         <!-- Trending cards injected here -->
       </section>
     </div>
-
+  <div id="videoGridSection" class=""> <!-- Global cards injected here -->  
     <h1 class="text-2xl font-bold mb-6">Latest Farming Videos</h1>
-
     <!-- VIDEO GRID -->
-
       <section
       id="videoGrid"
       class="videoGrid
@@ -107,7 +105,7 @@
              lg:grid-cols-4">
       <!-- Global cards injected here -->
     </section>
-
+</div> 
     <!-- PAGINATION CONTROLS -->
     <div class="mt-12 flex justify-center items-center gap-4">
       <button 
