@@ -68,15 +68,16 @@ async function fetchTrendingVideos() {
   try {
     const response = await fetch(`${API_BASE_URL}/video/trending`);
     const data = await response.json();
-    trendingGrid.innerHTML = "Loading trending videos...";
+    const newVideos =  data.videos.slice(9).map(video => video)
     if (response.ok && data.success && data.count > 0) {
       trendingSection.classList.remove("hidden");
-      trendingGrid.innerHTML = "";
-      const newVideos=  data.videos.slice(10).map(video => video)
       newVideos.forEach(video => {
         trendingGrid.appendChild(renderVideoCard(video));
       });
-    } else if (!response.ok) {
+    }else if(data.videos.length === 8){
+      trendingGrid.innerHTML = "No videos Found";
+    }
+    else if (!response.ok) {
       showNotification(data.message || "Failed to load trending videos.", "error");
     }
   } catch (error) {
@@ -89,14 +90,27 @@ async function fetchTrendingVideos() {
  * Fetches and renders global videos with pagination
  */
 async function fetchGlobalVideos(page = 1) {
+ const gridmain = document.getElementById("videoGridSection");
+ const newdiv= document.createElement("div");
+ newdiv.innerHTML = `
+  <div id="spinner" class="max-w-full flex flex-col items-center justify-center py-20 space-y-4">
+    
+    <div class="size-24 border-4 border-gray-300 border-t-green-600 rounded-full animate-spin"></div>
+    
+    <p class="text-gray-600 text-lg font-medium">
+      Loading Videos...
+    </p>
+
+  </div>
+`;
+  gridmain.prepend(newdiv);
   try {
     const response = await fetch(`${API_BASE_URL}/video?page=${page}&limit=${limit}`);
     const data = await response.json();
-    videoGrid.innerHTML = `<p> Loading Videos...</p>`;
-
+   
     if (response.ok && data.success) {
-      videoGrid.innerHTML = "";
-
+      newdiv.remove(); // Remove spinner
+      videoGrid.innerHTML = ""
       if (data.videos.length === 0) {
         videoGrid.innerHTML = `
           <p class="text-gray-500 col-span-full text-center py-10">
@@ -104,6 +118,7 @@ async function fetchGlobalVideos(page = 1) {
           </p>
         `;
       } else {
+        newdiv.remove();
         videoGrid.innerHTML = '';
         const fragment = document.createDocumentFragment();
         const newVideos=  data.videos.slice(0,-7).map(video => video)

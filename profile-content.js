@@ -2,6 +2,7 @@
 const user = JSON.parse(localStorage.getItem("skillHarvestUser"));
 const date = user.DateOfBirth || user.dob;
 const dob = new Date(date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+console.log(user);
 if (user) {
   const fields = {
     name: user.name,

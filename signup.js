@@ -16,7 +16,7 @@ const signupGender = document.querySelector(".gender");
 const signupPhone = document.querySelector(".phone");
 const signupPassword = document.getElementById("signupPassword");
 const signupExperience = document.querySelector(".experience");
-const signupLocation = document.querySelector(".farmLocation");
+const signupLocation = document.getElementById("farmLocation");
 const signupFarmType = document.querySelector(".farmType");
 
 // Login
@@ -160,6 +160,32 @@ signupForm.addEventListener("submit", async (e) => {
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   clearErrors();
+
+  if (!isValidEmail(loginEmail.value)) {
+    showNotification("Enter a valid email", "error");
+    return;
+  }
+
+  if (loginPassword.value.length < 6) {
+    showNotification("Invalid password", "error");
+    return;
+  }
+
+  const btn = loginForm.querySelector("button");
+  btn.dataset.originalText = btn.textContent;
+  setLoading(btn, true);
+   // Validate name and phone
+  if (loginName.value.trim() === "") {
+    showNotification("Enter your name", "error");
+    setLoading(btn, false);
+    return;
+  }
+
+  if (loginPhone.value.trim() === "") {
+    showNotification("Enter your phone number", "error");
+    setLoading(btn, false);
+    return;
+  }
    const payload = {
   name: loginName.value,
   phoneNumber: loginPhone.value,
@@ -199,37 +225,6 @@ loginForm.addEventListener("submit", async (e) => {
   } finally {
     setLoading(btn, false);
   }
-
-  if (!isValidEmail(loginEmail.value)) {
-    showNotification("Enter a valid email", "error");
-    return;
-  }
-
-  if (loginPassword.value.length < 6) {
-    showNotification("Invalid password", "error");
-    return;
-  }
-
-  const btn = loginForm.querySelector("button");
-  btn.dataset.originalText = btn.textContent;
-  setLoading(btn, true);
-   // Validate name and phone
-  if (loginName.value.trim() === "") {
-    showNotification("Enter your name", "error");
-    setLoading(btn, false);
-    return;
-  }
-
-  if (loginPhone.value.trim() === "") {
-    showNotification("Enter your phone number", "error");
-    setLoading(btn, false);
-    return;
-  }
-
- 
-
-
-  
 });
 
 
@@ -260,15 +255,17 @@ forgotForm.addEventListener("submit", async (e) => {
     });
 
     const data = await res.json();
-    console.log("RESET RESPONSE:", data);
+   
 
     if (!res.ok) {
       showNotification(data.message || "Reset failed", "error");
       return;
     }
-
     showNotification("Password reset successful", "success");
     showForm("login");
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("skillHarvestUser", JSON.stringify(data.user));
+    window.location.href = "signup.html";
   } catch (err) {
     console.error("RESET ERROR:", err);
     showNotification("Network error. Try again.", "error");

@@ -559,8 +559,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     const allVideos = (videoData) => {
-        const newVideos=  videoData.slice(0,-9).map(video => video)
-        newVideos.forEach(video => {
+        const newVideos = videoData.slice(0,-9).map(video => video)
+        const actualData  = videoData.length<10? videoData : newVideos;
+        actualData.forEach(video => {
             const card = document.createElement("div");
 
             card.className = "block bg-white rounded-xl shadow overflow-hidden lg:h-[10em] transform transition-transform hover:scale-[1.02]";
@@ -633,10 +634,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById("similarVideos").addEventListener("click", () => {
         videoList.innerHTML = "";
-        const activeVideo = videoData.find(v => v.isPlaying);
+        const activeVideo = videoData.find(v =>v.isPlaying===true);
+    
         if (activeVideo) {
             fetchSimilarVideos(activeVideo.id);
-            searchSimilar(videoData, activeVideo.authorId)
+            searchSimilar(videoData, activeVideo.author)
         }
     });
 
@@ -714,6 +716,7 @@ document.getElementById('downloadVideo').addEventListener('click', () => {
 
             const res = await fetch(`${API_BASE_URL}/video`);
             const data = await res.json();
+            
             if (data.success) {
                 videoData = data.videos.map(v => ({
                     id: v.id,
@@ -724,7 +727,7 @@ document.getElementById('downloadVideo').addEventListener('click', () => {
                     date: new Date(v.createdAt).toLocaleDateString(),
                     src: v.videoUrl,
                     description: v.description,
-                    location: v.user?.farmLocation || "N/A",
+                    location: user?.farmLocation || "N/A",
                     commentCount: v._count?.comments || 0,
                     likes: v._count?.likes || 0,
                     isPlaying: false,
@@ -854,12 +857,12 @@ document.getElementById('downloadVideo').addEventListener('click', () => {
          allVideos(found)
     }
 
-     function searchSimilar(videoData, currentAuthorId) {
+     function searchSimilar(videoData, currentAuthor) {
     
         // 🔎 LOCAL SEARCH WITHIN videoData
-        const found = videoData.filter(v => v.authorId === currentAuthorId
+        const found = videoData.filter(v => v.author === currentAuthor
         );
-
+        console.log(found)
         // Clear current list
         videoList.innerHTML = "";
        
@@ -869,7 +872,7 @@ document.getElementById('downloadVideo').addEventListener('click', () => {
             `;
             return;
         }
-         allVideos(found)
+            allVideos(found)   
     }
 
 
