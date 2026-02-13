@@ -120,8 +120,9 @@ async function fetchGlobalVideos(page = 1) {
       } else {
         newdiv.remove();
         videoGrid.innerHTML = '';
+        console.log(data.videos);
         const fragment = document.createDocumentFragment();
-        const newVideos=  data.videos.slice(0,-7).map(video => video)
+        const newVideos=  data.videos.slice(0,-6).map(video => video)
         newVideos.forEach(video => {
           fragment.appendChild(renderVideoCard(video));
         });

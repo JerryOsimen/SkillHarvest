@@ -559,9 +559,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     const allVideos = (videoData) => {
-        const newVideos = videoData.slice(0,-9).map(video => video)
-        const actualData  = videoData.length<10? videoData : newVideos;
-        actualData.forEach(video => {
+        videoData.forEach(video => {
             const card = document.createElement("div");
 
             card.className = "block bg-white rounded-xl shadow overflow-hidden lg:h-[10em] transform transition-transform hover:scale-[1.02]";
@@ -718,7 +716,7 @@ document.getElementById('downloadVideo').addEventListener('click', () => {
             const data = await res.json();
             
             if (data.success) {
-                videoData = data.videos.map(v => ({
+                videoData = data.videos.slice(0,-8).map(v => ({
                     id: v.id,
                     title: v.title,
                     author: v.user?.name || "Unknown Author",
@@ -745,7 +743,7 @@ document.getElementById('downloadVideo').addEventListener('click', () => {
             const res = await fetch(`${API_BASE_URL}/video/trending`);
             const data = await res.json();
             if (data.success) {
-                const trendingData = data.videos.map(v => ({
+                const trendingData = data.videos.slice(-1).map(v => ({
                     id: v.id,
                     title: v.title,
                     author: v.user?.name || "Unknown Author",
@@ -772,7 +770,7 @@ document.getElementById('downloadVideo').addEventListener('click', () => {
             const res = await fetch(`${API_BASE_URL}/video/${videoId}/similar`);
             const data = await res.json();
             if (data.success) {
-                const similarData = data.videos.map(v => ({
+                const similarData = data.videos.slice(0,-8).map(v => ({
                     id: v.id,
                     title: v.title,
                     description: v.description,
