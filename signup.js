@@ -98,6 +98,11 @@ signupForm.addEventListener("submit", async (e) => {
     return;
   }
 
+  if (!isValidEmail(signupEmail.value)) {
+    showNotification("Enter a valid email", "error");
+    return;
+  }
+
   const btn = signupForm.querySelector("button");
   btn.dataset.originalText = btn.textContent;
   setLoading(btn, true);
@@ -122,8 +127,7 @@ signupForm.addEventListener("submit", async (e) => {
     });
 
     const data = await res.json();
-    console.log("SIGNUP RESPONSE:", data);
-
+   
     if (!res.ok) {
       showNotification(data.message || "Signup failed", "error");
       // Express-validator errors
@@ -139,15 +143,16 @@ signupForm.addEventListener("submit", async (e) => {
           else if (msg.toLowerCase().includes("farm type")) displayError("signup", "farmType", msg);
         });
       return;
-    }else if (response.status === 409) {
+      }else if (response.status === 409) {
         displayError("signup", "email", data.message);
+        return;
       } else {
         showNotification(data.message || "Registration failed.", "error");
       }
 
     localStorage.setItem("token", data.token);
     localStorage.setItem("skillHarvestUser", JSON.stringify(data.user));
-    window.location.href = "Homepage.html";
+    window.location.href = "singup.html";
   } catch (err) {
     console.error("SIGNUP ERROR:", err);
     showNotification("Network error. Try again.", "error");
