@@ -7,7 +7,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <script defer src="https://kit.fontawesome.com/79e3c5887d.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="notifications.css" />
-  <link rel="stylesheet" href="signup.css" />
 </head>
 
 <body class="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-10">
@@ -80,8 +79,8 @@
       </div>
 
       <div>
-        <label class="block text-sm mb-1">Password</label>
-        <div class="flex items-center border border-gray-300 rounded-lg px-3">
+        <label for="signupPassword" class="block text-sm mb-1">Password</label>
+        <div class="flex items-center justify-between border border-gray-300 rounded-lg px-3">
           <input
             type="password"
             id="signupPassword"
@@ -96,15 +95,15 @@
         <span class="error-text hidden text-red-500 text-sm" id="signup-password-error"></span>
       </div>
 
-      <div>
+      <!-- <div>
         <label class="block text-sm mb-1">Years of Experience</label>
-        <input id="experience" placeholder="Years of Experience" class="experience w-full border border-gray-300 rounded-lg px-3 py-2" />
+        <input id="experience" placeholder="1" class="experience w-full border border-gray-300 rounded-lg px-3 py-2" />
         <span class="error-text hidden text-red-500 text-sm" id="signup-experience-error"></span>
-      </div>
+      </div> -->
 
       <div>
         <label class="block text-sm mb-1">Farm Location</label>
-        <input id="farmLocation" placeholder="Farm Location" class="farmLocation w-full border border-gray-300 rounded-lg px-3 py-2"  placeholder="Benin-city, Lagoss, etc"/>
+        <input id="farmLocation" class="farmLocation w-full border border-gray-300 rounded-lg px-3 py-2"  placeholder="Benin-city, Lagoss, etc"/>
         <span class="error-text hidden text-red-500 text-sm" id="signup-farmLocation-error"></span>
       </div>
 
@@ -145,13 +144,13 @@
           class="text-blue-500 text-sm cursor-pointer"
           onclick="togglePassword('loginPassword', this)"
         >👁️</span>
-        <span class="error-text hidden text-red-500 text-sm" id="login-password-error"></span>
       </div>
-      <span class="error-text hidden text-red-500 text-sm" id="login-general-error"></span>
+      <span class="error-text hidden text-red-500 text-sm" id="login-password-error"></span>
+      
       <button class="bg-green-700 hover:bg-green-800 text-white py-3 rounded-lg">
         Login
       </button>
-
+      <span class="error-text hidden text-red-500 text-sm" id="login-general-error"></span>
       <div class="flex justify-between text-sm">
         <span class="text-blue-500 cursor-pointer" onclick="showForm('forgot')">
           Forgot Password?
@@ -160,28 +159,56 @@
     </form>
 
     <!-- FORGOT PASSWORD -->
-    <form id="forgotForm" class="hidden flex flex-col gap-4">
-      <h2 class="font-bold text-xl text-center text-[#EAB76A] mb-4">
-        Reset Password
-      </h2>
+  <form id="forgotForm" class="hidden flex flex-col gap-4">
+  <h2 class="font-bold text-xl text-center text-[#EAB76A] mb-4">
+    Reset Password
+  </h2>
 
-      <input id="forgotName" class="forgotName w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Email" />
-      <span class="error-text hidden text-red-500 text-sm" id="forgot-name-error"></span>
-      <div class="flex items-center border border-gray-300 rounded-lg px-3">
-        <input id="resetPassword" placeholder="New password" type="password" class="w-full py-2 outline-none" />
-      
+  <!-- EMAIL -->
+  <input 
+    id="forgotEmail"
+    class="w-full border border-gray-300 rounded-lg px-3 py-2"
+    placeholder="Email"
+    type="email"
+  />
+  <span class="error-text hidden text-red-500 text-sm" id="forgot-name-error"></span>
 
-        <span
-          class="text-blue-500 text-sm cursor-pointer"
-          onclick="togglePassword('resetPassword', this)"
-        >👁️</span>
-        <span class="error-text hidden text-red-500 text-sm" id="forgot-password-error"></span>
-      </div>
-      <span class="error-text hidden text-red-500 text-sm" id="forgot-general-error"></span>
-      <button class="bg-green-700 hover:bg-green-800 text-white py-3 rounded-lg">
-        Reset Password
-      </button>
-    </form>
+
+  <!-- RESET CODE (HIDDEN INITIALLY) -->
+  <div class="code-field hidden">
+    <input 
+      id="forgotCode"
+      class="w-full border border-gray-300 rounded-lg px-3 py-2"
+      placeholder="Enter 4-digit code"
+      maxlength="4"
+    />
+  </div>
+
+
+  <!-- NEW PASSWORD (HIDDEN INITIALLY) -->
+  <div class="new-password-field hidden">
+    <div class="flex items-center border border-gray-300 rounded-lg px-3">
+      <input 
+        id="forgotNewPassword"
+        placeholder="New password"
+        type="password"
+        class="w-full py-2 outline-none"
+      />
+
+      <span
+        class="text-blue-500 text-sm cursor-pointer"
+        onclick="togglePassword('forgotNewPassword', this)"
+      >👁️</span>
+    </div>
+  </div>
+
+  <span class="error-text hidden text-red-500 text-sm" id="forgot-password-error"></span>
+  <span class="error-text hidden text-red-500 text-sm" id="forgot-general-error"></span>
+
+  <button class="bg-green-700 hover:bg-green-800 text-white py-3 rounded-lg">
+    Continue
+  </button>
+</form>
 
   </div>
 
