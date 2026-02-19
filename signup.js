@@ -233,6 +233,7 @@ forgotForm.addEventListener("submit", async (e) => {
       });
 
       const data = await res.json();
+      console.log(data)
       console.log(data.errors)
       if (!res.ok) {
         showNotification(data.message || "Failed to send reset code", "error");
