@@ -1,6 +1,9 @@
 const videoInput = document.getElementById("videoInput");
 const previewVideo = document.getElementById("previewVideo");
+window.App = window.App || {};
+App.uploadstatus = false;
 
+console.log("Upload status:", App.uploadstatus);
 videoInput.addEventListener("change", () => {
   const file = videoInput.files[0];
   if (!file) return;
@@ -54,6 +57,7 @@ document.getElementById("uploadBtn").addEventListener("click", async () => {
     if (response.ok) {
       showNotification("Video uploaded successfully!", "success");
       window.location.href = "Homepage.html";
+      localStorage.setItem("uploadstatus", "true");
     } else {
       showNotification(data.message || "Upload failed. Please ensure the video is between 2-5 minutes.", "error");
       uploadBtn.textContent = "Upload";
@@ -66,4 +70,3 @@ document.getElementById("uploadBtn").addEventListener("click", async () => {
     document.getElementById("uploadBtn").disabled = false;
   }
 });
-

@@ -2,14 +2,13 @@ const API_BASE_URL = "https://skillharvest-backend.onrender.com/api";
 const videoGrid = document.getElementById("videoGrid");
 const trendingGrid = document.getElementById("trendingGrid");
 const trendingSection = document.getElementById("trendingSection");
-
+ let revealExtent = -3; // Start with -3 to show 5 videos on first load, then reveal 3 more on upload 
 const prevPageBtn = document.getElementById("prevPage");
 const nextPageBtn = document.getElementById("nextPage");
 const pageInfo = document.getElementById("pageInfo");
-
 let currentPage = 1;
 const limit = 8;
-
+const uploadStatus = localStorage.getItem("uploadstatus") === "true";
 /**
  * Renders a single video card
  */
@@ -120,8 +119,19 @@ async function fetchGlobalVideos(page = 1) {
       } else {
         newdiv.remove();
         videoGrid.innerHTML = '';
+        let  newVideos;
         const fragment = document.createDocumentFragment();
-        const newVideos=  data.videos.slice(0,-6).map(video => video)
+        if(uploadStatus && revealExtent < 2) {
+              newVideos   =  data.videos.slice(0,revealExtent++).map(video => video)
+              revealExtent++ 
+              localStorage.removeItem("uploadstatus");
+        }else if(uploadStatus && revealExtent >= 1) {
+              newVideos=  data.videos.slice(0,revealExtent).map(video => video)
+              revealExtent++ 
+        }else{
+           newVideos=  data.videos.slice(0,revealExtent).map(video => video)
+        }
+       
         newVideos.forEach(video => {
           fragment.appendChild(renderVideoCard(video));
         });
@@ -130,9 +140,13 @@ async function fetchGlobalVideos(page = 1) {
 
       // Update pagination state
       currentPage = data.page;
-      pageInfo.textContent = `Page ${currentPage} of ${data.totalPages-1 || 1}`;
+       pageInfo.textContent = `Page ${currentPage} of ${data.totalPages-2 || 1}`;
       prevPageBtn.disabled = currentPage <= 1;
-      nextPageBtn.disabled = currentPage >= (data.totalPages || 1);
+      nextPageBtn.disabled = currentPage >= (data.totalPages-2 || 1);
+      if(revealExtent>0){
+      pageInfo.textContent = `Page ${currentPage} of ${data.totalPages-1 || 1}`;
+      nextPageBtn.disabled = currentPage >= (data.totalPages-1 || 1);
+    }
     } else {
       console.error("Failed to fetch videos:", data.message);
       showNotification(data.message || "Failed to load videos.", "error");
@@ -160,10 +174,10 @@ nextPageBtn.addEventListener("click", () => {
 /* Sidebar */
 const sideMenu = document.getElementById('sidebar');
 const menuBtn = document.getElementById("menuBtn");
-const links = sidebar.querySelectorAll("a");
+// const links = sidebar.querySelectorAll("a");
 
 const closeSidebar = document.getElementById('closeBtn');
-const menuItems = document.getElementById('menuItems');
+// const menuItems = document.getElementById('menuItems');
 
   closeSidebar.addEventListener('click', () => {
         sideMenu.classList.add('hidden');
