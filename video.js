@@ -14,11 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const authorName = params.get("authorName");
     const author = document.querySelector('.authorsName');
     const location = document.getElementById('location');
-
+    const uploadStatus = localStorage.getItem("uploadstatus") === "true";
     const mainVideo = document.getElementById('play-screen');
     const menuBtn = document.getElementById('menuBtn');
     const sideMenu = document.getElementById('sidebar');
     let isSubmitting = false;
+    let revealCount =-5;
     let bookmarkTimeout;
     const closeSidebar = document.getElementById('closeBtn');
     const playBtn = document.getElementById('playBtn');
@@ -708,6 +709,7 @@ document.getElementById('downloadVideo').addEventListener('click', () => {
      *  FETCH VIDEOS FROM BACKEND
      * =========================== */
     async function fetchGlobalVideos() {
+        let newArray;
         try {
             const userInfo = localStorage.getItem("skillHarvestUser");
             const user = JSON.parse(userInfo);
@@ -716,7 +718,13 @@ document.getElementById('downloadVideo').addEventListener('click', () => {
             const data = await res.json();
             
             if (data.success) {
-                videoData = data.videos.slice(0,-8).map(v => ({
+                if(uploadStatus) {
+                    newArray = data.videos.slice(0, revealCount++);
+                    revealCount++;
+                }else {
+                    newArray = data.videos.slice(0, revealCount);
+                }
+                videoData = newArray.map(v => ({
                     id: v.id,
                     title: v.title,
                     author: v.user?.name || "Unknown Author",
@@ -770,7 +778,7 @@ document.getElementById('downloadVideo').addEventListener('click', () => {
             const res = await fetch(`${API_BASE_URL}/video/${videoId}/similar`);
             const data = await res.json();
             if (data.success) {
-                const similarData = data.videos.slice(0,-8).map(v => ({
+                const similarData = data.videos.map(v => ({
                     id: v.id,
                     title: v.title,
                     description: v.description,
@@ -860,7 +868,6 @@ document.getElementById('downloadVideo').addEventListener('click', () => {
         // 🔎 LOCAL SEARCH WITHIN videoData
         const found = videoData.filter(v => v.author === currentAuthor
         );
-        console.log(found)
         // Clear current list
         videoList.innerHTML = "";
        
